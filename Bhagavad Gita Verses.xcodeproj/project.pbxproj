@@ -1,0 +1,583 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		33440B3C2D263E8A007321E2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33440B3B2D263E89007321E2 /* WidgetKit.framework */; };
+		33440B3E2D263E8A007321E2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33440B3D2D263E8A007321E2 /* SwiftUI.framework */; };
+		33440B4B2D263E8E007321E2 /* Widgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 33440B392D263E89007321E2 /* Widgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		334762CE2D4F5A3C0078FCB4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 334762C62D4F5A3C0078FCB4 /* Preview Assets.xcassets */; };
+		334762CF2D4F5A3C0078FCB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 334762C82D4F5A3C0078FCB4 /* Assets.xcassets */; };
+		334762D02D4F5A3C0078FCB4 /* BhagavadGitaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334762C92D4F5A3C0078FCB4 /* BhagavadGitaApp.swift */; };
+		334762D12D4F5A3C0078FCB4 /* QuoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334762CB2D4F5A3C0078FCB4 /* QuoteView.swift */; };
+		334762D92D4F5B1B0078FCB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 334762D22D4F5B1B0078FCB4 /* Assets.xcassets */; };
+		334762DA2D4F5B1B0078FCB4 /* WidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334762D62D4F5B1B0078FCB4 /* WidgetBundle.swift */; };
+		334762DB2D4F5B1B0078FCB4 /* VerseWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334762D52D4F5B1B0078FCB4 /* VerseWidget.swift */; };
+		334762DC2D4F5B1B0078FCB4 /* ControlWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334762D32D4F5B1B0078FCB4 /* ControlWidget.swift */; };
+		33B4A9F52D2DF2A700AE1044 /* VersesReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */; };
+		33B4A9F62D2DF2A700AE1044 /* VersesReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */; };
+		33FF16CC2D28FA83006E9888 /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF16CB2D28FA67006E9888 /* QuoteModel.swift */; };
+		33FF16D02D28FD5C006E9888 /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF16CB2D28FA67006E9888 /* QuoteModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		33440B492D263E8E007321E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33440B1C2D263D6E007321E2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 33440B382D263E89007321E2;
+			remoteInfo = exampleExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		33440B502D263E8E007321E2 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				33440B4B2D263E8E007321E2 /* Widgets.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		33440B242D263D6E007321E2 /* Bhagavad Gita Verses.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bhagavad Gita Verses.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		33440B392D263E89007321E2 /* Widgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Widgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		33440B3B2D263E89007321E2 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		33440B3D2D263E8A007321E2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		334762C62D4F5A3C0078FCB4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		334762C82D4F5A3C0078FCB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		334762C92D4F5A3C0078FCB4 /* BhagavadGitaApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BhagavadGitaApp.swift; sourceTree = "<group>"; };
+		334762CA2D4F5A3C0078FCB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		334762CB2D4F5A3C0078FCB4 /* QuoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteView.swift; sourceTree = "<group>"; };
+		334762D22D4F5B1B0078FCB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		334762D32D4F5B1B0078FCB4 /* ControlWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlWidget.swift; sourceTree = "<group>"; };
+		334762D42D4F5B1B0078FCB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		334762D52D4F5B1B0078FCB4 /* VerseWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseWidget.swift; sourceTree = "<group>"; };
+		334762D62D4F5B1B0078FCB4 /* WidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetBundle.swift; sourceTree = "<group>"; };
+		33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersesReader.swift; sourceTree = "<group>"; };
+		33FF16CB2D28FA67006E9888 /* QuoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteModel.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		33C70C482D28E50900B16348 /* Resources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		33440B212D263D6E007321E2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33440B362D263E89007321E2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33440B3E2D263E8A007321E2 /* SwiftUI.framework in Frameworks */,
+				33440B3C2D263E8A007321E2 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		33440B1B2D263D6E007321E2 = {
+			isa = PBXGroup;
+			children = (
+				334762CC2D4F5A3C0078FCB4 /* Bhagavad Gita Verses App */,
+				334762D72D4F5B1B0078FCB4 /* Widget Extension */,
+				33FF16CA2D28FA5C006E9888 /* Model */,
+				33C70C482D28E50900B16348 /* Resources */,
+				33440B3A2D263E89007321E2 /* Frameworks */,
+				33440B252D263D6E007321E2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		33440B252D263D6E007321E2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				33440B242D263D6E007321E2 /* Bhagavad Gita Verses.app */,
+				33440B392D263E89007321E2 /* Widgets.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		33440B3A2D263E89007321E2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				33440B3B2D263E89007321E2 /* WidgetKit.framework */,
+				33440B3D2D263E8A007321E2 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		334762C72D4F5A3C0078FCB4 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				334762C62D4F5A3C0078FCB4 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		334762CC2D4F5A3C0078FCB4 /* Bhagavad Gita Verses App */ = {
+			isa = PBXGroup;
+			children = (
+				334762C72D4F5A3C0078FCB4 /* Preview Content */,
+				334762C82D4F5A3C0078FCB4 /* Assets.xcassets */,
+				334762C92D4F5A3C0078FCB4 /* BhagavadGitaApp.swift */,
+				334762CA2D4F5A3C0078FCB4 /* Info.plist */,
+				334762CB2D4F5A3C0078FCB4 /* QuoteView.swift */,
+			);
+			path = "Bhagavad Gita Verses App";
+			sourceTree = "<group>";
+		};
+		334762D72D4F5B1B0078FCB4 /* Widget Extension */ = {
+			isa = PBXGroup;
+			children = (
+				334762D22D4F5B1B0078FCB4 /* Assets.xcassets */,
+				334762D32D4F5B1B0078FCB4 /* ControlWidget.swift */,
+				334762D42D4F5B1B0078FCB4 /* Info.plist */,
+				334762D52D4F5B1B0078FCB4 /* VerseWidget.swift */,
+				334762D62D4F5B1B0078FCB4 /* WidgetBundle.swift */,
+			);
+			path = "Widget Extension";
+			sourceTree = "<group>";
+		};
+		33FF16CA2D28FA5C006E9888 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				33FF16CB2D28FA67006E9888 /* QuoteModel.swift */,
+				33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		33440B232D263D6E007321E2 /* Bhagavad Gita Verses */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 33440B322D263D74007321E2 /* Build configuration list for PBXNativeTarget "Bhagavad Gita Verses" */;
+			buildPhases = (
+				33440B202D263D6E007321E2 /* Sources */,
+				33440B212D263D6E007321E2 /* Frameworks */,
+				33440B222D263D6E007321E2 /* Resources */,
+				33440B502D263E8E007321E2 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				33440B4A2D263E8E007321E2 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				33C70C482D28E50900B16348 /* Resources */,
+			);
+			name = "Bhagavad Gita Verses";
+			packageProductDependencies = (
+			);
+			productName = LockScreenWidgetSample;
+			productReference = 33440B242D263D6E007321E2 /* Bhagavad Gita Verses.app */;
+			productType = "com.apple.product-type.application";
+		};
+		33440B382D263E89007321E2 /* Widgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 33440B4D2D263E8E007321E2 /* Build configuration list for PBXNativeTarget "Widgets" */;
+			buildPhases = (
+				33440B352D263E89007321E2 /* Sources */,
+				33440B362D263E89007321E2 /* Frameworks */,
+				33440B372D263E89007321E2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				33C70C482D28E50900B16348 /* Resources */,
+			);
+			name = Widgets;
+			packageProductDependencies = (
+			);
+			productName = exampleExtension;
+			productReference = 33440B392D263E89007321E2 /* Widgets.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		33440B1C2D263D6E007321E2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					33440B232D263D6E007321E2 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					33440B382D263E89007321E2 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+				};
+			};
+			buildConfigurationList = 33440B1F2D263D6E007321E2 /* Build configuration list for PBXProject "Bhagavad Gita Verses" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 33440B1B2D263D6E007321E2;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 33440B252D263D6E007321E2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				33440B232D263D6E007321E2 /* Bhagavad Gita Verses */,
+				33440B382D263E89007321E2 /* Widgets */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		33440B222D263D6E007321E2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				334762CE2D4F5A3C0078FCB4 /* Preview Assets.xcassets in Resources */,
+				334762CF2D4F5A3C0078FCB4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33440B372D263E89007321E2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				334762D92D4F5B1B0078FCB4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		33440B202D263D6E007321E2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33B4A9F52D2DF2A700AE1044 /* VersesReader.swift in Sources */,
+				334762D02D4F5A3C0078FCB4 /* BhagavadGitaApp.swift in Sources */,
+				334762D12D4F5A3C0078FCB4 /* QuoteView.swift in Sources */,
+				33FF16CC2D28FA83006E9888 /* QuoteModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		33440B352D263E89007321E2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				334762DA2D4F5B1B0078FCB4 /* WidgetBundle.swift in Sources */,
+				334762DB2D4F5B1B0078FCB4 /* VerseWidget.swift in Sources */,
+				334762DC2D4F5B1B0078FCB4 /* ControlWidget.swift in Sources */,
+				33B4A9F62D2DF2A700AE1044 /* VersesReader.swift in Sources */,
+				33FF16D02D28FD5C006E9888 /* QuoteModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		33440B4A2D263E8E007321E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 33440B382D263E89007321E2 /* Widgets */;
+			targetProxy = 33440B492D263E8E007321E2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		33440B302D263D74007321E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		33440B312D263D74007321E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		33440B332D263D74007321E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Bhagavad Gita Verses app/Preview Content\"";
+				DEVELOPMENT_TEAM = FMDJTXM4W7;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Bhagavad Gita Verses app/Info.plist";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Sne.LockScreenWidgetSample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		33440B342D263D74007321E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Bhagavad Gita Verses app/Preview Content\"";
+				DEVELOPMENT_TEAM = FMDJTXM4W7;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Bhagavad Gita Verses app/Info.plist";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Sne.LockScreenWidgetSample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		33440B4E2D263E8E007321E2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FMDJTXM4W7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Widget Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = example;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Sne.LockScreenWidgetSample.example;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		33440B4F2D263E8E007321E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FMDJTXM4W7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Widget Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = example;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Sne.LockScreenWidgetSample.example;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		33440B1F2D263D6E007321E2 /* Build configuration list for PBXProject "Bhagavad Gita Verses" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33440B302D263D74007321E2 /* Debug */,
+				33440B312D263D74007321E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		33440B322D263D74007321E2 /* Build configuration list for PBXNativeTarget "Bhagavad Gita Verses" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33440B332D263D74007321E2 /* Debug */,
+				33440B342D263D74007321E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		33440B4D2D263E8E007321E2 /* Build configuration list for PBXNativeTarget "Widgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33440B4E2D263E8E007321E2 /* Debug */,
+				33440B4F2D263E8E007321E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 33440B1C2D263D6E007321E2 /* Project object */;
+}
