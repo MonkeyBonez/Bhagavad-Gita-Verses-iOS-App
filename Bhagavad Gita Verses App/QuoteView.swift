@@ -5,9 +5,9 @@ struct QuoteView: View {
     
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.scenePhase) var scenePhase
-    
-    init() {
-        dailyQuoteModel = QuoteModel()
+
+    init(dailyQuoteModel: QuoteModel = QuoteModel()) {
+        self.dailyQuoteModel = dailyQuoteModel
     }
     
     init(quote: String, author: String, chapter: String, verse: String) {
@@ -21,9 +21,13 @@ struct QuoteView: View {
     private func rightSideScreenTap() {
         dailyQuoteModel.getNextVerse()
     }
-    
-    var interactionArea: some View {
-        HStack(spacing: 0) {
+
+    private var foregroundColor: Color {
+        colorScheme == .light ? AppColors.darkCharcoal : AppColors.parchment
+    }
+
+    private var verseChangeView: some View {
+        HStack(spacing: 80) {
             Rectangle()
                 .foregroundStyle(.clear)
                 .contentShape(Rectangle())
@@ -38,36 +42,57 @@ struct QuoteView: View {
                 }
         }
     }
-    
+
+    private var actionView: some View { //TODO: Add bookmark functioanlity and boomark list view
+        let buttonClickPadding = 30.0
+        return HStack {
+            ShareLink(item: dailyQuoteModel.shareText) {
+                Image(systemName: "square.and.arrow.up")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 25)
+                    .padding(buttonClickPadding)
+                    .contentShape(Rectangle())
+            }
+        }
+        .foregroundStyle(foregroundColor)
+        .frame(maxHeight: .infinity, alignment: .bottom)
+        .safeAreaPadding(.bottom, 48-buttonClickPadding) // change to just padding?
+    }
+
+
+    var textView: some View {
+        VStack(spacing: 16) {
+            Text(dailyQuoteModel.quote)
+                .font(.custom(Fonts.verseFontName, size: 30))
+                .minimumScaleFactor(20/30)
+                .multilineTextAlignment(.center)
+            VStack(spacing: 0) {
+                Text(dailyQuoteModel.author)
+                    .font(.custom(Fonts.verseFontName, size: 20))
+                    .bold()
+                Text("\(dailyQuoteModel.chapter).\(dailyQuoteModel.verse)")
+            }
+        }
+        .foregroundStyle(foregroundColor)
+        .padding(25)
+        .padding(.bottom, 144)
+    }
+
+    var background: some View {
+        colorScheme == .light ? AppColors.parchment.linearGradient : AppColors.charcoalBackground
+    }
+
     var body: some View {
         ZStack {
-            if colorScheme == .light {
-                AppColors.parchment
-            } else {
-                AppColors.charcoalBackground
-            }
-            VStack(spacing: 16) {
-                Text(dailyQuoteModel.quote)
-                    .font(.custom(Fonts.verseFontName, size: 30))
-                    .minimumScaleFactor(20/30)
-                    .multilineTextAlignment(.center)
-                VStack(spacing: 0) {
-                    Text(dailyQuoteModel.author)
-                        .font(.custom(Fonts.verseFontName, size: 20))
-                        .bold()
-                    Text("\(dailyQuoteModel.chapter).\(dailyQuoteModel.verse)")
-                }
-            }
-            .foregroundStyle(colorScheme == .light ? AppColors.darkCharcoal : AppColors.parchment)
-            .padding(25)
-            .padding(.bottom, 144)
-            interactionArea
+            background
+            textView
+            verseChangeView
+            actionView
         }
         .ignoresSafeArea()
-        .onChange(of: scenePhase) { _ , newPhase in
-            if newPhase == .active {
-                dailyQuoteModel.viewLoaded()
-            }
+        .onChange(of: scenePhase) { oldPhase , newPhase in
+            dailyQuoteModel.scenePhaseChange(from: oldPhase, to: newPhase)
         }
     }
 }
