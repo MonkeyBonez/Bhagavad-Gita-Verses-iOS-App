@@ -21,10 +21,26 @@
 		334762DB2D4F5B1B0078FCB4 /* LockscreenVerseWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334762D52D4F5B1B0078FCB4 /* LockscreenVerseWidget.swift */; };
 		334762DC2D4F5B1B0078FCB4 /* ControlWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334762D32D4F5B1B0078FCB4 /* ControlWidget.swift */; };
 		334762EB2D5071400078FCB4 /* App Intent Extension.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 334762E22D5071400078FCB4 /* App Intent Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		335445C42DE42E68000D38E2 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 335445C32DE42E68000D38E2 /* Algorithms */; };
+		335445C52DE42EF0000D38E2 /* BookmarkedVersesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339B0B032DE0267F00BFC39D /* BookmarkedVersesModel.swift */; };
+		335445C72DE42F1A000D38E2 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 335445C62DE42F1A000D38E2 /* Algorithms */; };
 		337BB69A2DCD9B3200F5EF82 /* DeeplinkCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3360D5532DC5C47100FC57B0 /* DeeplinkCoordinator.swift */; };
 		337BB69B2DCD9B5E00F5EF82 /* DeeplinkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3360D54F2DC5C33E00FC57B0 /* DeeplinkConstants.swift */; };
 		337BB69C2DCD9B7C00F5EF82 /* DeeplinkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3360D54F2DC5C33E00FC57B0 /* DeeplinkConstants.swift */; };
 		337BB69D2DCD9B7C00F5EF82 /* DeeplinkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3360D54F2DC5C33E00FC57B0 /* DeeplinkConstants.swift */; };
+		339B0B052DE0268500BFC39D /* BookmarkedVersesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339B0B032DE0267F00BFC39D /* BookmarkedVersesModel.swift */; };
+		339B0B0F2DE0307600BFC39D /* EBGaramond-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 339B0B062DE0307600BFC39D /* EBGaramond-VariableFont_wght.ttf */; };
+		339B0B102DE0307600BFC39D /* verses-formatted.json in Resources */ = {isa = PBXBuildFile; fileRef = 339B0B0C2DE0307600BFC39D /* verses-formatted.json */; };
+		339B0B112DE0307600BFC39D /* Verses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339B0B0B2DE0307600BFC39D /* Verses.swift */; };
+		339B0B122DE0307600BFC39D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339B0B0A2DE0307600BFC39D /* Colors.swift */; };
+		339B0B132DE0307600BFC39D /* VersesInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339B0B0D2DE0307600BFC39D /* VersesInfo.swift */; };
+		339B0B142DE0307600BFC39D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339B0B082DE0307600BFC39D /* Fonts.swift */; };
+		339B0B152DE0307600BFC39D /* Verses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339B0B0B2DE0307600BFC39D /* Verses.swift */; };
+		339B0B162DE0307600BFC39D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339B0B0A2DE0307600BFC39D /* Colors.swift */; };
+		339B0B172DE0307600BFC39D /* VersesInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339B0B0D2DE0307600BFC39D /* VersesInfo.swift */; };
+		339B0B182DE0307600BFC39D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339B0B082DE0307600BFC39D /* Fonts.swift */; };
+		339B0B192DE0307600BFC39D /* EBGaramond-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 339B0B062DE0307600BFC39D /* EBGaramond-VariableFont_wght.ttf */; };
+		339B0B1A2DE0307600BFC39D /* verses-formatted.json in Resources */ = {isa = PBXBuildFile; fileRef = 339B0B0C2DE0307600BFC39D /* verses-formatted.json */; };
 		33A7D3E72DD97D7500900DFF /* LockscreenEasyViewVerseWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A7D3E62DD97D7500900DFF /* LockscreenEasyViewVerseWidgetEntryView.swift */; };
 		33B4A9F52D2DF2A700AE1044 /* VersesReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */; };
 		33B4A9F62D2DF2A700AE1044 /* VersesReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */; };
@@ -104,6 +120,13 @@
 		334762E22D5071400078FCB4 /* App Intent Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = "App Intent Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3360D54F2DC5C33E00FC57B0 /* DeeplinkConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkConstants.swift; sourceTree = "<group>"; };
 		3360D5532DC5C47100FC57B0 /* DeeplinkCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkCoordinator.swift; sourceTree = "<group>"; };
+		339B0B032DE0267F00BFC39D /* BookmarkedVersesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkedVersesModel.swift; sourceTree = "<group>"; };
+		339B0B062DE0307600BFC39D /* EBGaramond-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EBGaramond-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		339B0B082DE0307600BFC39D /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		339B0B0A2DE0307600BFC39D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		339B0B0B2DE0307600BFC39D /* Verses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verses.swift; sourceTree = "<group>"; };
+		339B0B0C2DE0307600BFC39D /* verses-formatted.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "verses-formatted.json"; sourceTree = "<group>"; };
+		339B0B0D2DE0307600BFC39D /* VersesInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersesInfo.swift; sourceTree = "<group>"; };
 		33A7D3E62DD97D7500900DFF /* LockscreenEasyViewVerseWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockscreenEasyViewVerseWidgetEntryView.swift; sourceTree = "<group>"; };
 		33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersesReader.swift; sourceTree = "<group>"; };
 		33FF16CB2D28FA67006E9888 /* QuoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteModel.swift; sourceTree = "<group>"; };
@@ -145,11 +168,6 @@
 			path = "App Intent Extension";
 			sourceTree = "<group>";
 		};
-		33C70C482D28E50900B16348 /* Resources */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Resources;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				335445C42DE42E68000D38E2 /* Algorithms in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +183,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				335445C72DE42F1A000D38E2 /* Algorithms in Frameworks */,
 				33440B3E2D263E8A007321E2 /* SwiftUI.framework in Frameworks */,
 				33440B3C2D263E8A007321E2 /* WidgetKit.framework in Frameworks */,
 			);
@@ -248,9 +268,9 @@
 		334762DD2D506F6C0078FCB4 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				339B0B0E2DE0307600BFC39D /* Resources */,
 				3360D53C2DC5C06600FC57B0 /* Deeplinking */,
 				33FF16CA2D28FA5C006E9888 /* Model */,
-				33C70C482D28E50900B16348 /* Resources */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -264,9 +284,39 @@
 			path = Deeplinking;
 			sourceTree = "<group>";
 		};
+		339B0B072DE0307600BFC39D /* EB_Garamond */ = {
+			isa = PBXGroup;
+			children = (
+				339B0B062DE0307600BFC39D /* EBGaramond-VariableFont_wght.ttf */,
+			);
+			path = EB_Garamond;
+			sourceTree = "<group>";
+		};
+		339B0B092DE0307600BFC39D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				339B0B072DE0307600BFC39D /* EB_Garamond */,
+				339B0B082DE0307600BFC39D /* Fonts.swift */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		339B0B0E2DE0307600BFC39D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				339B0B092DE0307600BFC39D /* Fonts */,
+				339B0B0A2DE0307600BFC39D /* Colors.swift */,
+				339B0B0B2DE0307600BFC39D /* Verses.swift */,
+				339B0B0C2DE0307600BFC39D /* verses-formatted.json */,
+				339B0B0D2DE0307600BFC39D /* VersesInfo.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		33FF16CA2D28FA5C006E9888 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				339B0B032DE0267F00BFC39D /* BookmarkedVersesModel.swift */,
 				33FF16CB2D28FA67006E9888 /* QuoteModel.swift */,
 				33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */,
 			);
@@ -293,11 +343,9 @@
 				33440B4A2D263E8E007321E2 /* PBXTargetDependency */,
 				334762EA2D5071400078FCB4 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				33C70C482D28E50900B16348 /* Resources */,
-			);
 			name = "Bhagavad Gita Verses";
 			packageProductDependencies = (
+				335445C32DE42E68000D38E2 /* Algorithms */,
 			);
 			productName = LockScreenWidgetSample;
 			productReference = 33440B242D263D6E007321E2 /* Bhagavad Gita Verses.app */;
@@ -315,11 +363,9 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				33C70C482D28E50900B16348 /* Resources */,
-			);
 			name = Widgets;
 			packageProductDependencies = (
+				335445C62DE42F1A000D38E2 /* Algorithms */,
 			);
 			productName = exampleExtension;
 			productReference = 33440B392D263E89007321E2 /* Widgets.appex */;
@@ -377,6 +423,9 @@
 			);
 			mainGroup = 33440B1B2D263D6E007321E2;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				335445C22DE42DFE000D38E2 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 33440B252D263D6E007321E2 /* Products */;
 			projectDirPath = "";
@@ -396,6 +445,8 @@
 			files = (
 				334762CE2D4F5A3C0078FCB4 /* Preview Assets.xcassets in Resources */,
 				334762CF2D4F5A3C0078FCB4 /* Assets.xcassets in Resources */,
+				339B0B192DE0307600BFC39D /* EBGaramond-VariableFont_wght.ttf in Resources */,
+				339B0B1A2DE0307600BFC39D /* verses-formatted.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +454,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				339B0B0F2DE0307600BFC39D /* EBGaramond-VariableFont_wght.ttf in Resources */,
+				339B0B102DE0307600BFC39D /* verses-formatted.json in Resources */,
 				334762D92D4F5B1B0078FCB4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -421,12 +474,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				339B0B152DE0307600BFC39D /* Verses.swift in Sources */,
+				339B0B162DE0307600BFC39D /* Colors.swift in Sources */,
+				339B0B172DE0307600BFC39D /* VersesInfo.swift in Sources */,
+				339B0B182DE0307600BFC39D /* Fonts.swift in Sources */,
 				337BB69B2DCD9B5E00F5EF82 /* DeeplinkConstants.swift in Sources */,
 				337BB69A2DCD9B3200F5EF82 /* DeeplinkCoordinator.swift in Sources */,
 				33B4A9F52D2DF2A700AE1044 /* VersesReader.swift in Sources */,
 				334762D02D4F5A3C0078FCB4 /* BhagavadGitaApp.swift in Sources */,
 				334762D12D4F5A3C0078FCB4 /* QuoteView.swift in Sources */,
 				33FF16CC2D28FA83006E9888 /* QuoteModel.swift in Sources */,
+				339B0B052DE0268500BFC39D /* BookmarkedVersesModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +495,11 @@
 				337BB69C2DCD9B7C00F5EF82 /* DeeplinkConstants.swift in Sources */,
 				33A7D3E72DD97D7500900DFF /* LockscreenEasyViewVerseWidgetEntryView.swift in Sources */,
 				334762DA2D4F5B1B0078FCB4 /* WidgetBundle.swift in Sources */,
+				339B0B112DE0307600BFC39D /* Verses.swift in Sources */,
+				339B0B122DE0307600BFC39D /* Colors.swift in Sources */,
+				335445C52DE42EF0000D38E2 /* BookmarkedVersesModel.swift in Sources */,
+				339B0B132DE0307600BFC39D /* VersesInfo.swift in Sources */,
+				339B0B142DE0307600BFC39D /* Fonts.swift in Sources */,
 				334762DB2D4F5B1B0078FCB4 /* LockscreenVerseWidget.swift in Sources */,
 				334762DC2D4F5B1B0078FCB4 /* ControlWidget.swift in Sources */,
 				33B4A9F62D2DF2A700AE1044 /* VersesReader.swift in Sources */,
@@ -801,6 +864,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		335445C22DE42DFE000D38E2 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		335445C32DE42E68000D38E2 /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 335445C22DE42DFE000D38E2 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
+		};
+		335445C62DE42F1A000D38E2 /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 335445C22DE42DFE000D38E2 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 33440B1C2D263D6E007321E2 /* Project object */;
 }

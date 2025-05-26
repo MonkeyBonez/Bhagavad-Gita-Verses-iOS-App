@@ -9,54 +9,44 @@ import SwiftUI
     private var lastBackgroundedTime: Date?
     private let backgroundTimeRefreshThresholdHours: Double = 1
 
-    var quote: String
-    
-    var chapter: String
-    
-    var verse: String
-    
-    var author: String
-    
+    var viewingBookmarked: Bool {
+        versesReader.bookmarkedOnlyMode
+    }
+
+    var quote: String {
+        versesReader.currentVerse.text
+    }
+
+    var chapter: Int {
+        versesReader.currentVerse.chapterNumber
+    }
+
+    var verse: Int {
+        versesReader.currentVerse.verseNumber
+    }
+
+    var author: String {
+        VersesInfo.author
+    }
+
+    var bookmarked: Bool {
+        versesReader.currentVerse.bookmarked
+    }
+
     init() {
-        let versesReader = VersesReader()
-        self.versesReader = versesReader
-        guard let verseOfDay = versesReader.getVerseOfDay() else {
-            self.quote = ""
-            self.chapter = ""
-            self.verse = ""
-            self.author = ""
-            //better exit failure - throw error?
-            return
-        }
-        self.shownVerseOfDay = verseOfDay
-        self.quote = verseOfDay.verse
-        self.chapter = String(verseOfDay.chapterNumber)
-        self.verse = String(verseOfDay.verseNumber)
-        self.author = VersesInfo.author
+        self.versesReader = VersesReader()
+        versesReader.setVerseOfDay()
+        self.shownVerseOfDay = versesReader.currentVerse
     }
     
-    init(quote: String, author: String, chapter: String, verse: String) {
-        self.versesReader = VersesReader()
-        self.quote = quote
-        self.chapter = chapter
-        self.verse = verse
-        self.author = author
+    init(quote: String, author: String, chapter: Int, verse: Int, bookmarked: Bool = false) {
+        self.versesReader = VersesReader(currentVerse: Verse(text: quote, chapterNumber: chapter, verseNumber: verse, bookmarked: bookmarked))
     }
     
     func setToVerseOfDay() {
-        guard let verseOfDay = versesReader.updateWithVerseOfDay() else {
-            return
-        }
-        self.shownVerseOfDay = verseOfDay
-        updateWithVerse(verseOfDay)
+        versesReader.setVerseOfDay()
     }
 
-    private func updateWithVerse(_ verse: Verse) {
-        self.quote = verse.verse
-        self.chapter = String(verse.chapterNumber)
-        self.verse = String(verse.verseNumber)
-        self.author = VersesInfo.author
-    }
 
 }
 
@@ -74,9 +64,10 @@ extension QuoteModel {
     func scenePhaseChange(from oldPhase: ScenePhase, to newPhase: ScenePhase) {
         if newPhase == .background {
             lastBackgroundedTime = Date()
+            versesReader.bookmarkedVersesModel.persistData()
         }
         else if newPhase == .inactive && oldPhase == .background {
-            if !checkNewQuoteOfDay() {
+            if !versesReader.checkNewQuoteOfDay(shownVerseOfDay: shownVerseOfDay!) {
                 checkResetToQuoteOfDay()
             }
         }
@@ -89,28 +80,23 @@ extension QuoteModel {
         }
     }
 
-    private func checkNewQuoteOfDay() -> Bool {
-        if versesReader.getVerseOfDay() != shownVerseOfDay {
-            setToVerseOfDay()
-            return true
-        }
-        return false
-    }
-
     func getPreviousVerse() {
         userInteracted = true
-        guard let prevVerse = versesReader.getPreviousVerse() else {
-            return
-        }
-        updateWithVerse(prevVerse)
+        versesReader.getPreviousVerse()
     }
 
     func getNextVerse() {
         userInteracted = true
-        guard let nextVerse = versesReader.getNextVerse() else {
-            return
-        }
-        updateWithVerse(nextVerse)
+        versesReader.getNextVerse()
+    }
+
+    func bookmarkTapped() {
+        bookmarked ? versesReader.unbookmarkCurrentVerse() : versesReader.bookmarkCurrentVerse()
+    }
+
+    func viewingBookmarkedTapped() {
+//        viewingBookmarked.toggle()
+        versesReader.bookmarkedOnlyMode.toggle()
     }
 
 }

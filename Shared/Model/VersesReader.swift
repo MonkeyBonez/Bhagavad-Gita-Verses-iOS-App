@@ -2,52 +2,68 @@ import Foundation
 
 struct VersesReader {
     let versesFilePath = Bundle.main.path(forResource: "verses-formatted", ofType: "json")
-    var chapterNumber: Int
-    var verseNumber: Int
+    var chapterNumber: Int = 0
+    var verseNumber: Int = 0
     var verses: [Verse]
-    init() {
-        chapterNumber = 0
-        verseNumber = 0
+    var currentVerse: Verse
+    var bookmarkedVersesModel: BookmarkedVersesModel = BookmarkedVersesModel()
+    var bookmarkedOnlyMode: Bool = false {
+        didSet {
+            checkValidBookmarkOnlyMode()
+            if bookmarkedOnlyMode {
+                getCurrentBookmarkedVerse()
+            }
+            if !bookmarkedOnlyMode {
+                updateVerse(chapter: chapterNumber, verse: verseNumber)
+            }
+        }
+    }
+
+    init(currentVerse: Verse = Verse(text: "", chapterNumber: 0, verseNumber: 0)) {
+        self.currentVerse = currentVerse
         verses = []
         guard let versesFilePath = versesFilePath else {
             return
         }
         let fileUrl = URL(fileURLWithPath: versesFilePath)
-        guard let data = try? Data(contentsOf: fileUrl), let verses = try? JSONDecoder().decode([Verse].self, from: data) else {
+        guard let data = try? Data(contentsOf: fileUrl),
+                let verses = try? JSONDecoder().decode([Verse].self, from: data) else {
             return
         }
-        self.verses = verses
         (chapterNumber, verseNumber) = getChapterAndVerseNumber(for: Date())
+        self.bookmarkedVersesModel = BookmarkedVersesModel(currentRegularVerseIndex: VersesInfo.getIndexOfVerse(chapter: chapterNumber, verse: verseNumber))
+        self.verses = bookmarkedVersesModel.markBookmarked(allVerses: verses)
     }
-    
-    private func getVerse(chapter: Int, verse: Int) -> Verse? {
-        let index = sum(Array(VersesInfo.versesPerChapter.prefix(chapter - 1))) + (verse - 1)
-        return verses[index]
+
+    private mutating func checkValidBookmarkOnlyMode() {
+        if bookmarkedOnlyMode, bookmarkedVersesModel.isEmpty {
+            bookmarkedOnlyMode = false
+        }
     }
-    
-    private func sum(_ numbers: [Int]) -> Int {
-        numbers.reduce(0, +)
+
+    private func getVerse(chapter: Int, verse: Int) -> Verse {
+        verses[VersesInfo.getIndexOfVerse(chapter: chapter, verse: verse)]
     }
-    
-    private var verseOfDay: Verse? {
+
+    private mutating func updateVerse(chapter: Int, verse: Int){
+        let index = VersesInfo.getIndexOfVerse(chapter: chapter, verse: verse)
+        bookmarkedVersesModel.regularVerseIndexUpdate(regularIndex: index)
+        currentVerse = verses[VersesInfo.getIndexOfVerse(chapter: chapter, verse: verse)]
+    }
+
+    private var verseOfDay: Verse {
         return verseOfDayForDate(Date())
     }
 
-    func getVerseOfDay() -> Verse? {
-        return verseOfDay
-    }
-
-    mutating func updateWithVerseOfDay() -> Verse? {
-        chapterNumber = verseOfDay?.chapterNumber ?? 0
-        verseNumber = verseOfDay?.verseNumber ?? 0
-        return verseOfDay
+    mutating func setVerseOfDay() {
+        currentVerse = verseOfDay
     }
 
     private var numberOfChapters: Int {
         return VersesInfo.versesPerChapter.count
     }
 
-    func verseOfDayForDate(_ date: Date) -> Verse? {
+    func verseOfDayForDate(_ date: Date) -> Verse {
         let (chapterNumber, verseNumber) = getChapterAndVerseNumber(for: date)
         return getVerse(chapter: chapterNumber, verse: verseNumber)
     }
@@ -61,35 +77,79 @@ struct VersesReader {
         return VersesInfo.topVerses[verseOfDayIndex]
     }
     
-    mutating func getNextVerse() -> Verse? {
-        var newVerseNumber = verseNumber + 1
-        var newChapterNumber = chapterNumber
-        if newVerseNumber > VersesInfo.versesPerChapter[chapterNumber - 1] {
-            newChapterNumber += 1
-            guard newChapterNumber < numberOfChapters else {
-                return nil
-            }
-            newVerseNumber = 1
+    mutating func getNextVerse(){
+        if bookmarkedOnlyMode {
+            getNextBookmarkedVerse()
         }
-        self.verseNumber = newVerseNumber
-        self.chapterNumber = newChapterNumber
-        return getVerse(chapter: chapterNumber, verse: verseNumber)
+        else {
+            var newVerseNumber = verseNumber + 1
+            var newChapterNumber = chapterNumber
+            if newVerseNumber > VersesInfo.versesPerChapter[chapterNumber - 1] {
+                newChapterNumber += 1
+                guard newChapterNumber < numberOfChapters else {
+                    return
+                }
+                newVerseNumber = 1
+            }
+            self.verseNumber = newVerseNumber
+            self.chapterNumber = newChapterNumber
+            updateVerse(chapter: chapterNumber, verse: verseNumber)
+        }
     }
     
-    mutating func getPreviousVerse() -> Verse? {
-        var newVerseNumber = verseNumber - 1
-        var newChapterNumber = chapterNumber
-        if newVerseNumber < 1 {
-            newChapterNumber -= 1
-            guard newChapterNumber > 0 else {
-                return nil
-            }
-            newVerseNumber = VersesInfo.versesPerChapter[newChapterNumber - 1]
+    mutating func getPreviousVerse(){
+        if bookmarkedOnlyMode {
+            getPrevBookmarkedVerse()
         }
-        self.verseNumber = newVerseNumber
-        self.chapterNumber = newChapterNumber
-        return getVerse(chapter: chapterNumber, verse: verseNumber)
+        else {
+            var newVerseNumber = verseNumber - 1
+            var newChapterNumber = chapterNumber
+            if newVerseNumber < 1 {
+                newChapterNumber -= 1
+                guard newChapterNumber > 0 else {
+                    return
+                }
+                newVerseNumber = VersesInfo.versesPerChapter[newChapterNumber - 1]
+            }
+            self.verseNumber = newVerseNumber
+            self.chapterNumber = newChapterNumber
+            updateVerse(chapter: chapterNumber, verse: verseNumber)
+        }
     }
+
+    mutating func getNextBookmarkedVerse() {
+        currentVerse = verses[bookmarkedVersesModel.nextVerseIndex()]
+    }
+
+    mutating func getPrevBookmarkedVerse() {
+        currentVerse = verses[bookmarkedVersesModel.prevVerseIndex()]
+    }
+
+    mutating func getCurrentBookmarkedVerse() {
+        currentVerse = verses[bookmarkedVersesModel.currentBookmarkedVerseIndex]
+    }
+
+    mutating func bookmarkCurrentVerse() {
+        verses[VersesInfo.getIndexOfVerse(chapter: chapterNumber, verse: verseNumber)].bookmarked = true
+        bookmarkedVersesModel.addVerse(chapter: chapterNumber, verse: verseNumber)
+        currentVerse.bookmarked = true
+    }
+
+    mutating func unbookmarkCurrentVerse() {
+        let unbookmarkedIndex = bookmarkedVersesModel.removeCurrentVerse()
+        verses[unbookmarkedIndex].bookmarked = false
+        currentVerse.bookmarked = false
+        checkValidBookmarkOnlyMode()
+    }
+
+    mutating func checkNewQuoteOfDay(shownVerseOfDay: Verse) -> Bool {
+        if verseOfDay != shownVerseOfDay {
+            setVerseOfDay()
+            return true
+        }
+        return false
+    }
+
 }
 
 

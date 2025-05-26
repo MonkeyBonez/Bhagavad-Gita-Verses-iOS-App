@@ -1,7 +1,14 @@
 struct Verse: Codable {
-    let verse: String
+    let text: String
     let chapterNumber: Int
     let verseNumber: Int
+    var bookmarked: Bool = false
+
+    private enum CodingKeys: String, CodingKey {
+        case text
+        case chapterNumber
+        case verseNumber
+    }
 }
 
 extension Verse: Equatable {

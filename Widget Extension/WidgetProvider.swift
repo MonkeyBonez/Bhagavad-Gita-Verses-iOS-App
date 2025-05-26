@@ -25,7 +25,7 @@ struct WidgetProvider: TimelineProvider {
             guard let entryDate = Calendar.current.date(byAdding: .day, value: dayOffset, to: beginningOfCurrentDate), let verseForEntry = dailyQuoteModel.getVerseForDate(entryDate) else {
                 return
             }
-            let entry = QuoteEntry(date: entryDate, quote: verseForEntry.verse)
+            let entry = QuoteEntry(date: entryDate, quote: verseForEntry.text)
             entries.append(entry)
         }
 

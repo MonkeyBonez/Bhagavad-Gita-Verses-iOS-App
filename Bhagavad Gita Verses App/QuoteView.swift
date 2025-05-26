@@ -1,25 +1,27 @@
 import SwiftUI
 
 struct QuoteView: View {
-    @State var dailyQuoteModel: QuoteModel
-    
+    @State var viewModel: QuoteModel
+
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.scenePhase) var scenePhase
 
+    let buttonClickPadding = 30.0
+
     init(dailyQuoteModel: QuoteModel = QuoteModel()) {
-        self.dailyQuoteModel = dailyQuoteModel
+        self.viewModel = dailyQuoteModel
     }
     
-    init(quote: String, author: String, chapter: String, verse: String) {
-        dailyQuoteModel = QuoteModel(quote: quote, author: author, chapter: chapter, verse: verse)
+    init(quote: String, author: String, chapter: Int, verse: Int) {
+        viewModel = QuoteModel(quote: quote, author: author, chapter: chapter, verse: verse)
     }
     
     private func leftSideScreenTap() {
-        dailyQuoteModel.getPreviousVerse()
+        viewModel.getPreviousVerse()
     }
     
     private func rightSideScreenTap() {
-        dailyQuoteModel.getNextVerse()
+        viewModel.getNextVerse()
     }
 
     private var foregroundColor: Color {
@@ -43,35 +45,55 @@ struct QuoteView: View {
         }
     }
 
-    private var actionView: some View { //TODO: Add bookmark functioanlity and boomark list view
-        let buttonClickPadding = 30.0
-        return HStack {
-            ShareLink(item: dailyQuoteModel.shareText) {
-                Image(systemName: "square.and.arrow.up")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 25)
-                    .padding(buttonClickPadding)
-                    .contentShape(Rectangle())
-            }
+    private var actionView: some View {
+        return HStack(spacing: 52) {
+            viewBookmarkedView
+            shareButtonView
+            bookmarkButtonView
         }
         .foregroundStyle(foregroundColor)
         .frame(maxHeight: .infinity, alignment: .bottom)
         .safeAreaPadding(.bottom, 48-buttonClickPadding) // change to just padding?
     }
 
+    @ViewBuilder
+    private func actionIcon(systemName: String) -> some View {
+        Image(systemName: systemName)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(height: 25)
+            .padding(buttonClickPadding)
+            .contentShape(Rectangle())
+    }
+
+    private var shareButtonView: some View {
+        ShareLink(item: viewModel.shareText) {
+            actionIcon(systemName: "square.and.arrow.up")
+        }
+    }
+
+    private var bookmarkButtonView: some View {
+        actionIcon(systemName: viewModel.bookmarked ? "bookmark.fill" : "bookmark")
+            .onTapGesture { viewModel.bookmarkTapped() }
+    }
+
+    private var viewBookmarkedView: some View {
+        actionIcon(systemName: viewModel.viewingBookmarked ? "book.pages.fill" : "book.pages")
+            .onTapGesture { viewModel.viewingBookmarkedTapped() }
+    }
+
 
     var textView: some View {
         VStack(spacing: 16) {
-            Text(dailyQuoteModel.quote)
+            Text(viewModel.quote)
                 .font(.custom(Fonts.verseFontName, size: 30))
                 .minimumScaleFactor(20/30)
                 .multilineTextAlignment(.center)
             VStack(spacing: 0) {
-                Text(dailyQuoteModel.author)
+                Text(viewModel.author)
                     .font(.custom(Fonts.verseFontName, size: 20))
                     .bold()
-                Text("\(dailyQuoteModel.chapter).\(dailyQuoteModel.verse)")
+                Text("\(viewModel.chapter).\(viewModel.verse)")
             }
         }
         .foregroundStyle(foregroundColor)
@@ -92,7 +114,7 @@ struct QuoteView: View {
         }
         .ignoresSafeArea()
         .onChange(of: scenePhase) { oldPhase , newPhase in
-            dailyQuoteModel.scenePhaseChange(from: oldPhase, to: newPhase)
+            viewModel.scenePhaseChange(from: oldPhase, to: newPhase)
         }
     }
 }
@@ -100,7 +122,7 @@ struct QuoteView: View {
 #Preview {
     let quote = "You have the right to perform your duty, but not to the fruits of your actions"
     let author = "Bhagavad Gita"
-    let chapter = "2"
-    let verse = "47"
+    let chapter = 2
+    let verse = 47
     QuoteView(quote: quote, author: author, chapter: chapter, verse: verse)
 }
