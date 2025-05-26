@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33182E082DD58B6000A82202 /* HomescreenVerseWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182E052DD5893A00A82202 /* HomescreenVerseWidget.swift */; };
+		33182E0C2DD58E4100A82202 /* WidgetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182E092DD58B7400A82202 /* WidgetProvider.swift */; };
 		33440B3C2D263E8A007321E2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33440B3B2D263E89007321E2 /* WidgetKit.framework */; };
 		33440B3E2D263E8A007321E2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33440B3D2D263E8A007321E2 /* SwiftUI.framework */; };
 		33440B4B2D263E8E007321E2 /* Widgets.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 33440B392D263E89007321E2 /* Widgets.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -16,8 +18,14 @@
 		334762D12D4F5A3C0078FCB4 /* QuoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334762CB2D4F5A3C0078FCB4 /* QuoteView.swift */; };
 		334762D92D4F5B1B0078FCB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 334762D22D4F5B1B0078FCB4 /* Assets.xcassets */; };
 		334762DA2D4F5B1B0078FCB4 /* WidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334762D62D4F5B1B0078FCB4 /* WidgetBundle.swift */; };
-		334762DB2D4F5B1B0078FCB4 /* VerseWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334762D52D4F5B1B0078FCB4 /* VerseWidget.swift */; };
+		334762DB2D4F5B1B0078FCB4 /* LockscreenVerseWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334762D52D4F5B1B0078FCB4 /* LockscreenVerseWidget.swift */; };
 		334762DC2D4F5B1B0078FCB4 /* ControlWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334762D32D4F5B1B0078FCB4 /* ControlWidget.swift */; };
+		334762EB2D5071400078FCB4 /* App Intent Extension.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 334762E22D5071400078FCB4 /* App Intent Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		337BB69A2DCD9B3200F5EF82 /* DeeplinkCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3360D5532DC5C47100FC57B0 /* DeeplinkCoordinator.swift */; };
+		337BB69B2DCD9B5E00F5EF82 /* DeeplinkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3360D54F2DC5C33E00FC57B0 /* DeeplinkConstants.swift */; };
+		337BB69C2DCD9B7C00F5EF82 /* DeeplinkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3360D54F2DC5C33E00FC57B0 /* DeeplinkConstants.swift */; };
+		337BB69D2DCD9B7C00F5EF82 /* DeeplinkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3360D54F2DC5C33E00FC57B0 /* DeeplinkConstants.swift */; };
+		33A7D3E72DD97D7500900DFF /* LockscreenEasyViewVerseWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A7D3E62DD97D7500900DFF /* LockscreenEasyViewVerseWidgetEntryView.swift */; };
 		33B4A9F52D2DF2A700AE1044 /* VersesReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */; };
 		33B4A9F62D2DF2A700AE1044 /* VersesReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */; };
 		33FF16CC2D28FA83006E9888 /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF16CB2D28FA67006E9888 /* QuoteModel.swift */; };
@@ -31,6 +39,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 33440B382D263E89007321E2;
 			remoteInfo = exampleExtension;
+		};
+		334762E92D5071400078FCB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33440B1C2D263D6E007321E2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 334762E12D5071400078FCB4;
+			remoteInfo = "App Intent Extension";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -46,9 +61,32 @@
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		334762F02D5071400078FCB4 /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				334762EB2D5071400078FCB4 /* App Intent Extension.appex in Embed ExtensionKit Extensions */,
+			);
+			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3360D54E2DC5C33500FC57B0 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		33182E052DD5893A00A82202 /* HomescreenVerseWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomescreenVerseWidget.swift; sourceTree = "<group>"; };
+		33182E092DD58B7400A82202 /* WidgetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetProvider.swift; sourceTree = "<group>"; };
 		33440B242D263D6E007321E2 /* Bhagavad Gita Verses.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bhagavad Gita Verses.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33440B392D263E89007321E2 /* Widgets.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Widgets.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		33440B3B2D263E89007321E2 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -61,13 +99,52 @@
 		334762D22D4F5B1B0078FCB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		334762D32D4F5B1B0078FCB4 /* ControlWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlWidget.swift; sourceTree = "<group>"; };
 		334762D42D4F5B1B0078FCB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		334762D52D4F5B1B0078FCB4 /* VerseWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseWidget.swift; sourceTree = "<group>"; };
+		334762D52D4F5B1B0078FCB4 /* LockscreenVerseWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockscreenVerseWidget.swift; sourceTree = "<group>"; };
 		334762D62D4F5B1B0078FCB4 /* WidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetBundle.swift; sourceTree = "<group>"; };
+		334762E22D5071400078FCB4 /* App Intent Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = "App Intent Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3360D54F2DC5C33E00FC57B0 /* DeeplinkConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkConstants.swift; sourceTree = "<group>"; };
+		3360D5532DC5C47100FC57B0 /* DeeplinkCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkCoordinator.swift; sourceTree = "<group>"; };
+		33A7D3E62DD97D7500900DFF /* LockscreenEasyViewVerseWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockscreenEasyViewVerseWidgetEntryView.swift; sourceTree = "<group>"; };
 		33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersesReader.swift; sourceTree = "<group>"; };
 		33FF16CB2D28FA67006E9888 /* QuoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		331940112DCFEFE7005051B0 /* Exceptions for "App Intent Extension" folder in "Widgets" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				App_Intent_Extension.swift,
+			);
+			target = 33440B382D263E89007321E2 /* Widgets */;
+		};
+		334762EC2D5071400078FCB4 /* Exceptions for "App Intent Extension" folder in "App Intent Extension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				App_Intent_Extension.swift,
+				Info.plist,
+			);
+			target = 334762E12D5071400078FCB4 /* App Intent Extension */;
+		};
+		334763162D5184DF0078FCB4 /* Exceptions for "App Intent Extension" folder in "Bhagavad Gita Verses" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				App_Intent_Extension.swift,
+			);
+			target = 33440B232D263D6E007321E2 /* Bhagavad Gita Verses */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		334762E32D5071400078FCB4 /* App Intent Extension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				334763162D5184DF0078FCB4 /* Exceptions for "App Intent Extension" folder in "Bhagavad Gita Verses" target */,
+				331940112DCFEFE7005051B0 /* Exceptions for "App Intent Extension" folder in "Widgets" target */,
+				334762EC2D5071400078FCB4 /* Exceptions for "App Intent Extension" folder in "App Intent Extension" target */,
+			);
+			path = "App Intent Extension";
+			sourceTree = "<group>";
+		};
 		33C70C482D28E50900B16348 /* Resources */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Resources;
@@ -92,6 +169,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		334762DF2D5071400078FCB4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -100,10 +184,10 @@
 			children = (
 				334762CC2D4F5A3C0078FCB4 /* Bhagavad Gita Verses App */,
 				334762D72D4F5B1B0078FCB4 /* Widget Extension */,
-				33FF16CA2D28FA5C006E9888 /* Model */,
-				33C70C482D28E50900B16348 /* Resources */,
+				334762E32D5071400078FCB4 /* App Intent Extension */,
 				33440B3A2D263E89007321E2 /* Frameworks */,
 				33440B252D263D6E007321E2 /* Products */,
+				334762DD2D506F6C0078FCB4 /* Shared */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +196,7 @@
 			children = (
 				33440B242D263D6E007321E2 /* Bhagavad Gita Verses.app */,
 				33440B392D263E89007321E2 /* Widgets.appex */,
+				334762E22D5071400078FCB4 /* App Intent Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -148,13 +233,35 @@
 		334762D72D4F5B1B0078FCB4 /* Widget Extension */ = {
 			isa = PBXGroup;
 			children = (
+				33182E092DD58B7400A82202 /* WidgetProvider.swift */,
 				334762D22D4F5B1B0078FCB4 /* Assets.xcassets */,
+				33182E052DD5893A00A82202 /* HomescreenVerseWidget.swift */,
 				334762D32D4F5B1B0078FCB4 /* ControlWidget.swift */,
 				334762D42D4F5B1B0078FCB4 /* Info.plist */,
-				334762D52D4F5B1B0078FCB4 /* VerseWidget.swift */,
+				334762D52D4F5B1B0078FCB4 /* LockscreenVerseWidget.swift */,
+				33A7D3E62DD97D7500900DFF /* LockscreenEasyViewVerseWidgetEntryView.swift */,
 				334762D62D4F5B1B0078FCB4 /* WidgetBundle.swift */,
 			);
 			path = "Widget Extension";
+			sourceTree = "<group>";
+		};
+		334762DD2D506F6C0078FCB4 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				3360D53C2DC5C06600FC57B0 /* Deeplinking */,
+				33FF16CA2D28FA5C006E9888 /* Model */,
+				33C70C482D28E50900B16348 /* Resources */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		3360D53C2DC5C06600FC57B0 /* Deeplinking */ = {
+			isa = PBXGroup;
+			children = (
+				3360D5532DC5C47100FC57B0 /* DeeplinkCoordinator.swift */,
+				3360D54F2DC5C33E00FC57B0 /* DeeplinkConstants.swift */,
+			);
+			path = Deeplinking;
 			sourceTree = "<group>";
 		};
 		33FF16CA2D28FA5C006E9888 /* Model */ = {
@@ -177,11 +284,14 @@
 				33440B212D263D6E007321E2 /* Frameworks */,
 				33440B222D263D6E007321E2 /* Resources */,
 				33440B502D263E8E007321E2 /* Embed Foundation Extensions */,
+				334762F02D5071400078FCB4 /* Embed ExtensionKit Extensions */,
+				3360D54E2DC5C33500FC57B0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				33440B4A2D263E8E007321E2 /* PBXTargetDependency */,
+				334762EA2D5071400078FCB4 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				33C70C482D28E50900B16348 /* Resources */,
@@ -215,6 +325,28 @@
 			productReference = 33440B392D263E89007321E2 /* Widgets.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		334762E12D5071400078FCB4 /* App Intent Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 334762ED2D5071400078FCB4 /* Build configuration list for PBXNativeTarget "App Intent Extension" */;
+			buildPhases = (
+				334762DE2D5071400078FCB4 /* Sources */,
+				334762DF2D5071400078FCB4 /* Frameworks */,
+				334762E02D5071400078FCB4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				334762E32D5071400078FCB4 /* App Intent Extension */,
+			);
+			name = "App Intent Extension";
+			packageProductDependencies = (
+			);
+			productName = "App Intent Extension";
+			productReference = 334762E22D5071400078FCB4 /* App Intent Extension.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -229,6 +361,9 @@
 						CreatedOnToolsVersion = 16.2;
 					};
 					33440B382D263E89007321E2 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					334762E12D5071400078FCB4 = {
 						CreatedOnToolsVersion = 16.2;
 					};
 				};
@@ -249,6 +384,7 @@
 			targets = (
 				33440B232D263D6E007321E2 /* Bhagavad Gita Verses */,
 				33440B382D263E89007321E2 /* Widgets */,
+				334762E12D5071400078FCB4 /* App Intent Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -271,6 +407,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		334762E02D5071400078FCB4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -278,6 +421,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				337BB69B2DCD9B5E00F5EF82 /* DeeplinkConstants.swift in Sources */,
+				337BB69A2DCD9B3200F5EF82 /* DeeplinkCoordinator.swift in Sources */,
 				33B4A9F52D2DF2A700AE1044 /* VersesReader.swift in Sources */,
 				334762D02D4F5A3C0078FCB4 /* BhagavadGitaApp.swift in Sources */,
 				334762D12D4F5A3C0078FCB4 /* QuoteView.swift in Sources */,
@@ -289,11 +434,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				337BB69C2DCD9B7C00F5EF82 /* DeeplinkConstants.swift in Sources */,
+				33A7D3E72DD97D7500900DFF /* LockscreenEasyViewVerseWidgetEntryView.swift in Sources */,
 				334762DA2D4F5B1B0078FCB4 /* WidgetBundle.swift in Sources */,
-				334762DB2D4F5B1B0078FCB4 /* VerseWidget.swift in Sources */,
+				334762DB2D4F5B1B0078FCB4 /* LockscreenVerseWidget.swift in Sources */,
 				334762DC2D4F5B1B0078FCB4 /* ControlWidget.swift in Sources */,
 				33B4A9F62D2DF2A700AE1044 /* VersesReader.swift in Sources */,
 				33FF16D02D28FD5C006E9888 /* QuoteModel.swift in Sources */,
+				33182E0C2DD58E4100A82202 /* WidgetProvider.swift in Sources */,
+				33182E082DD58B6000A82202 /* HomescreenVerseWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		334762DE2D5071400078FCB4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				337BB69D2DCD9B7C00F5EF82 /* DeeplinkConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +461,11 @@
 			isa = PBXTargetDependency;
 			target = 33440B382D263E89007321E2 /* Widgets */;
 			targetProxy = 33440B492D263E8E007321E2 /* PBXContainerItemProxy */;
+		};
+		334762EA2D5071400078FCB4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 334762E12D5071400078FCB4 /* App Intent Extension */;
+			targetProxy = 334762E92D5071400078FCB4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -547,6 +709,58 @@
 			};
 			name = Release;
 		};
+		334762EE2D5071400078FCB4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FMDJTXM4W7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "App Intent Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "App Intent Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Sne.LockScreenWidgetSample.App-Intent-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		334762EF2D5071400078FCB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FMDJTXM4W7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "App Intent Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "App Intent Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Sne.LockScreenWidgetSample.App-Intent-Extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -573,6 +787,15 @@
 			buildConfigurations = (
 				33440B4E2D263E8E007321E2 /* Debug */,
 				33440B4F2D263E8E007321E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		334762ED2D5071400078FCB4 /* Build configuration list for PBXNativeTarget "App Intent Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				334762EE2D5071400078FCB4 /* Debug */,
+				334762EF2D5071400078FCB4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

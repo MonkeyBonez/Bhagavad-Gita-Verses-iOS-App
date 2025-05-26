@@ -14,4 +14,11 @@ struct AppColors {
     static let lightCharcoal = RGB (R: 96, G: 101, B: 105).color
     static let darkCharcoal = RGB(R: 68, G: 72, B: 75).color
     static let charcoalBackground = LinearGradient(colors: [lightCharcoal, darkCharcoal], startPoint: .top, endPoint: .bottom)
+    static let parchmentSolidAsGradient = parchment.linearGradient
+}
+
+extension Color {
+    var linearGradient: LinearGradient {
+        LinearGradient(colors: [self, self], startPoint: .leading, endPoint: .trailing)
+    }
 }
