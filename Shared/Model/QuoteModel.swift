@@ -61,6 +61,10 @@ extension QuoteModel {
         "\"\(quote)\"\n\(author)\n\(chapter):\(verse)"
     }
 
+    var hasBookmarks: Bool {
+        versesReader.hasBookmarks
+    }
+
     func scenePhaseChange(from oldPhase: ScenePhase, to newPhase: ScenePhase) {
         if newPhase == .background {
             lastBackgroundedTime = Date()
@@ -95,8 +99,11 @@ extension QuoteModel {
     }
 
     func viewingBookmarkedTapped() {
-//        viewingBookmarked.toggle()
         versesReader.bookmarkedOnlyMode.toggle()
+    }
+
+    func viewingBookmarkedDisable() {
+        versesReader.bookmarkedOnlyMode = false
     }
 
 }

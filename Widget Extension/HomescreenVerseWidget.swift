@@ -3,19 +3,16 @@ import WidgetKit
 
 
 struct HomescreenVerseWidget: Widget {
-    @Environment(\.colorScheme) private var colorScheme
 
     let kind = "HomescreenVerseWidget"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: WidgetProvider()) { entry in
             HomescreenVerseWidgetEntryView(entry: entry)
-                .containerBackground(background, for: .widget)
         }
-    }
-
-    var background: LinearGradient {
-        colorScheme == .light ? AppColors.parchmentSolidAsGradient : AppColors.charcoalBackground
+        .supportedFamilies([.systemMedium])
+        .configurationDisplayName("Quote of the Week")
+        .description("This is a widget to show the quote of the week from the Bhagavad Gita.")
     }
 }
 
@@ -30,10 +27,17 @@ struct HomescreenVerseWidgetEntryView: View {
             .minimumScaleFactor(10/20)
             .foregroundStyle(textColor)
             .widgetURL(DeeplinkScheme.createDeeplink(path: .homeScreenWidget))
+            .containerBackground(for: .widget) {
+                backgroundcolor
+            }
     }
 
     var textColor: Color {
-        colorScheme == .light ? AppColors.darkCharcoal : AppColors.parchment
+        colorScheme == .light ? AppColors.greenPeacock : AppColors.parchment
+    }
+
+    var backgroundcolor: LinearGradient {
+        colorScheme == .light ? AppColors.parchmentSolidAsGradient : AppColors.peacockBackground
     }
 }
 

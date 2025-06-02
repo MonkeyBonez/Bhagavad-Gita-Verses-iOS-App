@@ -7,6 +7,6 @@ struct exampleBundle: WidgetBundle {
         HomescreenVerseWidget()
         LockscreenVerseWidget()
         LockscreenEasyViewVerseWidget()
-        quoteOfDayControl()
+        QuoteOfDayControl()
     }
 }

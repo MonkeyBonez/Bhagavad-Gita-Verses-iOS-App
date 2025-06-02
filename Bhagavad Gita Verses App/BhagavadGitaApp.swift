@@ -24,6 +24,7 @@ struct BhagavadGitaApp: App {
     }
 
     private func setToQuoteOfDay() {
+        quoteModel.viewingBookmarkedDisable()
         quoteModel.setToVerseOfDay()
     }
 }

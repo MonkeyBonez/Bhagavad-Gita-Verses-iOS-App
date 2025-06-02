@@ -23,8 +23,8 @@ struct LockscreenVerseWidget: Widget {
             LockscreenVerseWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("My Widget 2")
-        .description("This is an example widget 2.")
+        .configurationDisplayName("Quote of the Week")
+        .description("This is a widget to show the quote of the week from the Bhagavad Gita.")
         .supportedFamilies([.accessoryRectangular])
     }
 }

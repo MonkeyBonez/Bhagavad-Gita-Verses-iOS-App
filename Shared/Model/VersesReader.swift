@@ -41,6 +41,10 @@ struct VersesReader {
         }
     }
 
+    var hasBookmarks: Bool {
+        !bookmarkedVersesModel.isEmpty
+    }
+
     private func getVerse(chapter: Int, verse: Int) -> Verse {
         verses[VersesInfo.getIndexOfVerse(chapter: chapter, verse: verse)]
     }
@@ -52,15 +56,16 @@ struct VersesReader {
     }
 
     private var verseOfDay: Verse {
-        return verseOfDayForDate(Date())
+        verseOfDayForDate(Date())
     }
 
     mutating func setVerseOfDay() {
-        currentVerse = verseOfDay
+        (chapterNumber, verseNumber) = getChapterAndVerseNumber(for: Date())
+        currentVerse = getVerse(chapter: chapterNumber, verse: verseNumber)
     }
 
     private var numberOfChapters: Int {
-        return VersesInfo.versesPerChapter.count
+        VersesInfo.versesPerChapter.count
     }
 
     func verseOfDayForDate(_ date: Date) -> Verse {

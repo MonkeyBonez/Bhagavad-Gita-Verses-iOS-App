@@ -19,5 +19,10 @@
 	<array>
 		<string>EBGaramond-VariableFont_wght.ttf</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>BackgroundColor</string>
+	</dict>
 </dict>
 </plist>

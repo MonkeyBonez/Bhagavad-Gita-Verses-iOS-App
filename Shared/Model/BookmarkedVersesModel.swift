@@ -90,37 +90,16 @@ struct BookmarkedVersesModel {
 
 extension Array where Element: Comparable {
 
-//    /// Inserts an element into a sorted array using binary search (partitioning index).
-//    /// - Returns: The index where the element was inserted or found.
-//    mutating func binaryInsert(_ newElement: Element) -> Int {
-//        let index = partitioningIndex { $0 >= newElement }
-//        if index >= self.count || self[index] != newElement {
-//            self.insert(newElement, at: index)
-//        }
-//        return index
-//    }
-
-//    // Removes an element from a sorted array using binary search (partitioning index).
-//    /// - Returns: `true` if the element was found and removed.
-//    mutating func binaryRemove(_ element: Element) -> Int? {
-//        let index = self.binaryFind(element)
-//        guard self[index] == element else {
-//            return nil
-//        }
-//        self.remove(at: index)
-//        return index
-//    }
-
     // Returns the element or the closest smaller element
     func binaryFind(_ element: Element) -> Int {
-        var index = partitioningIndex { $0 >= element }
-        if index < self.count && self[index] == element {
+        var index = Swift.min(partitioningIndex { $0 >= element }, self.count - 1)
+        if 0 <= index, index < self.count && self[index] == element {
             return index
         }
-        if self [index] > element {
+        if index > 0, self [index] > element {
             index -= 1
         }
-        return [index, 0].max()!
+        return index
     }
 
 }

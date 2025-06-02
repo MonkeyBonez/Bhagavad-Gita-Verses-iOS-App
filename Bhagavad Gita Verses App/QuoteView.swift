@@ -16,31 +16,34 @@ struct QuoteView: View {
         viewModel = QuoteModel(quote: quote, author: author, chapter: chapter, verse: verse)
     }
     
-    private func leftSideScreenTap() {
+    private func leftSideScreenTapSwipe() {
         viewModel.getPreviousVerse()
     }
     
-    private func rightSideScreenTap() {
+    private func rightSideScreenTapSwipe() {
         viewModel.getNextVerse()
     }
 
     private var foregroundColor: Color {
-        colorScheme == .light ? AppColors.darkCharcoal : AppColors.parchment
+        colorScheme == .light ? AppColors.lightPeacock : viewModel.bookmarked ? AppColors.lavender : AppColors.parchment
     }
 
-    private var verseChangeView: some View {
-        HStack(spacing: 80) {
+    private var tapVerseChangeView: some View {
+        HStack(spacing: 0) {
             Rectangle()
                 .foregroundStyle(.clear)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    leftSideScreenTap()
+                    leftSideScreenTapSwipe()
                 }
             Rectangle()
                 .foregroundStyle(.clear)
+                .frame(width: 80)
+            Rectangle()
+                .foregroundStyle(.clear)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    rightSideScreenTap()
+                    rightSideScreenTapSwipe()
                 }
         }
     }
@@ -80,6 +83,7 @@ struct QuoteView: View {
     private var viewBookmarkedView: some View {
         actionIcon(systemName: viewModel.viewingBookmarked ? "book.pages.fill" : "book.pages")
             .onTapGesture { viewModel.viewingBookmarkedTapped() }
+            .foregroundStyle(viewModel.hasBookmarks ? foregroundColor : .clear)
     }
 
 
@@ -102,19 +106,23 @@ struct QuoteView: View {
     }
 
     var background: some View {
-        colorScheme == .light ? AppColors.parchment.linearGradient : AppColors.charcoalBackground
+        colorScheme == .light ? viewModel.bookmarked ? AppColors.lavender.linearGradient : AppColors.parchment.linearGradient : AppColors.peacockBackground
     }
 
     var body: some View {
         ZStack {
             background
             textView
-            verseChangeView
+            tapVerseChangeView
             actionView
         }
+        .gesture(DragGesture(minimumDistance: 15)
+            .onEnded({$0.translation.width > 0 ? leftSideScreenTapSwipe() : rightSideScreenTapSwipe() })
+        )
         .ignoresSafeArea()
         .onChange(of: scenePhase) { oldPhase , newPhase in
             viewModel.scenePhaseChange(from: oldPhase, to: newPhase)
+            UIApplication.shared.windows.first?.rootViewController?.dismiss(animated: false)
         }
     }
 }

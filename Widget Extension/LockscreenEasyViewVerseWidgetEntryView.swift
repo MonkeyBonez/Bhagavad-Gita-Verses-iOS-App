@@ -25,8 +25,8 @@ struct LockscreenEasyViewVerseWidget: Widget {
             LockscreenEasyViewVerseWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Easy View of Quote of the Week")
+        .description("This is a widget to show the quote of the week from the Bhagavad Gita - utlizing a blurred background behind text for easier viewing")
         .supportedFamilies([.accessoryRectangular])
     }
 }

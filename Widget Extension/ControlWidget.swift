@@ -2,17 +2,16 @@ import AppIntents
 import SwiftUI
 import WidgetKit
 
-struct quoteOfDayControl: ControlWidget {
+struct QuoteOfDayControl: ControlWidget {
     var body: some ControlWidgetConfiguration {
         StaticControlConfiguration(
             kind: "Sne.LockScreenWidgetSample.example"
         ) {
             ControlWidgetButton(action: OpenVerseOfDayIntent()) {
-                Label("Label", systemImage: "text.book.closed")
+                Label("Verse of Week", systemImage: "text.book.closed")
             }
         }
-        .displayName("Display name")
-        .description("Description")
-         // TODO fix ^
+        .displayName("Verse of Week")
+        .description("Opens to the Bhagavad Gita verse of week")
     }
 }
