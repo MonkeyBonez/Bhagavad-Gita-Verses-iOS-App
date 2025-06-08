@@ -8,7 +8,7 @@ struct BhagavadGitaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            QuoteView(dailyQuoteModel: quoteModel)
+            VerseView(dailyQuoteModel: quoteModel)
                 .onOpenURL(perform: {handleUrl($0)})
         }
     }

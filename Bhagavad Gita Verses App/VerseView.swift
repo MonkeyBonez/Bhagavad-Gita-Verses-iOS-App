@@ -1,10 +1,13 @@
 import SwiftUI
 
-struct QuoteView: View {
+struct VerseView: View {
     @State var viewModel: QuoteModel
 
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.scenePhase) var scenePhase
+
+    @State var showGuidance = false
+    @State var validInteraction = false
 
     let buttonClickPadding = 30.0
 
@@ -16,12 +19,24 @@ struct QuoteView: View {
         viewModel = QuoteModel(quote: quote, author: author, chapter: chapter, verse: verse)
     }
     
-    private func leftSideScreenTapSwipe() {
+    private func backwardsTapSwipe() {
+        validInteraction = true
         viewModel.getPreviousVerse()
+        validInteraction = false
     }
     
-    private func rightSideScreenTapSwipe() {
+    private func forwardsTapSwipe() {
+        validInteraction = true
         viewModel.getNextVerse()
+        validInteraction = false
+    }
+
+    private func flashGuidance() {
+        showGuidance = true
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            showGuidance = false
+        }
     }
 
     private var foregroundColor: Color {
@@ -34,16 +49,20 @@ struct QuoteView: View {
                 .foregroundStyle(.clear)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    leftSideScreenTapSwipe()
+                    backwardsTapSwipe()
                 }
             Rectangle()
                 .foregroundStyle(.clear)
                 .frame(width: 80)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    flashGuidance()
+                }
             Rectangle()
                 .foregroundStyle(.clear)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    rightSideScreenTapSwipe()
+                    forwardsTapSwipe()
                 }
         }
     }
@@ -84,10 +103,11 @@ struct QuoteView: View {
         actionIcon(systemName: viewModel.viewingBookmarked ? "book.pages.fill" : "book.pages")
             .onTapGesture { viewModel.viewingBookmarkedTapped() }
             .foregroundStyle(viewModel.hasBookmarks ? foregroundColor : .clear)
+            .symbolEffect(.bounce, value: viewModel.viewBookmarkAddIndicator)
     }
 
 
-    var textView: some View {
+    var textAndGuidanceView: some View {
         VStack(spacing: 16) {
             Text(viewModel.quote)
                 .font(.custom(Fonts.verseFontName, size: 30))
@@ -97,12 +117,26 @@ struct QuoteView: View {
                 Text(viewModel.author)
                     .font(.custom(Fonts.verseFontName, size: 20))
                     .bold()
-                Text("\(viewModel.chapter).\(viewModel.verse)")
+                HStack(spacing: 120) {
+                    guidanceView(systemImageName: "chevron.left")
+                    Text("\(viewModel.chapter).\(viewModel.verse)")
+                    guidanceView(systemImageName: "chevron.right")
+                }
             }
         }
         .foregroundStyle(foregroundColor)
         .padding(25)
         .padding(.bottom, 144)
+    }
+
+    func guidanceView(systemImageName: String) -> some View {
+        Image(systemName: systemImageName)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(height: 24)
+            .offset(y: -12)
+            .opacity(showGuidance ? 1: 0)
+            .animation(.easeInOut, value: showGuidance)
     }
 
     var background: some View {
@@ -112,17 +146,31 @@ struct QuoteView: View {
     var body: some View {
         ZStack {
             background
-            textView
+            textAndGuidanceView
             tapVerseChangeView
             actionView
         }
-        .gesture(DragGesture(minimumDistance: 15)
-            .onEnded({$0.translation.width > 0 ? leftSideScreenTapSwipe() : rightSideScreenTapSwipe() })
+        .gesture(DragGesture(minimumDistance: 100)
+            .onEnded({ gesture in
+                guard abs(gesture.translation.width) > 100 else {
+                    flashGuidance()
+                    return
+                }
+                if gesture.translation.width > 0 {
+                    backwardsTapSwipe()
+                }
+                else {
+                    forwardsTapSwipe()
+                }
+            })
         )
         .ignoresSafeArea()
         .onChange(of: scenePhase) { oldPhase , newPhase in
             viewModel.scenePhaseChange(from: oldPhase, to: newPhase)
             UIApplication.shared.windows.first?.rootViewController?.dismiss(animated: false)
+        }
+        .onAppear {
+            flashGuidance()
         }
     }
 }
@@ -132,5 +180,5 @@ struct QuoteView: View {
     let author = "Bhagavad Gita"
     let chapter = 2
     let verse = 47
-    QuoteView(quote: quote, author: author, chapter: chapter, verse: verse)
+    VerseView(quote: quote, author: author, chapter: chapter, verse: verse)
 }

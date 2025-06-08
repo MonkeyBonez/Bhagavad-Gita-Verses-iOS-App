@@ -32,6 +32,7 @@ struct LockscreenVerseWidget: Widget {
 #Preview(as: .accessoryRectangular) {
     LockscreenVerseWidget()
 } timeline: {
+    QuoteEntry(date: .now, quote: "123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 ")
     QuoteEntry(date: .now, quote: "You have the right to perform your duty, but not to the fruits of your actions")
     QuoteEntry(date: .now, quote: "Wisdom")
     QuoteEntry(date: .now, quote: "Wisdom has a way of finding you when you least expect it Wisdom has a way of finding you when you least expect it Wisdom has a way of finding you when you least expect it")

@@ -9,6 +9,8 @@ import SwiftUI
     private var lastBackgroundedTime: Date?
     private let backgroundTimeRefreshThresholdHours: Double = 1
 
+    var viewBookmarkAddIndicator: Bool = false
+
     var viewingBookmarked: Bool {
         versesReader.bookmarkedOnlyMode
     }
@@ -95,7 +97,13 @@ extension QuoteModel {
     }
 
     func bookmarkTapped() {
-        bookmarked ? versesReader.unbookmarkCurrentVerse() : versesReader.bookmarkCurrentVerse()
+        if bookmarked {
+            versesReader.unbookmarkCurrentVerse()
+        }
+        else {
+            versesReader.bookmarkCurrentVerse()
+            viewBookmarkAddIndicator.toggle()
+        }
     }
 
     func viewingBookmarkedTapped() {

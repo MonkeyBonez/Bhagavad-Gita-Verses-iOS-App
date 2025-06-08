@@ -22,12 +22,7 @@ struct VersesReader {
     init(currentVerse: Verse = Verse(text: "", chapterNumber: 0, verseNumber: 0)) {
         self.currentVerse = currentVerse
         verses = []
-        guard let versesFilePath = versesFilePath else {
-            return
-        }
-        let fileUrl = URL(fileURLWithPath: versesFilePath)
-        guard let data = try? Data(contentsOf: fileUrl),
-                let verses = try? JSONDecoder().decode([Verse].self, from: data) else {
+        guard let verses = FileReader.getVerses(filePath: versesFilePath) else {
             return
         }
         (chapterNumber, verseNumber) = getChapterAndVerseNumber(for: Date())
