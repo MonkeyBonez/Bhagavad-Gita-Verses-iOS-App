@@ -116,7 +116,7 @@ extension QuoteModel {
 
 }
 
-// Lock screen widget-specific code
+// widget-specific code
 extension QuoteModel {
 
     func getVerseForDate(_ date: Date) -> Verse? {

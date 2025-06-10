@@ -1,27 +1,35 @@
+//
+//  HomescreenVerseWidget 2.swift
+//  Bhagavad Gita Verses
+//
+//  Created by Snehal Mulchandani on 6/8/25.
+//
+
+
 import SwiftUI
 import WidgetKit
 
 
-struct HomescreenVerseWidget: Widget {
+struct HomescreenQuoteWidget: Widget {
 
-    let kind = "HomescreenVerseWidget"
+    let kind = "HomescreenQuoteWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: VerseWidgetProvider()) { entry in
-            HomescreenVerseWidgetEntryView(entry: entry)
+        StaticConfiguration(kind: kind, provider: QuoteWidgetProvider()) { entry in
+            HomescreenQuoteWidgetEntryView(entry: entry)
         }
-        .supportedFamilies([.systemMedium])
+        .supportedFamilies([.systemSmall])
         .configurationDisplayName("Quote of the Week")
         .description("This is a widget to show the quote of the week from the Bhagavad Gita.")
     }
 }
 
-struct HomescreenVerseWidgetEntryView: View {
+struct HomescreenQuoteWidgetEntryView: View {
     @Environment(\.colorScheme) private var colorScheme
 
-    let entry: VerseWidgetProvider.Entry
+    let entry: QuoteWidgetProvider.Entry
     var body: some View {
-        Text(entry.verse)
+        Text(entry.quote)
             .multilineTextAlignment(.center)
             .font(.custom(Fonts.verseFontName, size: 20))
             .minimumScaleFactor(10/20)
@@ -44,8 +52,7 @@ struct HomescreenVerseWidgetEntryView: View {
 #Preview(as: .systemMedium) {
     HomescreenVerseWidget()
 } timeline: {
-    QuoteEntry(date: .now, quote: "You have the right to perform your duty, but not to the fruits of your actions")
+    QuoteEntry(date: .now, quote: "Act in harmony with your purpose, not to please others.")
     QuoteEntry(date: .now, quote: "Wisdom")
-    QuoteEntry(date: .now, quote: "Wisdom has a way of finding you when you least expect it Wisdom has a way of finding you when you least expect it Wisdom has a way of finding you when you least expect it")
 }
 

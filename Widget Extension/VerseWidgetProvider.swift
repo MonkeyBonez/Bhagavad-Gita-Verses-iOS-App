@@ -1,21 +1,21 @@
 import WidgetKit
 import SwiftUI
 
-struct WidgetProvider: TimelineProvider {
+struct VerseWidgetProvider: TimelineProvider {
     let dailyQuoteModel = QuoteModel()
-    func placeholder(in context: Context) -> QuoteEntry {
-        QuoteEntry(date: Date(), quote: "Wisdom has a way of finding you when you least expect it")
+    func placeholder(in context: Context) -> VerseEntry {
+        VerseEntry(date: Date(), verse: "Wisdom has a way of finding you when you least expect it")
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (QuoteEntry) -> ()) {
-        let entry = QuoteEntry(date: Date(), quote: dailyQuoteModel.quote)
+    func getSnapshot(in context: Context, completion: @escaping (VerseEntry) -> ()) {
+        let entry = VerseEntry(date: Date(), verse: dailyQuoteModel.quote)
         completion(entry)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<QuoteEntry>) -> ()) {
-        var entries: [QuoteEntry] = []
+    func getTimeline(in context: Context, completion: @escaping (Timeline<VerseEntry>) -> ()) {
+        var entries: [VerseEntry] = []
         let currentDate = Date()
-        let firstEntry = QuoteEntry(date: currentDate, quote: dailyQuoteModel.quote)
+        let firstEntry = VerseEntry(date: currentDate, verse: dailyQuoteModel.quote)
         entries.append(firstEntry)
 
         // Generate a timeline consisting of one entries a day apart, starting from the current date.
@@ -25,7 +25,7 @@ struct WidgetProvider: TimelineProvider {
             guard let entryDate = Calendar.current.date(byAdding: .day, value: dayOffset, to: beginningOfCurrentDate), let verseForEntry = dailyQuoteModel.getVerseForDate(entryDate) else {
                 return
             }
-            let entry = QuoteEntry(date: entryDate, quote: verseForEntry.text)
+            let entry = VerseEntry(date: entryDate, verse: verseForEntry.text)
             entries.append(entry)
         }
 
@@ -35,7 +35,7 @@ struct WidgetProvider: TimelineProvider {
 
 }
 
-struct QuoteEntry: TimelineEntry {
+struct VerseEntry: TimelineEntry {
     let date: Date
-    let quote: String
+    let verse: String
 }

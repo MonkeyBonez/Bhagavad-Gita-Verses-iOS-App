@@ -10,4 +10,16 @@ struct QuoteReader {
         }
         self.quotes = quotes
     }
+
+    func quoteOfDayFor(date: Date) -> Verse {
+        return quotes[getIndexFor(date: date)]
+    }
+
+    private func getIndexFor(date: Date) -> Int {
+        return Calendar.current.component(.weekOfYear, from: date)
+    }
+
+    var quoteOfDay: Verse {
+        quoteOfDayFor(date: Date())
+    }
 }

@@ -2,6 +2,7 @@ import Foundation
 
 struct VersesReader {
     let versesFilePath = Bundle.main.path(forResource: "verses-formatted", ofType: "json")
+    let quoteReader = QuoteReader()
     var chapterNumber: Int = 0
     var verseNumber: Int = 0
     var verses: [Verse]
@@ -28,6 +29,7 @@ struct VersesReader {
         (chapterNumber, verseNumber) = getChapterAndVerseNumber(for: Date())
         self.bookmarkedVersesModel = BookmarkedVersesModel(currentRegularVerseIndex: VersesInfo.getIndexOfVerse(chapter: chapterNumber, verse: verseNumber))
         self.verses = bookmarkedVersesModel.markBookmarked(allVerses: verses)
+        self.currentVerse = getVerse(chapter: chapterNumber, verse: verseNumber)
     }
 
     private mutating func checkValidBookmarkOnlyMode() {
@@ -69,12 +71,10 @@ struct VersesReader {
     }
     
     private func getChapterAndVerseNumber(for date: Date) -> (Int, Int) {
-        let dayOfYear = Double(Calendar.current.component(.dayOfYear, from: date))
-        let weeksPerYear = 52
-        let daysPerYear = 366.0
-        let numberOfVersesOfDay = Double(VersesInfo.topVerses.count)
-        let verseOfDayIndex: Int = Int(((dayOfYear / daysPerYear) * numberOfVersesOfDay).rounded(.toNearestOrAwayFromZero))
-        return VersesInfo.topVerses[verseOfDayIndex]
+        let quoteForDate = quoteReader.quoteOfDayFor(date: date)
+        let chapterNumber = quoteForDate.chapterNumber
+        let verseNumber = quoteForDate.verseNumber
+        return (chapterNumber, verseNumber)
     }
     
     mutating func getNextVerse(){

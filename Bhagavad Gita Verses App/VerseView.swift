@@ -6,7 +6,8 @@ struct VerseView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.scenePhase) var scenePhase
 
-    @State var showGuidance = false
+    @State var showRightGuidance = false
+    @State var showLeftGuidance = false
     @State var validInteraction = false
 
     let buttonClickPadding = 30.0
@@ -32,10 +33,15 @@ struct VerseView: View {
     }
 
     private func flashGuidance() {
-        showGuidance = true
+        guard !showLeftGuidance, !showRightGuidance else {
+            return
+        }
+        showLeftGuidance = true
+        showRightGuidance = true
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            showGuidance = false
+            showLeftGuidance = false
+            showRightGuidance = false
         }
     }
 
@@ -117,11 +123,14 @@ struct VerseView: View {
                 Text(viewModel.author)
                     .font(.custom(Fonts.verseFontName, size: 20))
                     .bold()
-                HStack(spacing: 120) {
-                    guidanceView(systemImageName: "chevron.left")
+                HStack() {
+                    guidanceView(systemImageName: "chevron.left", value: showLeftGuidance)
+                    Spacer()
                     Text("\(viewModel.chapter).\(viewModel.verse)")
-                    guidanceView(systemImageName: "chevron.right")
+                    Spacer()
+                    guidanceView(systemImageName: "chevron.right", value: showRightGuidance)
                 }
+                .padding(.horizontal, 16)
             }
         }
         .foregroundStyle(foregroundColor)
@@ -129,14 +138,14 @@ struct VerseView: View {
         .padding(.bottom, 144)
     }
 
-    func guidanceView(systemImageName: String) -> some View {
+    func guidanceView(systemImageName: String, value: Bool) -> some View {
         Image(systemName: systemImageName)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(height: 24)
             .offset(y: -12)
-            .opacity(showGuidance ? 1: 0)
-            .animation(.easeInOut, value: showGuidance)
+            .opacity(value ? 1: 0)
+            .animation(.easeInOut(duration: 0.5), value: value)
     }
 
     var background: some View {

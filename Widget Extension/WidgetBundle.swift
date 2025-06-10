@@ -5,8 +5,9 @@ import SwiftUI
 struct exampleBundle: WidgetBundle {
     var body: some Widget {
         HomescreenVerseWidget()
-        LockscreenVerseWidget()
-        LockscreenEasyViewVerseWidget()
+        HomescreenQuoteWidget()
+        LockscreenQuoteWidget()
+        LockscreenEasyViewQuoteWidget()
         QuoteOfDayControl()
     }
 }
