@@ -8,14 +8,14 @@ struct VerseWidgetProvider: TimelineProvider {
     }
 
     func getSnapshot(in context: Context, completion: @escaping (VerseEntry) -> ()) {
-        let entry = VerseEntry(date: Date(), verse: dailyQuoteModel.quote)
+        let entry = VerseEntry(date: Date(), verse: dailyQuoteModel.quote.text)
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<VerseEntry>) -> ()) {
         var entries: [VerseEntry] = []
         let currentDate = Date()
-        let firstEntry = VerseEntry(date: currentDate, verse: dailyQuoteModel.quote)
+        let firstEntry = VerseEntry(date: currentDate, verse: dailyQuoteModel.quote.text)
         entries.append(firstEntry)
 
         // Generate a timeline consisting of one entries a day apart, starting from the current date.

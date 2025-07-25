@@ -77,9 +77,27 @@ struct VersesReader {
         return (chapterNumber, verseNumber)
     }
     
-    mutating func getNextVerse(){
+    var nextVerse: Verse? {
         if bookmarkedOnlyMode {
-            getNextBookmarkedVerse()
+            return nextBookmarkedVerse
+        }
+        else {
+            var newVerseNumber = verseNumber + 1
+            var newChapterNumber = chapterNumber
+            if newVerseNumber > VersesInfo.versesPerChapter[chapterNumber - 1] {
+                newChapterNumber += 1
+                guard newChapterNumber < numberOfChapters else {
+                    return nil
+                }
+                newVerseNumber = 1
+            }
+            return getVerse(chapter: newChapterNumber, verse: newVerseNumber)
+        }
+    }
+    
+    mutating func setNextVerse(){
+        if bookmarkedOnlyMode {
+            setNextBookmarkedVerse()
         }
         else {
             var newVerseNumber = verseNumber + 1
@@ -97,7 +115,25 @@ struct VersesReader {
         }
     }
     
-    mutating func getPreviousVerse(){
+    var previousVerse: Verse? {
+        if bookmarkedOnlyMode {
+            return prevBookmarkedVerse
+        }
+        else {
+            var newVerseNumber = verseNumber - 1
+            var newChapterNumber = chapterNumber
+            if newVerseNumber < 1 {
+                newChapterNumber -= 1
+                guard newChapterNumber > 0 else {
+                    return nil
+                }
+                newVerseNumber = VersesInfo.versesPerChapter[newChapterNumber - 1]
+            }
+            return getVerse(chapter: newChapterNumber, verse: newVerseNumber)
+        }
+    }
+    
+    mutating func setPreviousVerse(){
         if bookmarkedOnlyMode {
             getPrevBookmarkedVerse()
         }
@@ -116,13 +152,21 @@ struct VersesReader {
             updateVerse(chapter: chapterNumber, verse: verseNumber)
         }
     }
+    
+    var nextBookmarkedVerse: Verse {
+        verses[bookmarkedVersesModel.nextVerseIndex]
+    }
 
-    mutating func getNextBookmarkedVerse() {
-        currentVerse = verses[bookmarkedVersesModel.nextVerseIndex()]
+    mutating func setNextBookmarkedVerse() {
+        currentVerse = verses[bookmarkedVersesModel.setNextVerseIndex()]
+    }
+    
+    var prevBookmarkedVerse: Verse {
+        verses[bookmarkedVersesModel.previousVerseIndex]
     }
 
     mutating func getPrevBookmarkedVerse() {
-        currentVerse = verses[bookmarkedVersesModel.prevVerseIndex()]
+        currentVerse = verses[bookmarkedVersesModel.setPrevVerseIndex()]
     }
 
     mutating func getCurrentBookmarkedVerse() {

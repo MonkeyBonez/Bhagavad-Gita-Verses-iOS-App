@@ -7,7 +7,7 @@
 
 import AppIntents
 import UIKit
-import SwiftUICore
+import SwiftUI
 
 struct OpenVerseOfDayIntent: AppIntent {
     static var title: LocalizedStringResource { "Open Verse Of Day" }

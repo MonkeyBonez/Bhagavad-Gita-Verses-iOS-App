@@ -55,14 +55,30 @@ struct BookmarkedVersesModel {
         let array = Array(bookmarkedVerseIndices)
         UserDefaults.standard.setValue(array, forKey: userDefaultsKey)
     }
-
-    mutating func nextVerseIndex() -> Int {
-        bookmarkedVerseIndex = (bookmarkedVerseIndex + 1) % bookmarkedVerseIndices.count
+    
+    private var bookmarkArrayNextVerseIndex: Int {
+        (bookmarkedVerseIndex + 1) % bookmarkedVerseIndices.count
+    }
+    
+    var nextVerseIndex: Int {
+        return bookmarkedVerseIndices[bookmarkArrayNextVerseIndex]
+    }
+    
+    mutating func setNextVerseIndex() -> Int {
+        bookmarkedVerseIndex = bookmarkArrayNextVerseIndex
         return bookmarkedVerseIndices[bookmarkedVerseIndex]
     }
+    
+    private var bookmarkArrayPreviousVerseIndex: Int {
+        ((bookmarkedVerseIndex == 0 ? bookmarkedVerseIndices.count : bookmarkedVerseIndex) - 1) % bookmarkedVerseIndices.count
+    }
+    
+    var previousVerseIndex: Int {
+        return bookmarkedVerseIndices[bookmarkArrayPreviousVerseIndex]
+    }
 
-    mutating func prevVerseIndex() -> Int {
-        bookmarkedVerseIndex = ((bookmarkedVerseIndex == 0 ? bookmarkedVerseIndices.count : bookmarkedVerseIndex) - 1) % bookmarkedVerseIndices.count
+    mutating func setPrevVerseIndex() -> Int {
+        bookmarkedVerseIndex = bookmarkArrayPreviousVerseIndex
         return bookmarkedVerseIndices[bookmarkedVerseIndex]
     }
 

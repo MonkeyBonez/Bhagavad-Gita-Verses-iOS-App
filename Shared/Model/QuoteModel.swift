@@ -15,15 +15,23 @@ import SwiftUI
         versesReader.bookmarkedOnlyMode
     }
 
-    var quote: String {
-        versesReader.currentVerse.text
+    var quote: Verse {
+        versesReader.currentVerse
+    }
+    
+    var prevQuote: Verse? {
+        versesReader.previousVerse
+    }
+    
+    var nextQuote: Verse? {
+        versesReader.nextVerse
     }
 
-    var chapter: Int {
+    private var chapter: Int {
         versesReader.currentVerse.chapterNumber
     }
 
-    var verse: Int {
+    private var verse: Int {
         versesReader.currentVerse.verseNumber
     }
 
@@ -88,12 +96,12 @@ extension QuoteModel {
 
     func getPreviousVerse() {
         userInteracted = true
-        versesReader.getPreviousVerse()
+        versesReader.setPreviousVerse()
     }
 
     func getNextVerse() {
         userInteracted = true
-        versesReader.getNextVerse()
+        versesReader.setNextVerse()
     }
 
     func bookmarkTapped() {
