@@ -27,6 +27,27 @@ import SwiftUI
         versesReader.nextVerse
     }
 
+    // MARK: - Paging helpers
+    var totalVerseCount: Int {
+        versesReader.totalVerseCount
+    }
+
+    var currentGlobalIndex: Int {
+        versesReader.currentGlobalIndex
+    }
+
+    var bookmarkedGlobalIndices: [Int] {
+        versesReader.bookmarkedGlobalIndices
+    }
+
+    func setCurrentByGlobalIndex(_ index: Int) {
+        versesReader.setCurrentByGlobalIndex(index)
+    }
+
+    func verse(atGlobalIndex index: Int) -> Verse {
+        versesReader.verse(atGlobalIndex: index)
+    }
+
     private var chapter: Int {
         versesReader.currentVerse.chapterNumber
     }
@@ -68,7 +89,7 @@ extension QuoteModel {
     }
 
     var shareText: String {
-        "\"\(quote)\"\n\(author)\n\(chapter):\(verse)"
+        "\"\(quote.text)\"\n\(author)\n\(chapter):\(verse)"
     }
 
     var hasBookmarks: Bool {
@@ -121,6 +142,8 @@ extension QuoteModel {
     func viewingBookmarkedDisable() {
         versesReader.bookmarkedOnlyMode = false
     }
+
+    var bookmarkedOnlyMode: Bool { versesReader.bookmarkedOnlyMode }
 
 }
 

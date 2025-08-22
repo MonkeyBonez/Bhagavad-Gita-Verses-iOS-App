@@ -12,7 +12,13 @@ struct VersesReader {
         didSet {
             checkValidBookmarkOnlyMode()
             if bookmarkedOnlyMode {
-                getCurrentBookmarkedVerse()
+                // When entering bookmarked mode, jump to the nearest bookmarked verse to the current regular index
+                let current = VersesInfo.getIndexOfVerse(chapter: chapterNumber, verse: verseNumber)
+                if let nearest = bookmarkedVersesModel.setPointerToNearest(to: current) {
+                    currentVerse = verses[nearest]
+                } else {
+                    getCurrentBookmarkedVerse()
+                }
             }
             if !bookmarkedOnlyMode {
                 updateVerse(chapter: chapterNumber, verse: verseNumber)
@@ -50,6 +56,41 @@ struct VersesReader {
         let index = VersesInfo.getIndexOfVerse(chapter: chapter, verse: verse)
         bookmarkedVersesModel.regularVerseIndexUpdate(regularIndex: index)
         currentVerse = verses[VersesInfo.getIndexOfVerse(chapter: chapter, verse: verse)]
+    }
+
+    // MARK: - New helpers for paging UI
+    var totalVerseCount: Int {
+        verses.count
+    }
+
+    var currentGlobalIndex: Int {
+        VersesInfo.getIndexOfVerse(chapter: chapterNumber, verse: verseNumber)
+    }
+
+    var bookmarkedGlobalIndices: [Int] {
+        bookmarkedVersesModel.allIndices
+    }
+
+    mutating func setCurrentByGlobalIndex(_ index: Int) {
+        guard index >= 0 && index < verses.count else { return }
+        // Map index back to chapter/verse
+        var remaining = index
+        var newChapter = 1
+        for count in VersesInfo.versesPerChapter {
+            if remaining < count { break }
+            remaining -= count
+            newChapter += 1
+        }
+        let newVerse = remaining + 1
+        chapterNumber = newChapter
+        verseNumber = newVerse
+        updateVerse(chapter: chapterNumber, verse: verseNumber)
+        // Keep bookmarked pointer in sync
+        bookmarkedVersesModel.setCurrentToGlobalIndex(index)
+    }
+
+    func verse(atGlobalIndex index: Int) -> Verse {
+        verses[max(0, min(index, verses.count - 1))]
     }
 
     private var verseOfDay: Verse {

@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct VerseView: View {
     @State var viewModel: QuoteModel
@@ -6,46 +7,39 @@ struct VerseView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.scenePhase) var scenePhase
     
-    @State var showRightGuidance = false
-    @State var showLeftGuidance = false
-    @State var validInteraction = false
-    @State var swipeXOffset = CGFloat(0)
     @State var screenWidth = CGFloat(0)
-    @State var currQuoteHeight = CGFloat(0)
+    @State var screenHeight = CGFloat(0)
+    @State var footerVerseInfo: Verse
+    
+    // Paging state
+    @State private var dataSource: [Int] = [] // global verse indices
+    @State private var scrollPosition: Int?
+    @State private var selectedGlobalIndex: Int = 0
     
     let buttonClickPadding = 30.0
+    private let fadeThreshold: CGFloat = 0.4
+    
+    // Cubic easeInOut mapping for 0...1 → 0...1
+    private func easeInOut01(_ t: CGFloat) -> CGFloat {
+        let x = max(0, min(1, t))
+        return (3 * x * x) - (2 * x * x * x)
+    }
     
     init(dailyQuoteModel: QuoteModel = QuoteModel()) {
-        self.viewModel = dailyQuoteModel
+        self._viewModel = State(initialValue: dailyQuoteModel)
+        self._footerVerseInfo = State(initialValue: dailyQuoteModel.quote)
+        self._selectedGlobalIndex = State(initialValue: dailyQuoteModel.currentGlobalIndex)
+        self._scrollPosition = State(initialValue: dailyQuoteModel.currentGlobalIndex)
+        self._dataSource = State(initialValue: [])
     }
     
     init(quote: String, author: String, chapter: Int, verse: Int) {
-        viewModel = QuoteModel(quote: quote, author: author, chapter: chapter, verse: verse)
-    }
-    
-    private func backwardsTapSwipe() {
-        validInteraction = true
-        viewModel.getPreviousVerse()
-        validInteraction = false
-    }
-    
-    private func forwardsTapSwipe() {
-        validInteraction = true
-        viewModel.getNextVerse()
-        validInteraction = false
-    }
-    
-    private func flashGuidance() {
-        guard !showLeftGuidance, !showRightGuidance else {
-            return
-        }
-        showLeftGuidance = true
-        showRightGuidance = true
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            showLeftGuidance = false
-            showRightGuidance = false
-        }
+        let quoteModel = QuoteModel(quote: quote, author: author, chapter: chapter, verse: verse)
+        self._viewModel = State(initialValue: quoteModel)
+        self._footerVerseInfo = State(initialValue: quoteModel.quote)
+        self._selectedGlobalIndex = State(initialValue: quoteModel.currentGlobalIndex)
+        self._scrollPosition = State(initialValue: quoteModel.currentGlobalIndex)
+        self._dataSource = State(initialValue: [])
     }
     
     private var foregroundColor: Color {
@@ -56,39 +50,24 @@ struct VerseView: View {
         colorScheme == .light ? AppColors.lightPeacock : bookmarked ? AppColors.lavender : AppColors.parchment
     }
     
-    private var tapVerseChangeView: some View {
-        HStack(spacing: 0) {
-            Rectangle()
-                .foregroundStyle(.clear)
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    backwardsTapSwipe()
-                }
-            Rectangle()
-                .foregroundStyle(.clear)
-                .frame(width: 80)
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    flashGuidance()
-                }
-            Rectangle()
-                .foregroundStyle(.clear)
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    forwardsTapSwipe()
-                }
-        }
-    }
-    
-    private var actionView: some View {
-        return HStack(spacing: 52) {
-            viewBookmarkedView
+    private var footerActionView: some View {
+        return HStack() {
             shareButtonView
+            Spacer()
             bookmarkButtonView
         }
         .foregroundStyle(foregroundColor)
         .frame(maxHeight: .infinity, alignment: .bottom)
-        .safeAreaPadding(.bottom, 48-buttonClickPadding) // change to just padding?
+//        .safeAreaPadding(.bottom, 48-buttonClickPadding)
+    }
+
+    private var headerActionView: some View {
+        HStack(spacing: 0) {
+            // Placeholder for future top-left button
+            Spacer()
+            viewBookmarkedView
+        }
+        .foregroundStyle(foregroundColor)
     }
     
     @ViewBuilder
@@ -96,88 +75,153 @@ struct VerseView: View {
         Image(systemName: systemName)
             .resizable()
             .aspectRatio(contentMode: .fit)
-            .frame(height: 25)
+            .frame(height: 26)
             .padding(buttonClickPadding)
             .contentShape(Rectangle())
     }
     
     private var shareButtonView: some View {
-        ShareLink(item: viewModel.shareText) {
-            actionIcon(systemName: "square.and.arrow.up")
-        }
+        AnimatedTap(content: {
+            ShareLink(item: viewModel.shareText) {
+                actionIcon(systemName: "square.and.arrow.up")
+            }
+        }, onTap: { })
     }
     
     private var bookmarkButtonView: some View {
-        actionIcon(systemName: viewModel.bookmarked ? "bookmark.fill" : "bookmark")
-            .onTapGesture { viewModel.bookmarkTapped() }
+        AnimatedTap(content: {
+            actionIcon(systemName: viewModel.bookmarked ? "bookmark.fill" : "bookmark")
+        }, onTap: {
+            let wasBookmarked = viewModel.bookmarked
+            let wasViewingBookmarked = viewModel.viewingBookmarked
+            viewModel.bookmarkTapped()
+            if !wasBookmarked {
+                triggerSoftBookmarkHaptic()
+            } else if wasViewingBookmarked {
+                viewModel.viewingBookmarkedDisable()
+                rebuildDataSource()
+                selectedGlobalIndex = viewModel.currentGlobalIndex
+                scrollPosition = selectedGlobalIndex
+            }
+        })
     }
     
     private var viewBookmarkedView: some View {
-        actionIcon(systemName: viewModel.viewingBookmarked ? "book.pages.fill" : "book.pages")
-            .onTapGesture { viewModel.viewingBookmarkedTapped() }
-            .foregroundStyle(viewModel.hasBookmarks ? foregroundColor : .clear)
-            .symbolEffect(.bounce, value: viewModel.viewBookmarkAddIndicator)
+        AnimatedTap(content: {
+            actionIcon(systemName: viewModel.viewingBookmarked ? "book.pages.fill" : "book.pages")
+                .foregroundStyle(viewModel.hasBookmarks ? foregroundColor : .clear)
+                .symbolEffect(.bounce, value: viewModel.viewBookmarkAddIndicator)
+        }, onTap: {
+            toggleBookmarkedOnly()
+        })
     }
     
-    var versesView: some View {
-        HStack {
-            if let prevQuote = viewModel.prevQuote {
-                quoteView(quote: prevQuote)
-                    .frame(width: screenWidth)
-            }
-            quoteView(quote: viewModel.quote)
-                .frame(width: screenWidth)
-            if let nextQuote = viewModel.nextQuote {
-                quoteView(quote: nextQuote)
-                    .frame(width: screenWidth)
-            }
-        }
-        .offset(x: swipeXOffset)
-    }
-    
-    var dontHideGuidance: Bool {
-        swipeXOffset.isZero //TODO: smooth animation instead or remove guidance
-    }
-    
-    @ViewBuilder
-    func quoteView(quote: Verse) -> some View {
-        VStack(spacing: 16) {
-            Text(quote.text)
-                .font(.custom(Fonts.verseFontName, size: 30))
-                .minimumScaleFactor(20/30)
-                .multilineTextAlignment(.center)
-            VStack(spacing: 0) {
-                Text(viewModel.author)
-                    .font(.custom(Fonts.verseFontName, size: 20))
-                    .bold()
-                HStack() {
-                    if dontHideGuidance {
-                        guidanceView(systemImageName: "chevron.left", value: showLeftGuidance)
-                        Spacer()
-                    }
-                    Text("\(quote.chapterNumber).\(quote.verseNumber)")
-                    if dontHideGuidance {
-                        Spacer()
-                        guidanceView(systemImageName: "chevron.right", value: showRightGuidance)
-                    }
-                    
-                }
-                .padding(.horizontal, 16)
+    private func toggleBookmarkedOnly() {
+        viewModel.viewingBookmarkedTapped()
+        rebuildDataSource()
+        // Ensure the current selected index is visible in the new dataSource
+        if viewModel.viewingBookmarked {
+            // Jump to the nearest bookmarked to the current verse
+            let current = viewModel.currentGlobalIndex
+            if let nearest = dataSource.min(by: { abs($0 - current) < abs($1 - current) }) {
+                selectedGlobalIndex = nearest
+                scrollPosition = nearest
+                viewModel.setCurrentByGlobalIndex(nearest)
+                setFooterQuoteAfterQuoteChange()
+            } else if let first = dataSource.first {
+                selectedGlobalIndex = first
+                scrollPosition = first
+                viewModel.setCurrentByGlobalIndex(first)
+                setFooterQuoteAfterQuoteChange()
             }
         }
-        .foregroundStyle(foregroundColorForQuote(bookmarked: quote.bookmarked))
-        .padding(25)
-        .padding(.bottom, 144)
+    }
+
+    private func setFooterQuoteAfterQuoteChange() {
+        footerVerseInfo = viewModel.quote
+    }
+
+    private func triggerSoftBookmarkHaptic() {
+        let generator = UIImpactFeedbackGenerator(style: .soft)
+        generator.prepare()
+        generator.impactOccurred(intensity: 0.5)
+    }
+
+    // Reusable micro-animation wrapper for tap interactions
+    private struct AnimatedTap<Content: View>: View {
+        let content: () -> Content
+        let onTap: () -> Void
+        @State private var scale: CGFloat = 1.0
+        var body: some View {
+            content()
+                .scaleEffect(scale)
+                .simultaneousGesture(TapGesture().onEnded {
+                    scale = 0.9
+                    withAnimation(.spring(response: 0.22, dampingFraction: 0.6)) {
+                        scale = 1.0
+                    }
+                    onTap()
+                })
+        }
     }
     
-    func guidanceView(systemImageName: String, value: Bool) -> some View {
-        Image(systemName: systemImageName)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(height: 24)
-            .offset(y: -12)
-            .opacity(value ? 1: 0)
-            .animation(.easeInOut(duration: 0.5), value: value)
+    private func rebuildDataSource() {
+        if viewModel.viewingBookmarked {
+            dataSource = viewModel.bookmarkedGlobalIndices
+        } else {
+            dataSource = Array(0..<viewModel.totalVerseCount)
+        }
+    }
+    
+    // Display indices equals the data source (no transient items)
+    private func displayIndices() -> [Int] { dataSource }
+    
+    private func goToPrevious() {
+        guard let currentIdx = dataSource.firstIndex(of: selectedGlobalIndex), currentIdx > 0 else { return }
+        let target = dataSource[currentIdx - 1]
+        scrollPosition = target
+    }
+    
+    private func goToNext() {
+        guard let currentIdx = dataSource.firstIndex(of: selectedGlobalIndex), currentIdx + 1 < dataSource.count else { return }
+        let target = dataSource[currentIdx + 1]
+        scrollPosition = target
+    }
+    
+    private func quoteFooterView(quote: Verse) -> some View {
+        VStack(spacing: 0) {
+            Text(viewModel.author)
+                .font(.custom(Fonts.verseFontName, size: 20))
+                .bold()
+            Text("\(quote.chapterNumber).\(quote.verseNumber)")
+        }
+    }
+    
+    private func quotePage(globalIndex: Int) -> some View {
+        let verse = viewModel.verse(atGlobalIndex: globalIndex)
+        return GeometryReader { geo in
+            let frame = geo.frame(in: .named("scroll"))
+            let centerX = screenWidth / 2
+            let dx = frame.midX - centerX
+            let distanceFromCenter = abs(dx) / max(screenWidth, 1)
+            let normalized = min(distanceFromCenter / fadeThreshold, 1)
+            let opacity = max(0, 1.0 - easeInOut01(normalized))
+            VStack(spacing: 16) {
+                Text(verse.text)
+                    .font(.custom(Fonts.verseFontName, size: 30))
+                    .minimumScaleFactor(20/30)
+                    .multilineTextAlignment(.center)
+                quoteFooterView(quote: verse)
+                    .offset(x: -dx)
+                    .opacity(opacity)
+            }
+            .foregroundStyle(foregroundColorForQuote(bookmarked: verse.bookmarked))
+            .padding(25)
+            .padding(.bottom, 144) // leave toolbar area free
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .containerRelativeFrame(.horizontal)
+        .id(globalIndex)
     }
     
     var background: some View {
@@ -186,85 +230,79 @@ struct VerseView: View {
     
     var body: some View {
         ZStack {
-            background
-            versesView
-            tapVerseChangeView
-            actionView
-        }
-        .gesture(DragGesture(minimumDistance: 0)
-            .onChanged({ gesture in
-                swipeXOffset = gesture.translation.width
-            })
-            .onEnded({ gesture in
-                respondToSwipeEnded(swipeAmount: gesture.translation.width, swipeVelocity: gesture.velocity.width)
-                resetQuoteToCenter()
-            })
-        )
-        .background(
-            GeometryReader { geometry in
-                Color.clear
-                    .onAppear { screenWidth = geometry.size.width}
+            background.ignoresSafeArea()
+            
+            // Wrap the horizontal scroll in a full-screen content shape to capture drags anywhere
+            ScrollView(.horizontal) {
+                LazyHStack(spacing: 0) {
+                    ForEach(displayIndices(), id: \.self) { index in
+                        quotePage(globalIndex: index)
+                    }
+                }
+                .scrollTargetLayout()
             }
-        )
-        .ignoresSafeArea()
-        .onChange(of: scenePhase) { oldPhase , newPhase in
-            swipeXOffset = 0
-            viewModel.scenePhaseChange(from: oldPhase, to: newPhase)
-            UIApplication.shared.windows.first?.rootViewController?.dismiss(animated: false)
-        }
-        .onAppear {
-            flashGuidance()
-        }
-    }
-    
-    private func respondToSwipeEnded(swipeAmount: CGFloat, swipeVelocity: CGFloat) {
-        let minimumSwipeScreenRatioThresholdNoVelocity = 0.4
-        let minimumSwipeScreenRatioThresholdHighVelocity = 0.25
-        let minimumThresholdHighVelocity = 1000.0
-        let swipeAmountToScreenWidth = swipeAmount/screenWidth
-        if isSwipe(minimumSwipeScreenRatioThresholdNoVelocity: abs(minimumSwipeScreenRatioThresholdNoVelocity),
-                   minimumSwipeScreenRatioThresholdHighVelocity: abs(minimumSwipeScreenRatioThresholdHighVelocity),
-                   minimumThresholdHighVelocity: abs(minimumThresholdHighVelocity),
-                   swipeAmountToScreenWidth: abs(swipeAmountToScreenWidth),
-                   swipeVelocity: abs(swipeVelocity),
-                   swipeAmount: abs(swipeAmount)) {
-            if swipeAmount > 0 {
-                backwardsSwipe(swipeAmount: swipeAmount)
+            .contentShape(Rectangle())
+            .simultaneousGesture(
+                SpatialTapGesture()
+                    .onEnded { value in
+                        if value.location.x < screenWidth / 2 {
+                            goToPrevious()
+                        } else {
+                            goToNext()
+                        }
+                    }
+            )
+            .scrollTargetBehavior(.paging)
+            .scrollIndicators(.hidden)
+            .coordinateSpace(.named("scroll"))
+            .scrollPosition(id: $scrollPosition, anchor: .center)
+            .background(
+                GeometryReader { geometry in
+                    Color.clear
+                        .onAppear {
+                            screenWidth = geometry.size.width
+                            screenHeight = geometry.size.height
+                            rebuildDataSource()
+                            scrollPosition = selectedGlobalIndex
+                        }
+                }
+            )
+            .onChange(of: scrollPosition) { _, newValue in
+                if let newValue = newValue {
+                    selectedGlobalIndex = newValue
+                    viewModel.setCurrentByGlobalIndex(newValue)
+                    setFooterQuoteAfterQuoteChange()
+                }
             }
-            else {
-                forwardsSwipe(swipeAmount: swipeAmount)
+            VStack {
+                headerActionView
+                Spacer()
             }
+            .padding(.horizontal, 12)
+            .padding(.top, 30)
+            .ignoresSafeArea()
+            VStack {
+                Spacer()
+                footerActionView
+                    .padding(.horizontal, 20)
+            }
+            .padding(.bottom, 11)
+            .ignoresSafeArea()
             
         }
-    }
-    
-    //Uses abs values
-    private func isSwipe(minimumSwipeScreenRatioThresholdNoVelocity: CGFloat, minimumSwipeScreenRatioThresholdHighVelocity: CGFloat, minimumThresholdHighVelocity: CGFloat, swipeAmountToScreenWidth: CGFloat, swipeVelocity: CGFloat, swipeAmount: CGFloat) -> Bool{
-        if swipeAmountToScreenWidth > minimumSwipeScreenRatioThresholdHighVelocity {
-            if swipeAmountToScreenWidth > minimumSwipeScreenRatioThresholdNoVelocity || swipeVelocity > minimumThresholdHighVelocity {
-                return true
+        .onChange(of: scenePhase) { oldPhase, newPhase in
+            viewModel.scenePhaseChange(from: oldPhase, to: newPhase)
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let window = windowScene.windows.first {
+                window.rootViewController?.dismiss(animated: false)
             }
         }
-        return false
-    }
-    
-    private func backwardsSwipe(swipeAmount: CGFloat) {
-        swipeXOffset = -screenWidth + swipeAmount
-        backwardsTapSwipe()
-    }
-    
-    private func forwardsSwipe(swipeAmount: CGFloat) {
-        swipeXOffset = screenWidth + swipeAmount
-        forwardsTapSwipe()
-    }
-    
-    //TODO: Fine tune
-    func resetQuoteToCenter() {
-        withAnimation(.snappy) {
-            swipeXOffset = 0
+        .onAppear {
+            rebuildDataSource()
+            selectedGlobalIndex = viewModel.currentGlobalIndex
+            scrollPosition = selectedGlobalIndex
         }
     }
-    
 }
 
 #Preview {
@@ -274,3 +312,8 @@ struct VerseView: View {
     let verse = 47
     VerseView(quote: quote, author: author, chapter: chapter, verse: verse)
 }
+
+
+
+
+
