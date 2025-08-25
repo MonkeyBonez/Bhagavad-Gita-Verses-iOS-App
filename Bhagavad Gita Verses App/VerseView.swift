@@ -15,6 +15,8 @@ struct VerseView: View {
     @State private var dataSource: [Int] = [] // global verse indices
     @State private var scrollPosition: Int?
     @State private var selectedGlobalIndex: Int = 0
+    @State private var introOpacity: CGFloat = 0.0
+    @State private var isIntroAnimating: Bool = false
     
     let buttonClickPadding = 30.0
     private let fadeThreshold: CGFloat = 0.4
@@ -256,6 +258,7 @@ struct VerseView: View {
             .scrollIndicators(.hidden)
             .coordinateSpace(.named("scroll"))
             .scrollPosition(id: $scrollPosition, anchor: .center)
+            .opacity(introOpacity)
             .background(
                 GeometryReader { geometry in
                     Color.clear
@@ -263,11 +266,11 @@ struct VerseView: View {
                             screenWidth = geometry.size.width
                             screenHeight = geometry.size.height
                             rebuildDataSource()
-                            scrollPosition = selectedGlobalIndex
                         }
                 }
             )
             .onChange(of: scrollPosition) { _, newValue in
+                if isIntroAnimating { return }
                 if let newValue = newValue {
                     selectedGlobalIndex = newValue
                     viewModel.setCurrentByGlobalIndex(newValue)
@@ -290,6 +293,7 @@ struct VerseView: View {
             .ignoresSafeArea()
             
         }
+        .allowsHitTesting(!isIntroAnimating)
         .onChange(of: scenePhase) { oldPhase, newPhase in
             viewModel.scenePhaseChange(from: oldPhase, to: newPhase)
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -297,10 +301,30 @@ struct VerseView: View {
                 window.rootViewController?.dismiss(animated: false)
             }
         }
-        .onAppear {
+        // Respond to external mode changes (e.g., deeplink resets)
+        .onChange(of: viewModel.bookmarkedOnlyMode) { _, _ in
+            if isIntroAnimating { return }
             rebuildDataSource()
             selectedGlobalIndex = viewModel.currentGlobalIndex
             scrollPosition = selectedGlobalIndex
+        }
+        // Respond to external verse changes (e.g., deeplink to quote of the day)
+        .onChange(of: viewModel.quote) { _, _ in
+            if isIntroAnimating { return }
+            selectedGlobalIndex = viewModel.currentGlobalIndex
+            scrollPosition = selectedGlobalIndex
+        }
+        // Run intro animation when we arrive at verse-of-day via deeplink or cold start
+        .onChange(of: viewModel.animateFromEndToken) { _, _ in
+            runIntroAnimationToCurrent()
+        }
+        .onAppear {
+            rebuildDataSource()
+            selectedGlobalIndex = viewModel.currentGlobalIndex
+            // Trigger intro after first layout pass
+            DispatchQueue.main.async {
+                runIntroAnimationToCurrent()
+            }
         }
     }
 }
@@ -311,6 +335,51 @@ struct VerseView: View {
     let chapter = 2
     let verse = 47
     VerseView(quote: quote, author: author, chapter: chapter, verse: verse)
+}
+
+// MARK: - Intro animation
+extension VerseView {
+    private func runIntroAnimationToCurrent() {
+        guard !dataSource.isEmpty, !isIntroAnimating else { return }
+        let current = viewModel.currentGlobalIndex
+        // Find current's position within the dataSource; if absent, use nearest by distance
+        let currentPos: Int = dataSource.firstIndex(of: current)
+            ?? dataSource.enumerated().min(by: { abs($0.element - current) < abs($1.element - current) })?.offset
+            ?? 0
+        // Move 5 pages ahead within dataSource bounds
+        let targetPos = min(currentPos + 5, dataSource.count - 1)
+        let startIndex = dataSource[targetPos]
+        guard startIndex != current else { return }
+        // Disable interactions and set initial opacity (opacity currently unused)
+        isIntroAnimating = true
+        introOpacity = 0.0
+        let duration: Double = 0.8
+        let extraOpacityDuration = 0.1
+        // Phase 1: perform the jump without animation after layout
+        DispatchQueue.main.async {
+            var txn = Transaction()
+            txn.disablesAnimations = true
+            withTransaction(txn) {
+                scrollPosition = startIndex
+            }
+            // Phase 2: animate to the current verse after a short delay so the jump is committed
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                withAnimation(.spring(duration: duration, bounce: 0.15)) {
+                    scrollPosition = current
+                }
+                withAnimation(.easeInOut(duration: duration + extraOpacityDuration)) {
+                    introOpacity = 1.0
+                }
+                // Finalize after animation completes
+                DispatchQueue.main.asyncAfter(deadline: .now() + duration + extraOpacityDuration) {
+                    selectedGlobalIndex = current
+                    viewModel.setCurrentByGlobalIndex(current)
+                    setFooterQuoteAfterQuoteChange()
+                    isIntroAnimating = false
+                }
+            }
+        }
+    }
 }
 
 

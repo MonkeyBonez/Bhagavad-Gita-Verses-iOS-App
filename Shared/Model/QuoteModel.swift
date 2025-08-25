@@ -10,6 +10,8 @@ import SwiftUI
     private let backgroundTimeRefreshThresholdHours: Double = 1
 
     var viewBookmarkAddIndicator: Bool = false
+    // Increment this token to signal views to run an intro animation
+    var animateFromEndToken: Int = 0
 
     var viewingBookmarked: Bool {
         versesReader.bookmarkedOnlyMode
@@ -76,6 +78,7 @@ import SwiftUI
     
     func setToVerseOfDay() {
         versesReader.setVerseOfDay()
+        animateFromEndToken &+= 1
     }
 
 
