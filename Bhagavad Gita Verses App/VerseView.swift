@@ -98,7 +98,14 @@ struct VerseView: View {
             let wasViewingBookmarked = viewModel.viewingBookmarked
             viewModel.bookmarkTapped()
             if !wasBookmarked {
-                triggerSoftBookmarkHaptic()
+                // Added a bookmark; skip soft haptic if this is the very first bookmark
+                let bookmarkCount = viewModel.bookmarkedGlobalIndices.count
+                if bookmarkCount > 1 {
+                    triggerSoftBookmarkHaptic()
+                }
+                else{
+                    triggerStrongBookmarkHaptic()
+                }
             } else if wasViewingBookmarked {
                 viewModel.viewingBookmarkedDisable()
                 rebuildDataSource()
@@ -147,6 +154,12 @@ struct VerseView: View {
         let generator = UIImpactFeedbackGenerator(style: .soft)
         generator.prepare()
         generator.impactOccurred(intensity: 0.5)
+    }
+
+    private func triggerStrongBookmarkHaptic() {
+        let generator = UIImpactFeedbackGenerator(style: .heavy)
+        generator.prepare()
+        generator.impactOccurred(intensity: 0.6)
     }
 
     // Reusable micro-animation wrapper for tap interactions
