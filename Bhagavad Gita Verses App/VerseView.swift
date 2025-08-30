@@ -17,6 +17,15 @@ struct VerseView: View {
     @State private var selectedGlobalIndex: Int = 0
     @State private var introOpacity: CGFloat = 0.0
     @State private var isIntroAnimating: Bool = false
+    // Guidance sheet state
+    @State private var showGuidanceSheet: Bool = false
+    @State private var guidanceQuery: String = ""
+    @State private var guidanceTopK: Int = 10
+    @State private var guidanceRetrieveTopK: Int = 50
+    @State private var guidanceResults: [LessonResult] = []
+    @State private var isSearchingGuidance: Bool = false
+    @State private var guidanceError: String? = nil
+    @State private var searchHelper: LessonSearchHelper? = nil
     
     let buttonClickPadding = 30.0
     private let fadeThreshold: CGFloat = 0.4
@@ -65,7 +74,7 @@ struct VerseView: View {
 
     private var headerActionView: some View {
         HStack(spacing: 0) {
-            // Placeholder for future top-left button
+            guidanceButtonView
             Spacer()
             viewBookmarkedView
         }
@@ -123,6 +132,56 @@ struct VerseView: View {
         }, onTap: {
             toggleBookmarkedOnly()
         })
+    }
+
+    private var guidanceButtonView: some View {
+        AnimatedTap(content: {
+            actionIcon(systemName: "sparkles")
+        }, onTap: {
+            showGuidanceSheet = true
+        })
+        .sheet(isPresented: $showGuidanceSheet) {
+            NavigationView {
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Ask for guidance")
+                        .font(.headline)
+                    TextField("Type what you need help with...", text: $guidanceQuery)
+                        .textFieldStyle(.roundedBorder)
+                    HStack {
+                        Stepper("Top K: \(guidanceTopK)", value: $guidanceTopK, in: 1...20)
+                        Stepper("Retrieve: \(guidanceRetrieveTopK)", value: $guidanceRetrieveTopK, in: max(10, guidanceTopK)...200)
+                    }
+                    Button(action: { runGuidanceSearch() }) {
+                        HStack {
+                            if isSearchingGuidance { ProgressView().padding(.trailing, 8) }
+                            Text("Search")
+                        }
+                    }
+                    .buttonStyle(.borderedProminent)
+                    if let err = guidanceError {
+                        Text(err).foregroundStyle(.red)
+                    }
+                    List {
+                        ForEach(Array(guidanceResults.enumerated()), id: \.0) { _, item in
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(item.text)
+                                HStack(spacing: 12) {
+                                    Text(String(format: "cos: %.4f", item.cosine)).font(.caption)
+                                    if let ce = item.ce, abs(ce) < 1e6 { Text(String(format: "ce: %.4f", ce)).font(.caption) }
+                                }.foregroundStyle(.secondary)
+                            }
+                        }
+                    }
+                }
+                .padding()
+                .navigationTitle("Guidance")
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Close") { showGuidanceSheet = false }
+                    }
+                }
+            }
+        }
     }
     
     private func toggleBookmarkedOnly() {
@@ -390,6 +449,31 @@ extension VerseView {
                     setFooterQuoteAfterQuoteChange()
                     isIntroAnimating = false
                 }
+            }
+        }
+    }
+
+    private func runGuidanceSearch() {
+        guidanceError = nil
+        guidanceResults = []
+        guard !guidanceQuery.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            guidanceError = "Please enter some text."
+            return
+        }
+        if searchHelper == nil { searchHelper = LessonSearchHelper() }
+        guard let helper = searchHelper else {
+            guidanceError = "Failed to initialize search."
+            return
+        }
+        isSearchingGuidance = true
+        let query = guidanceQuery
+        let k = guidanceTopK
+        let rk = max(k, guidanceRetrieveTopK)
+        DispatchQueue.global(qos: .userInitiated).async {
+            let results = helper.search(text: query, topK: k, retrieveTopK: rk, doRerank: true)
+            DispatchQueue.main.async {
+                self.guidanceResults = results
+                self.isSearchingGuidance = false
             }
         }
     }

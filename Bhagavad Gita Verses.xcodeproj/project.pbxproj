@@ -54,6 +54,25 @@
 		33E6E6B42DEE7BDE005B80E6 /* quotes-formatted.json in Resources */ = {isa = PBXBuildFile; fileRef = 33E6E6B22DEE7BDE005B80E6 /* quotes-formatted.json */; };
 		33FF16CC2D28FA83006E9888 /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF16CB2D28FA67006E9888 /* QuoteModel.swift */; };
 		33FF16D02D28FD5C006E9888 /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF16CB2D28FA67006E9888 /* QuoteModel.swift */; };
+		366F74DA2E62A80F0013079A /* tokenizer_config_retriever.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74B82E62A80F0013079A /* tokenizer_config_retriever.json */; };
+		366F74DB2E62A80F0013079A /* vocab_retriever.txt in Resources */ = {isa = PBXBuildFile; fileRef = 366F74BA2E62A80F0013079A /* vocab_retriever.txt */; };
+		366F74DC2E62A80F0013079A /* tokenizer_config_ce.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74AD2E62A80F0013079A /* tokenizer_config_ce.json */; };
+		366F74DD2E62A80F0013079A /* vocab_ce.txt in Resources */ = {isa = PBXBuildFile; fileRef = 366F74AE2E62A80F0013079A /* vocab_ce.txt */; };
+		366F74DE2E62A80F0013079A /* lessons_meta.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74B22E62A80F0013079A /* lessons_meta.json */; };
+		366F74DF2E62A80F0013079A /* lessons_f32.bin in Resources */ = {isa = PBXBuildFile; fileRef = 366F74B12E62A80F0013079A /* lessons_f32.bin */; };
+		366F74E02E62A80F0013079A /* tokenizer_retriever.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74B92E62A80F0013079A /* tokenizer_retriever.json */; };
+		366F74E12E62A80F0013079A /* special_tokens_map_retriever.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74B72E62A80F0013079A /* special_tokens_map_retriever.json */; };
+		366F74E22E62A80F0013079A /* special_tokens_map_ce.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74AB2E62A80F0013079A /* special_tokens_map_ce.json */; };
+		366F74E32E62A80F0013079A /* tokenizer_ce.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74AC2E62A80F0013079A /* tokenizer_ce.json */; };
+		366F74E42E62A80F0013079A /* MiniLMReranker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74C12E62A80F0013079A /* MiniLMReranker.swift */; };
+		366F74E52E62A80F0013079A /* PairWordPieceTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74C22E62A80F0013079A /* PairWordPieceTokenizer.swift */; };
+		366F74E62E62A80F0013079A /* E5SmallV2.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 366F74B52E62A80F0013079A /* E5SmallV2.mlpackage */; };
+		366F74E82E62A80F0013079A /* LessonSearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74C02E62A80F0013079A /* LessonSearchHelper.swift */; };
+		366F74E92E62A80F0013079A /* RetrieverWordPieceTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74C32E62A80F0013079A /* RetrieverWordPieceTokenizer.swift */; };
+		366F74EA2E62A80F0013079A /* LessonEmbeddingIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74BF2E62A80F0013079A /* LessonEmbeddingIndex.swift */; };
+		366F74EB2E62A80F0013079A /* MiniLML6CE.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 366F74A92E62A80F0013079A /* MiniLML6CE.mlpackage */; };
+		366F74EC2E62A80F0013079A /* E5RetrieverEmbedder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74BE2E62A80F0013079A /* E5RetrieverEmbedder.swift */; };
+		366F74ED2E62A80F0013079A /* RetrieverEmbeddingIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74BC2E62A80F0013079A /* RetrieverEmbeddingIndex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +162,26 @@
 		33DB9A6A2DF6BD0F00DB8935 /* HomescreenQuoteWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomescreenQuoteWidget.swift; sourceTree = "<group>"; };
 		33E6E6B22DEE7BDE005B80E6 /* quotes-formatted.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "quotes-formatted.json"; sourceTree = "<group>"; };
 		33FF16CB2D28FA67006E9888 /* QuoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteModel.swift; sourceTree = "<group>"; };
+		366F74A92E62A80F0013079A /* MiniLML6CE.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = MiniLML6CE.mlpackage; sourceTree = "<group>"; };
+		366F74AB2E62A80F0013079A /* special_tokens_map_ce.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = special_tokens_map_ce.json; sourceTree = "<group>"; };
+		366F74AC2E62A80F0013079A /* tokenizer_ce.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tokenizer_ce.json; sourceTree = "<group>"; };
+		366F74AD2E62A80F0013079A /* tokenizer_config_ce.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tokenizer_config_ce.json; sourceTree = "<group>"; };
+		366F74AE2E62A80F0013079A /* vocab_ce.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = vocab_ce.txt; sourceTree = "<group>"; };
+		366F74B12E62A80F0013079A /* lessons_f32.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = lessons_f32.bin; sourceTree = "<group>"; };
+		366F74B22E62A80F0013079A /* lessons_meta.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = lessons_meta.json; sourceTree = "<group>"; };
+		366F74B42E62A80F0013079A /* E5Embedder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E5Embedder.swift; sourceTree = "<group>"; };
+		366F74B52E62A80F0013079A /* E5SmallV2.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = E5SmallV2.mlpackage; sourceTree = "<group>"; };
+		366F74B72E62A80F0013079A /* special_tokens_map_retriever.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = special_tokens_map_retriever.json; sourceTree = "<group>"; };
+		366F74B82E62A80F0013079A /* tokenizer_config_retriever.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tokenizer_config_retriever.json; sourceTree = "<group>"; };
+		366F74B92E62A80F0013079A /* tokenizer_retriever.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tokenizer_retriever.json; sourceTree = "<group>"; };
+		366F74BA2E62A80F0013079A /* vocab_retriever.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = vocab_retriever.txt; sourceTree = "<group>"; };
+		366F74BC2E62A80F0013079A /* RetrieverEmbeddingIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieverEmbeddingIndex.swift; sourceTree = "<group>"; };
+		366F74BE2E62A80F0013079A /* E5RetrieverEmbedder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E5RetrieverEmbedder.swift; sourceTree = "<group>"; };
+		366F74BF2E62A80F0013079A /* LessonEmbeddingIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonEmbeddingIndex.swift; sourceTree = "<group>"; };
+		366F74C02E62A80F0013079A /* LessonSearchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSearchHelper.swift; sourceTree = "<group>"; };
+		366F74C12E62A80F0013079A /* MiniLMReranker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniLMReranker.swift; sourceTree = "<group>"; };
+		366F74C22E62A80F0013079A /* PairWordPieceTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairWordPieceTokenizer.swift; sourceTree = "<group>"; };
+		366F74C32E62A80F0013079A /* RetrieverWordPieceTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieverWordPieceTokenizer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -286,6 +325,7 @@
 				339B0B0E2DE0307600BFC39D /* Resources */,
 				3360D53C2DC5C06600FC57B0 /* Deeplinking */,
 				33FF16CA2D28FA5C006E9888 /* Model */,
+				366F74C52E62A80F0013079A /* Inference */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -339,6 +379,97 @@
 				3310A48A2DEE9F2900EBBA15 /* QuoteReader.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		366F74AA2E62A80F0013079A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				366F74A92E62A80F0013079A /* MiniLML6CE.mlpackage */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		366F74AF2E62A80F0013079A /* Tokenizer */ = {
+			isa = PBXGroup;
+			children = (
+				366F74AB2E62A80F0013079A /* special_tokens_map_ce.json */,
+				366F74AC2E62A80F0013079A /* tokenizer_ce.json */,
+				366F74AD2E62A80F0013079A /* tokenizer_config_ce.json */,
+				366F74AE2E62A80F0013079A /* vocab_ce.txt */,
+			);
+			path = Tokenizer;
+			sourceTree = "<group>";
+		};
+		366F74B02E62A80F0013079A /* cross-encoder */ = {
+			isa = PBXGroup;
+			children = (
+				366F74AA2E62A80F0013079A /* Model */,
+				366F74AF2E62A80F0013079A /* Tokenizer */,
+			);
+			path = "cross-encoder";
+			sourceTree = "<group>";
+		};
+		366F74B32E62A80F0013079A /* Index */ = {
+			isa = PBXGroup;
+			children = (
+				366F74B12E62A80F0013079A /* lessons_f32.bin */,
+				366F74B22E62A80F0013079A /* lessons_meta.json */,
+			);
+			path = Index;
+			sourceTree = "<group>";
+		};
+		366F74B62E62A80F0013079A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				366F74B42E62A80F0013079A /* E5Embedder.swift */,
+				366F74B52E62A80F0013079A /* E5SmallV2.mlpackage */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		366F74BB2E62A80F0013079A /* Tokenizer */ = {
+			isa = PBXGroup;
+			children = (
+				366F74B72E62A80F0013079A /* special_tokens_map_retriever.json */,
+				366F74B82E62A80F0013079A /* tokenizer_config_retriever.json */,
+				366F74B92E62A80F0013079A /* tokenizer_retriever.json */,
+				366F74BA2E62A80F0013079A /* vocab_retriever.txt */,
+			);
+			path = Tokenizer;
+			sourceTree = "<group>";
+		};
+		366F74BD2E62A80F0013079A /* Retriever */ = {
+			isa = PBXGroup;
+			children = (
+				366F74B32E62A80F0013079A /* Index */,
+				366F74B62E62A80F0013079A /* Model */,
+				366F74BB2E62A80F0013079A /* Tokenizer */,
+				366F74BC2E62A80F0013079A /* RetrieverEmbeddingIndex.swift */,
+			);
+			path = Retriever;
+			sourceTree = "<group>";
+		};
+		366F74C42E62A80F0013079A /* swift */ = {
+			isa = PBXGroup;
+			children = (
+				366F74BE2E62A80F0013079A /* E5RetrieverEmbedder.swift */,
+				366F74BF2E62A80F0013079A /* LessonEmbeddingIndex.swift */,
+				366F74C02E62A80F0013079A /* LessonSearchHelper.swift */,
+				366F74C12E62A80F0013079A /* MiniLMReranker.swift */,
+				366F74C22E62A80F0013079A /* PairWordPieceTokenizer.swift */,
+				366F74C32E62A80F0013079A /* RetrieverWordPieceTokenizer.swift */,
+			);
+			path = swift;
+			sourceTree = "<group>";
+		};
+		366F74C52E62A80F0013079A /* Inference */ = {
+			isa = PBXGroup;
+			children = (
+				366F74B02E62A80F0013079A /* cross-encoder */,
+				366F74BD2E62A80F0013079A /* Retriever */,
+				366F74C42E62A80F0013079A /* swift */,
+			);
+			path = Inference;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -466,6 +597,16 @@
 				334762CF2D4F5A3C0078FCB4 /* Assets.xcassets in Resources */,
 				339B0B192DE0307600BFC39D /* EBGaramond-VariableFont_wght.ttf in Resources */,
 				339B0B1A2DE0307600BFC39D /* verses-formatted.json in Resources */,
+				366F74DA2E62A80F0013079A /* tokenizer_config_retriever.json in Resources */,
+				366F74DB2E62A80F0013079A /* vocab_retriever.txt in Resources */,
+				366F74DC2E62A80F0013079A /* tokenizer_config_ce.json in Resources */,
+				366F74DD2E62A80F0013079A /* vocab_ce.txt in Resources */,
+				366F74DE2E62A80F0013079A /* lessons_meta.json in Resources */,
+				366F74DF2E62A80F0013079A /* lessons_f32.bin in Resources */,
+				366F74E02E62A80F0013079A /* tokenizer_retriever.json in Resources */,
+				366F74E12E62A80F0013079A /* special_tokens_map_retriever.json in Resources */,
+				366F74E22E62A80F0013079A /* special_tokens_map_ce.json in Resources */,
+				366F74E32E62A80F0013079A /* tokenizer_ce.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,6 +645,15 @@
 				3310A48B2DEE9F2D00EBBA15 /* QuoteReader.swift in Sources */,
 				33B4A9F52D2DF2A700AE1044 /* VersesReader.swift in Sources */,
 				334762D02D4F5A3C0078FCB4 /* BhagavadGitaApp.swift in Sources */,
+				366F74E42E62A80F0013079A /* MiniLMReranker.swift in Sources */,
+				366F74E52E62A80F0013079A /* PairWordPieceTokenizer.swift in Sources */,
+				366F74E62E62A80F0013079A /* E5SmallV2.mlpackage in Sources */,
+				366F74E82E62A80F0013079A /* LessonSearchHelper.swift in Sources */,
+				366F74E92E62A80F0013079A /* RetrieverWordPieceTokenizer.swift in Sources */,
+				366F74EA2E62A80F0013079A /* LessonEmbeddingIndex.swift in Sources */,
+				366F74EB2E62A80F0013079A /* MiniLML6CE.mlpackage in Sources */,
+				366F74EC2E62A80F0013079A /* E5RetrieverEmbedder.swift in Sources */,
+				366F74ED2E62A80F0013079A /* RetrieverEmbeddingIndex.swift in Sources */,
 				334762D12D4F5A3C0078FCB4 /* VerseView.swift in Sources */,
 				33FF16CC2D28FA83006E9888 /* QuoteModel.swift in Sources */,
 				339B0B052DE0268500BFC39D /* BookmarkedVersesModel.swift in Sources */,
