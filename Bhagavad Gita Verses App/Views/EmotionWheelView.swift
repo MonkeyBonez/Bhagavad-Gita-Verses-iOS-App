@@ -5,8 +5,8 @@ import Combine
 struct EmotionWheelView: View {
     let roots: [EmotionNode]
     let onSelect: (String) -> Void
-    let initialVelocity = 0.4
-    let initialInertiaDecay = 0.95
+    let initialVelocity = 0.25
+    let initialInertiaDecay = 0.99
 
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
@@ -190,7 +190,7 @@ struct EmotionWheelView: View {
                     }
                     .frame(width: size, height: size)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                    .offset(y: -16)
+                    .offset(y: -30)
                     .gesture(
                         DragGesture(minimumDistance: 0)
                             .onChanged { value in
@@ -236,7 +236,7 @@ struct EmotionWheelView: View {
                                         var diff = angleEnd.radians - sampleAngle.radians
                                         while diff > .pi { diff -= 2 * .pi }
                                         while diff < -.pi { diff += 2 * .pi }
-                                        let ratio = 5.0
+                                        let ratio = 7.0
                                         let v = diff / (dt * ratio)// rad/s
                                         // Start inertia with clamped velocity
                                         let maxV = 8.0
