@@ -1,9 +1,12 @@
 import SwiftUI
 import UIKit
+import Combine
 
 struct EmotionWheelView: View {
     let roots: [EmotionNode]
     let onSelect: (String) -> Void
+    let initialVelocity = 0.4
+    let initialInertiaDecay = 0.95
 
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.dismiss) private var dismiss
@@ -30,6 +33,15 @@ struct EmotionWheelView: View {
     @State private var pendingQuery: String? = nil
     @State private var didTriggerHapticForCurrentTap: Bool = false
     @State private var didSendQueryForCurrentTap: Bool = false
+    @State private var ringRotation: Angle = .degrees(0)
+    @State private var rotationAccumulated: Angle = .degrees(0)
+    @State private var dragStartAngle: Angle? = nil
+    @State private var lastSampleDate: Date? = nil
+    @State private var lastSampleAngle: Angle? = nil
+    @State private var inertiaVelocity: Double = 0 // radians per second
+    @State private var isInertiaActive: Bool = false
+    @State private var lastInertiaTick: Date = Date()
+    @State private var inertiaDecayPerSecond: Double = 0.95
 
     private enum Stage { case idle, bringToCenter, expandToOuter, completed }
 
@@ -96,7 +108,8 @@ struct EmotionWheelView: View {
                                             center: center,
                                             orbitRadius: orbitRadius,
                                             bubbleRadius: bubbleRadius,
-                                            emotionDiameter: emotionDiameter)
+                                            emotionDiameter: emotionDiameter,
+                                            rotation: ringRotation)
                         }
                         
                         // Center hub
@@ -112,6 +125,7 @@ struct EmotionWheelView: View {
                                 EmotionBubbleView(label: nodes[i].label, baseFont: 15, minScale: 0.25, theme: theme)
                                     .matchedGeometryEffect(id: "node-\(nodeKey(nodes[i]))", in: ns)
                                     .frame(width: centerDiameter, height: centerDiameter)
+                                    .scaleEffect(centerScale)
                                     .position(center)
                                 // Ring anim overlay follows to center
                                 if showOverlayRing {
@@ -119,6 +133,7 @@ struct EmotionWheelView: View {
                                         .fill(Color.clear)
                                         .matchedGeometryEffect(id: ringAnimId, in: ns)
                                         .frame(width: centerDiameter, height: centerDiameter)
+                                        .scaleEffect(centerScale)
                                         .position(center)
                                         .zIndex(2)
                                 }
@@ -176,6 +191,82 @@ struct EmotionWheelView: View {
                     .frame(width: size, height: size)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     .offset(y: -16)
+                    .gesture(
+                        DragGesture(minimumDistance: 0)
+                            .onChanged { value in
+                                guard stage == .idle else { return }
+                                // Interrupt inertia when user interacts
+                                isInertiaActive = false
+                                let loc = value.location
+                                let dx = loc.x - center.x
+                                let dy = loc.y - center.y
+                                let angleNow = Angle(radians: Double(atan2(dy, dx)))
+                                if dragStartAngle == nil {
+                                    dragStartAngle = angleNow
+                                }
+                                if let start = dragStartAngle {
+                                    let delta = Angle(radians: angleNow.radians - start.radians)
+                                    ringRotation = Angle(radians: rotationAccumulated.radians + delta.radians)
+                                }
+                                // Sample for velocity
+                                let now = Date()
+                                if lastSampleDate == nil || now.timeIntervalSince(lastSampleDate!) > 0.05 {
+                                    lastSampleDate = now
+                                    lastSampleAngle = angleNow
+                                }
+                            }
+                            .onEnded { value in
+                                guard stage == .idle else { dragStartAngle = nil; return }
+                                let loc = value.location
+                                let dx = loc.x - center.x
+                                let dy = loc.y - center.y
+                                let angleEnd = Angle(radians: Double(atan2(dy, dx)))
+                                if let start = dragStartAngle {
+                                    let delta = Angle(radians: angleEnd.radians - start.radians)
+                                    rotationAccumulated = Angle(radians: rotationAccumulated.radians + delta.radians)
+                                    ringRotation = rotationAccumulated
+                                }
+                                dragStartAngle = nil
+                                // Compute angular velocity from last sample
+                                if let sampleDate = lastSampleDate, let sampleAngle = lastSampleAngle {
+                                    let now = Date()
+                                    let dt = now.timeIntervalSince(sampleDate)
+                                    if dt > 0 {
+                                        // Normalize angle difference to [-pi, pi]
+                                        var diff = angleEnd.radians - sampleAngle.radians
+                                        while diff > .pi { diff -= 2 * .pi }
+                                        while diff < -.pi { diff += 2 * .pi }
+                                        let ratio = 5.0
+                                        let v = diff / (dt * ratio)// rad/s
+                                        // Start inertia with clamped velocity
+                                        let maxV = 8.0
+                                        inertiaVelocity = max(-maxV, min(maxV, v))
+                                        isInertiaActive = abs(inertiaVelocity) > 0.05
+                                        lastInertiaTick = now
+                                        // User interaction → faster decay
+                                        inertiaDecayPerSecond = 0.70
+                                    }
+                                }
+                                lastSampleDate = nil
+                                lastSampleAngle = nil
+                            }
+                    )
+                    .onReceive(Timer.publish(every: 1/60, on: .main, in: .common).autoconnect()) { now in
+                        guard isInertiaActive, stage == .idle else { return }
+                        let dt = now.timeIntervalSince(lastInertiaTick)
+                        lastInertiaTick = now
+                        if dt <= 0 { return }
+                        // Integrate rotation
+                        let delta = inertiaVelocity * dt
+                        rotationAccumulated = Angle(radians: rotationAccumulated.radians + delta)
+                        ringRotation = rotationAccumulated
+                        // Exponential decay
+                        let factor = pow(inertiaDecayPerSecond, dt)
+                        inertiaVelocity *= factor
+                        if abs(inertiaVelocity) < 0.02 {
+                            isInertiaActive = false
+                        }
+                    }
                     .onAppear {
                         if currentNodes.isEmpty { currentNodes = displayNodes }
                         // Initialize default theme to match app foreground colors
@@ -188,6 +279,11 @@ struct EmotionWheelView: View {
                         }
                         // Initialize center scale based on current depth
                         centerScale = centerScaleForDepth(path.count)
+                        // Start a gentle auto-spin on first appear
+                        inertiaVelocity = initialVelocity // radians/sec
+                        isInertiaActive = true
+                        lastInertiaTick = Date()
+                        inertiaDecayPerSecond = initialInertiaDecay
                     }
                     .onChange(of: colorScheme) { _, _ in
                         // Smoothly retarget theme to match new scheme default
@@ -323,11 +419,21 @@ struct EmotionWheelView: View {
                         wheelGen += 1
                         // Reset navigation state last
                         path.append(tapped)
+                        // New wheel should start at default orientation (no carry-over spin)
+                        rotationAccumulated = .degrees(0)
+                        ringRotation = .degrees(0)
+                        dragStartAngle = nil
+                        isInertiaActive = false
                         stage = .idle
                         selectedIndex = nil
                         // lock in final theme
                         themeFrom = themeTo
                         morphProgress = 1
+                        // Kick off gentle auto-spin for the new wheel
+                        inertiaVelocity = initialVelocity
+                        isInertiaActive = true
+                        lastInertiaTick = Date()
+                        inertiaDecayPerSecond = initialInertiaDecay
                     }
                 } else {
                     // Leaf: keep the final color, do not render further bubbles
@@ -355,11 +461,12 @@ struct EmotionWheelView: View {
                                  center: CGPoint,
                                  orbitRadius: CGFloat,
                                  bubbleRadius: CGFloat,
-                                 emotionDiameter: CGFloat) -> some View {
+                                 emotionDiameter: CGFloat,
+                                 rotation: Angle = .degrees(0)) -> some View {
         ZStack {
             // Spokes
             ForEach(angles.indices, id: \.self) { i in
-                let angle = angles[i]
+                let angle = Angle.radians(angles[i].radians + rotation.radians)
                 let end = point(from: center, radius: max(orbitRadius - bubbleRadius, 0), angle: angle)
                 let spokeOpacity: Double = (selectedIndex == nil) ? 0.25 : 0.0
                 Path { p in
@@ -372,7 +479,8 @@ struct EmotionWheelView: View {
             // Idle bubbles
             if stage == .idle {
                 ForEach(Array(nodes.enumerated()), id: \.offset) { i, node in
-                    let p = point(from: center, radius: orbitRadius, angle: angles[i])
+                    let a = Angle.radians(angles[i].radians + rotation.radians)
+                    let p = point(from: center, radius: orbitRadius, angle: a)
                     let nid = nodeKey(node)
                     EmotionBubbleView(label: node.label, baseFont: 15, minScale: 0.85, theme: theme)
                         .matchedGeometryEffect(id: "node-\(nid)", in: ns)

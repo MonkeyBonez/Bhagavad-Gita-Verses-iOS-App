@@ -20,6 +20,7 @@ struct VerseView: View {
     // Guidance sheet state
     @State private var showGuidanceSheet: Bool = false
     @State private var showingEmotionWheel: Bool = false
+    @State private var showingColorPicker: Bool = false
     @State private var guidanceQuery: String = ""
     @State private var guidanceTopK: Int = 3
     @State private var guidanceRetrieveTopK: Int = 10
@@ -140,17 +141,21 @@ struct VerseView: View {
         Menu {
             Section("Gita Guidance") {
                 Button {
+                    guidanceQuery = ""
                     showGuidanceSheet = true
                 } label: {
                     Label("Describe circumstance", systemImage: "pencil")
                 }
                 Button {
-//                    showGuidanceSheet = true
                     showingEmotionWheel = true
                 } label: {
                     Label("Pick Emotion", systemImage: "smallcircle.circle")
                 }
-                // Future options will be added here
+                Button {
+                    showingColorPicker = true
+                } label: {
+                    Label("Pick Color", systemImage: "paintpalette")
+                }
             }
         } label: {
             actionIcon(systemName: "sparkles")
@@ -164,8 +169,7 @@ struct VerseView: View {
                 errorText: guidanceError,
                 results: guidanceResults,
                 onSearch: { runGuidanceSearch() },
-                onClose: { showGuidanceSheet = false },
-                isBookmarked: viewModel.bookmarked
+                onClose: { showGuidanceSheet = false }
             )
         }
         .fullScreenCover(isPresented: $showingEmotionWheel) {
@@ -173,6 +177,15 @@ struct VerseView: View {
                 showingEmotionWheel = false
                 runGuidanceSearch(text: query)
             })
+        }
+        .fullScreenCover(isPresented: $showingColorPicker) {
+            ColorPickerSheetView(initialColor: colorScheme == .light ? AppColors.lightPeacock : AppColors.lavender,
+                                 onPick: { _ in showingColorPicker = false },
+                                 onClose: { showingColorPicker = false },
+                                 onSubmitQuery: { query in
+                                     showingColorPicker = false
+                                     runGuidanceSearch(text: query)
+                                 })
         }
     }
     
@@ -361,7 +374,7 @@ struct VerseView: View {
         .onChange(of: scenePhase) { oldPhase, newPhase in
             viewModel.scenePhaseChange(from: oldPhase, to: newPhase)
             // Do not dismiss presentations while guidance covers are shown
-            if showGuidanceSheet || showingEmotionWheel { return }
+            if showGuidanceSheet || showingEmotionWheel || showingColorPicker { return }
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                let window = windowScene.windows.first {
                 window.rootViewController?.dismiss(animated: false)
@@ -395,6 +408,7 @@ struct VerseView: View {
             }
         }
         .onAppear { showingEmotionWheel = false }
+        .onAppear { showingColorPicker = false }
     }
 }
 
@@ -499,6 +513,7 @@ extension VerseView {
         guidanceError = nil
         guidanceResults = []
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        let normalized = trimmed.hasPrefix("query ") ? trimmed : ("query " + trimmed)
         guard !trimmed.isEmpty else {
             guidanceError = "Please enter some text."
             return
@@ -514,7 +529,7 @@ extension VerseView {
         let k = guidanceTopK
         let rk = max(k, guidanceRetrieveTopK)
         DispatchQueue.global(qos: .userInitiated).async {
-            let results = helper.search(text: trimmed, topK: k, retrieveTopK: rk, doRerank: true)
+            let results = helper.search(text: normalized, topK: k, retrieveTopK: rk, doRerank: true)
             DispatchQueue.main.async {
                 self.guidanceResults = results
                 self.isSearchingGuidance = false

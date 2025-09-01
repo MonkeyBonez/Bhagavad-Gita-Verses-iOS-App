@@ -15,17 +15,15 @@ struct GuidanceSheetView: View {
     let onSearch: () -> Void
     let onClose: () -> Void
 
-    let isBookmarked: Bool
+    // Bookmarked theming removed
 
     private var background: some View {
-        colorScheme == .light
-        ? (isBookmarked ? AppColors.lavender.linearGradient : AppColors.parchment.linearGradient)
-        : AppColors.peacockBackground
+        colorScheme == .light ? AppColors.parchment.linearGradient : AppColors.peacockBackground
     }
 
-    private var foregroundColor: Color {
-        colorScheme == .light ? AppColors.lightPeacock : (isBookmarked ? AppColors.lavender : AppColors.parchment)
-    }
+    private var foregroundColor: Color { colorScheme == .light ? AppColors.lightPeacock : AppColors.parchment }
+    
+    private var placeholderColor: Color { colorScheme == .light ? AppColors.lightPeacock : AppColors.lavender }
     
     private var fontSize: CGFloat {
         16
@@ -46,7 +44,7 @@ struct GuidanceSheetView: View {
                     if query.isEmpty {
                         Text("What do you need help navigating?")
                             .font(.system(size: fontSize))
-                            .foregroundStyle(foregroundColor.opacity(0.5))
+                            .foregroundStyle(placeholderColor.opacity(0.5))
                             .padding(.top, 8)
                             .padding(.leading, 16)
                             .allowsHitTesting(false)
@@ -112,8 +110,7 @@ struct GuidanceSheetView: View {
                 errorText: nil,
                 results: sample,
                 onSearch: {},
-                onClose: {},
-                isBookmarked: isBookmarked
+                onClose: {}
             )
         }
     }

@@ -54,6 +54,8 @@
 		33E6E6B42DEE7BDE005B80E6 /* quotes-formatted.json in Resources */ = {isa = PBXBuildFile; fileRef = 33E6E6B22DEE7BDE005B80E6 /* quotes-formatted.json */; };
 		33FF16CC2D28FA83006E9888 /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF16CB2D28FA67006E9888 /* QuoteModel.swift */; };
 		33FF16D02D28FD5C006E9888 /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF16CB2D28FA67006E9888 /* QuoteModel.swift */; };
+		3619F1202E65344000128BB8 /* ColorPickerSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3619F11F2E65344000128BB8 /* ColorPickerSheetView.swift */; };
+		3619F1222E6534FF00128BB8 /* ColorEmotionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3619F1212E6534FF00128BB8 /* ColorEmotionEngine.swift */; };
 		362F6F7F2E63C756004E22BF /* GuidanceSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F6F7E2E63C756004E22BF /* GuidanceSheetView.swift */; };
 		362F6F932E63CB42004E22BF /* ActionIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F6F902E63CB42004E22BF /* ActionIconButton.swift */; };
 		362F6F9D2E63DF5C004E22BF /* feelings_wheel.json in Resources */ = {isa = PBXBuildFile; fileRef = 362F6F9C2E63DF5C004E22BF /* feelings_wheel.json */; };
@@ -171,6 +173,8 @@
 		33DB9A6A2DF6BD0F00DB8935 /* HomescreenQuoteWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomescreenQuoteWidget.swift; sourceTree = "<group>"; };
 		33E6E6B22DEE7BDE005B80E6 /* quotes-formatted.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "quotes-formatted.json"; sourceTree = "<group>"; };
 		33FF16CB2D28FA67006E9888 /* QuoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteModel.swift; sourceTree = "<group>"; };
+		3619F11F2E65344000128BB8 /* ColorPickerSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerSheetView.swift; sourceTree = "<group>"; };
+		3619F1212E6534FF00128BB8 /* ColorEmotionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorEmotionEngine.swift; sourceTree = "<group>"; };
 		362F6F7E2E63C756004E22BF /* GuidanceSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidanceSheetView.swift; sourceTree = "<group>"; };
 		362F6F902E63CB42004E22BF /* ActionIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionIconButton.swift; sourceTree = "<group>"; };
 		362F6F9C2E63DF5C004E22BF /* feelings_wheel.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = feelings_wheel.json; sourceTree = "<group>"; };
@@ -423,6 +427,7 @@
 				334762CB2D4F5A3C0078FCB4 /* VerseView.swift */,
 				362F6FA62E63E93A004E22BF /* EmotionWheelView.swift */,
 				362F6F7E2E63C756004E22BF /* GuidanceSheetView.swift */,
+				3619F11F2E65344000128BB8 /* ColorPickerSheetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -431,6 +436,7 @@
 			isa = PBXGroup;
 			children = (
 				362F6FAC2E63E99B004E22BF /* EmotionWheelModel.swift */,
+				3619F1212E6534FF00128BB8 /* ColorEmotionEngine.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -695,6 +701,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3619F1202E65344000128BB8 /* ColorPickerSheetView.swift in Sources */,
 				339B0B152DE0307600BFC39D /* Verses.swift in Sources */,
 				362F6FAD2E63E99B004E22BF /* EmotionWheelModel.swift in Sources */,
 				339B0B162DE0307600BFC39D /* Colors.swift in Sources */,
@@ -705,6 +712,7 @@
 				337BB69A2DCD9B3200F5EF82 /* DeeplinkCoordinator.swift in Sources */,
 				3310A48B2DEE9F2D00EBBA15 /* QuoteReader.swift in Sources */,
 				362F6F7F2E63C756004E22BF /* GuidanceSheetView.swift in Sources */,
+				3619F1222E6534FF00128BB8 /* ColorEmotionEngine.swift in Sources */,
 				33B4A9F52D2DF2A700AE1044 /* VersesReader.swift in Sources */,
 				334762D02D4F5A3C0078FCB4 /* BhagavadGitaApp.swift in Sources */,
 				366F74E42E62A80F0013079A /* MiniLMReranker.swift in Sources */,
