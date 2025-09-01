@@ -81,6 +81,11 @@ import SwiftUI
         animateFromEndToken &+= 1
     }
 
+    func setToChapterVerse(chapter: Int, verse: Int) {
+        versesReader.setCurrentByChapterVerse(chapter, verse)
+        animateFromEndToken &+= 1
+    }
+
 
 }
 

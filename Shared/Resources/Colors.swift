@@ -12,6 +12,7 @@ struct RGB {
 struct AppColors {
     static let parchment = RGB(R: 238, G: 231, B: 210).color
     static let lavender = RGB(R: 229, G: 222, B: 252).color
+    static let vividPurple = RGB(R: 100, G: 88, B: 246).color
     static let greenPeacock = RGB(R: 16, G: 34, B: 30).color
     static let bluePeacock = RGB(R: 16, G: 34, B: 34).color
     static let peacockBackground = LinearGradient(colors: [greenPeacock, bluePeacock], startPoint: .top, endPoint: .bottom)

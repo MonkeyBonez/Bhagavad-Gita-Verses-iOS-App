@@ -11,9 +11,11 @@ enum DeeplinkPaths: String, CaseIterable {
     case lockScreenWidget = "lockScreenWidget"
     case verseOfDayIntent = "verseOfDayIntent"
     case homeScreenWidget = "homeScreenWidget"
+    case verse = "verse" // e.g., bhagavadgitaverses://bhagavadgitaverses/verse?chapter=2&verse=47
 }
 
 enum DeeplinkActions {
     case none
     case quoteOfTheDay
+    case openVerse(chapter: Int, verse: Int)
 }

@@ -54,6 +54,11 @@
 		33E6E6B42DEE7BDE005B80E6 /* quotes-formatted.json in Resources */ = {isa = PBXBuildFile; fileRef = 33E6E6B22DEE7BDE005B80E6 /* quotes-formatted.json */; };
 		33FF16CC2D28FA83006E9888 /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF16CB2D28FA67006E9888 /* QuoteModel.swift */; };
 		33FF16D02D28FD5C006E9888 /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF16CB2D28FA67006E9888 /* QuoteModel.swift */; };
+		362F6F7F2E63C756004E22BF /* GuidanceSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F6F7E2E63C756004E22BF /* GuidanceSheetView.swift */; };
+		362F6F932E63CB42004E22BF /* ActionIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F6F902E63CB42004E22BF /* ActionIconButton.swift */; };
+		362F6F9D2E63DF5C004E22BF /* feelings_wheel.json in Resources */ = {isa = PBXBuildFile; fileRef = 362F6F9C2E63DF5C004E22BF /* feelings_wheel.json */; };
+		362F6FA72E63E93A004E22BF /* EmotionWheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F6FA62E63E93A004E22BF /* EmotionWheelView.swift */; };
+		362F6FAD2E63E99B004E22BF /* EmotionWheelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F6FAC2E63E99B004E22BF /* EmotionWheelModel.swift */; };
 		366F74DA2E62A80F0013079A /* tokenizer_config_retriever.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74B82E62A80F0013079A /* tokenizer_config_retriever.json */; };
 		366F74DB2E62A80F0013079A /* vocab_retriever.txt in Resources */ = {isa = PBXBuildFile; fileRef = 366F74BA2E62A80F0013079A /* vocab_retriever.txt */; };
 		366F74DC2E62A80F0013079A /* tokenizer_config_ce.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74AD2E62A80F0013079A /* tokenizer_config_ce.json */; };
@@ -73,6 +78,10 @@
 		366F74EB2E62A80F0013079A /* MiniLML6CE.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 366F74A92E62A80F0013079A /* MiniLML6CE.mlpackage */; };
 		366F74EC2E62A80F0013079A /* E5RetrieverEmbedder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74BE2E62A80F0013079A /* E5RetrieverEmbedder.swift */; };
 		366F74ED2E62A80F0013079A /* RetrieverEmbeddingIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74BC2E62A80F0013079A /* RetrieverEmbeddingIndex.swift */; };
+		366F75242E62C5940013079A /* lesson_units.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F75232E62C5940013079A /* lesson_units.json */; };
+		366F75252E62C5940013079A /* lesson_units.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F75232E62C5940013079A /* lesson_units.json */; };
+		366F75282E62C69E0013079A /* LessonUnitsIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F75262E62C69E0013079A /* LessonUnitsIndex.swift */; };
+		366F75322E6364D70013079A /* LessonNavigationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F75312E6364D70013079A /* LessonNavigationHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +171,11 @@
 		33DB9A6A2DF6BD0F00DB8935 /* HomescreenQuoteWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomescreenQuoteWidget.swift; sourceTree = "<group>"; };
 		33E6E6B22DEE7BDE005B80E6 /* quotes-formatted.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "quotes-formatted.json"; sourceTree = "<group>"; };
 		33FF16CB2D28FA67006E9888 /* QuoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteModel.swift; sourceTree = "<group>"; };
+		362F6F7E2E63C756004E22BF /* GuidanceSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidanceSheetView.swift; sourceTree = "<group>"; };
+		362F6F902E63CB42004E22BF /* ActionIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionIconButton.swift; sourceTree = "<group>"; };
+		362F6F9C2E63DF5C004E22BF /* feelings_wheel.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = feelings_wheel.json; sourceTree = "<group>"; };
+		362F6FA62E63E93A004E22BF /* EmotionWheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionWheelView.swift; sourceTree = "<group>"; };
+		362F6FAC2E63E99B004E22BF /* EmotionWheelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionWheelModel.swift; sourceTree = "<group>"; };
 		366F74A92E62A80F0013079A /* MiniLML6CE.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = MiniLML6CE.mlpackage; sourceTree = "<group>"; };
 		366F74AB2E62A80F0013079A /* special_tokens_map_ce.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = special_tokens_map_ce.json; sourceTree = "<group>"; };
 		366F74AC2E62A80F0013079A /* tokenizer_ce.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tokenizer_ce.json; sourceTree = "<group>"; };
@@ -182,6 +196,9 @@
 		366F74C12E62A80F0013079A /* MiniLMReranker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniLMReranker.swift; sourceTree = "<group>"; };
 		366F74C22E62A80F0013079A /* PairWordPieceTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairWordPieceTokenizer.swift; sourceTree = "<group>"; };
 		366F74C32E62A80F0013079A /* RetrieverWordPieceTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieverWordPieceTokenizer.swift; sourceTree = "<group>"; };
+		366F75232E62C5940013079A /* lesson_units.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = lesson_units.json; sourceTree = "<group>"; };
+		366F75262E62C69E0013079A /* LessonUnitsIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonUnitsIndex.swift; sourceTree = "<group>"; };
+		366F75312E6364D70013079A /* LessonNavigationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonNavigationHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -293,11 +310,12 @@
 		334762CC2D4F5A3C0078FCB4 /* Bhagavad Gita Verses App */ = {
 			isa = PBXGroup;
 			children = (
+				362F6FAB2E63E979004E22BF /* Models */,
+				362F6FAA2E63E970004E22BF /* Views */,
 				334762C72D4F5A3C0078FCB4 /* Preview Content */,
 				334762C82D4F5A3C0078FCB4 /* Assets.xcassets */,
 				334762C92D4F5A3C0078FCB4 /* BhagavadGitaApp.swift */,
 				334762CA2D4F5A3C0078FCB4 /* Info.plist */,
-				334762CB2D4F5A3C0078FCB4 /* VerseView.swift */,
 			);
 			path = "Bhagavad Gita Verses App";
 			sourceTree = "<group>";
@@ -326,6 +344,7 @@
 				3360D53C2DC5C06600FC57B0 /* Deeplinking */,
 				33FF16CA2D28FA5C006E9888 /* Model */,
 				366F74C52E62A80F0013079A /* Inference */,
+				362F6F922E63CB42004E22BF /* Views */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -365,6 +384,7 @@
 				339B0B0C2DE0307600BFC39D /* verses-formatted.json */,
 				33E6E6B22DEE7BDE005B80E6 /* quotes-formatted.json */,
 				339B0B0D2DE0307600BFC39D /* VersesInfo.swift */,
+				362F6F9C2E63DF5C004E22BF /* feelings_wheel.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -379,6 +399,40 @@
 				3310A48A2DEE9F2900EBBA15 /* QuoteReader.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		362F6F912E63CB42004E22BF /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				362F6F902E63CB42004E22BF /* ActionIconButton.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		362F6F922E63CB42004E22BF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				362F6F912E63CB42004E22BF /* Components */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		362F6FAA2E63E970004E22BF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				334762CB2D4F5A3C0078FCB4 /* VerseView.swift */,
+				362F6FA62E63E93A004E22BF /* EmotionWheelView.swift */,
+				362F6F7E2E63C756004E22BF /* GuidanceSheetView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		362F6FAB2E63E979004E22BF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				362F6FAC2E63E99B004E22BF /* EmotionWheelModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		366F74AA2E62A80F0013079A /* Model */ = {
@@ -458,6 +512,9 @@
 				366F74C12E62A80F0013079A /* MiniLMReranker.swift */,
 				366F74C22E62A80F0013079A /* PairWordPieceTokenizer.swift */,
 				366F74C32E62A80F0013079A /* RetrieverWordPieceTokenizer.swift */,
+				366F75232E62C5940013079A /* lesson_units.json */,
+				366F75262E62C69E0013079A /* LessonUnitsIndex.swift */,
+				366F75312E6364D70013079A /* LessonNavigationHelper.swift */,
 			);
 			path = swift;
 			sourceTree = "<group>";
@@ -600,6 +657,7 @@
 				366F74DA2E62A80F0013079A /* tokenizer_config_retriever.json in Resources */,
 				366F74DB2E62A80F0013079A /* vocab_retriever.txt in Resources */,
 				366F74DC2E62A80F0013079A /* tokenizer_config_ce.json in Resources */,
+				362F6F9D2E63DF5C004E22BF /* feelings_wheel.json in Resources */,
 				366F74DD2E62A80F0013079A /* vocab_ce.txt in Resources */,
 				366F74DE2E62A80F0013079A /* lessons_meta.json in Resources */,
 				366F74DF2E62A80F0013079A /* lessons_f32.bin in Resources */,
@@ -607,6 +665,7 @@
 				366F74E12E62A80F0013079A /* special_tokens_map_retriever.json in Resources */,
 				366F74E22E62A80F0013079A /* special_tokens_map_ce.json in Resources */,
 				366F74E32E62A80F0013079A /* tokenizer_ce.json in Resources */,
+				366F75252E62C5940013079A /* lesson_units.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,6 +676,7 @@
 				33E6E6B42DEE7BDE005B80E6 /* quotes-formatted.json in Resources */,
 				339B0B0F2DE0307600BFC39D /* EBGaramond-VariableFont_wght.ttf in Resources */,
 				339B0B102DE0307600BFC39D /* verses-formatted.json in Resources */,
+				366F75242E62C5940013079A /* lesson_units.json in Resources */,
 				334762D92D4F5B1B0078FCB4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -636,6 +696,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				339B0B152DE0307600BFC39D /* Verses.swift in Sources */,
+				362F6FAD2E63E99B004E22BF /* EmotionWheelModel.swift in Sources */,
 				339B0B162DE0307600BFC39D /* Colors.swift in Sources */,
 				3310A48F2DEF606A00EBBA15 /* FileReader.swift in Sources */,
 				339B0B172DE0307600BFC39D /* VersesInfo.swift in Sources */,
@@ -643,19 +704,24 @@
 				337BB69B2DCD9B5E00F5EF82 /* DeeplinkConstants.swift in Sources */,
 				337BB69A2DCD9B3200F5EF82 /* DeeplinkCoordinator.swift in Sources */,
 				3310A48B2DEE9F2D00EBBA15 /* QuoteReader.swift in Sources */,
+				362F6F7F2E63C756004E22BF /* GuidanceSheetView.swift in Sources */,
 				33B4A9F52D2DF2A700AE1044 /* VersesReader.swift in Sources */,
 				334762D02D4F5A3C0078FCB4 /* BhagavadGitaApp.swift in Sources */,
 				366F74E42E62A80F0013079A /* MiniLMReranker.swift in Sources */,
 				366F74E52E62A80F0013079A /* PairWordPieceTokenizer.swift in Sources */,
 				366F74E62E62A80F0013079A /* E5SmallV2.mlpackage in Sources */,
 				366F74E82E62A80F0013079A /* LessonSearchHelper.swift in Sources */,
+				366F75322E6364D70013079A /* LessonNavigationHelper.swift in Sources */,
 				366F74E92E62A80F0013079A /* RetrieverWordPieceTokenizer.swift in Sources */,
+				366F75282E62C69E0013079A /* LessonUnitsIndex.swift in Sources */,
 				366F74EA2E62A80F0013079A /* LessonEmbeddingIndex.swift in Sources */,
 				366F74EB2E62A80F0013079A /* MiniLML6CE.mlpackage in Sources */,
 				366F74EC2E62A80F0013079A /* E5RetrieverEmbedder.swift in Sources */,
 				366F74ED2E62A80F0013079A /* RetrieverEmbeddingIndex.swift in Sources */,
 				334762D12D4F5A3C0078FCB4 /* VerseView.swift in Sources */,
+				362F6FA72E63E93A004E22BF /* EmotionWheelView.swift in Sources */,
 				33FF16CC2D28FA83006E9888 /* QuoteModel.swift in Sources */,
+				362F6F932E63CB42004E22BF /* ActionIconButton.swift in Sources */,
 				339B0B052DE0268500BFC39D /* BookmarkedVersesModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -841,7 +907,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Bhagavad Gita Verses app/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Gita Verses";
+				INFOPLIST_KEY_CFBundleDisplayName = Sattva;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -873,7 +939,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Bhagavad Gita Verses app/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Gita Verses";
+				INFOPLIST_KEY_CFBundleDisplayName = Sattva;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

@@ -20,11 +20,18 @@ struct BhagavadGitaApp: App {
             break
         case .quoteOfTheDay:
             setToQuoteOfDay()
+        case .openVerse(let chapter, let verse):
+            openSpecificVerse(chapter: chapter, verse: verse)
         }
     }
 
     private func setToQuoteOfDay() {
         quoteModel.viewingBookmarkedDisable()
         quoteModel.setToVerseOfDay()
+    }
+
+    private func openSpecificVerse(chapter: Int, verse: Int) {
+        quoteModel.viewingBookmarkedDisable()
+        quoteModel.setToChapterVerse(chapter: chapter, verse: verse)
     }
 }

@@ -19,13 +19,15 @@ struct VerseView: View {
     @State private var isIntroAnimating: Bool = false
     // Guidance sheet state
     @State private var showGuidanceSheet: Bool = false
+    @State private var showingEmotionWheel: Bool = false
     @State private var guidanceQuery: String = ""
-    @State private var guidanceTopK: Int = 10
-    @State private var guidanceRetrieveTopK: Int = 50
+    @State private var guidanceTopK: Int = 3
+    @State private var guidanceRetrieveTopK: Int = 10
     @State private var guidanceResults: [LessonResult] = []
     @State private var isSearchingGuidance: Bool = false
     @State private var guidanceError: String? = nil
     @State private var searchHelper: LessonSearchHelper? = nil
+    @State private var unitsIndex: LessonUnitsIndex? = LessonUnitsIndex()
     
     let buttonClickPadding = 30.0
     private let fadeThreshold: CGFloat = 0.4
@@ -63,9 +65,9 @@ struct VerseView: View {
     
     private var footerActionView: some View {
         return HStack() {
-            shareButtonView
-            Spacer()
             bookmarkButtonView
+            Spacer()
+            shareButtonView
         }
         .foregroundStyle(foregroundColor)
         .frame(maxHeight: .infinity, alignment: .bottom)
@@ -74,9 +76,9 @@ struct VerseView: View {
 
     private var headerActionView: some View {
         HStack(spacing: 0) {
-            guidanceButtonView
-            Spacer()
             viewBookmarkedView
+            Spacer()
+            guidanceButtonView
         }
         .foregroundStyle(foregroundColor)
     }
@@ -135,52 +137,42 @@ struct VerseView: View {
     }
 
     private var guidanceButtonView: some View {
-        AnimatedTap(content: {
-            actionIcon(systemName: "sparkles")
-        }, onTap: {
-            showGuidanceSheet = true
-        })
-        .sheet(isPresented: $showGuidanceSheet) {
-            NavigationView {
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Ask for guidance")
-                        .font(.headline)
-                    TextField("Type what you need help with...", text: $guidanceQuery)
-                        .textFieldStyle(.roundedBorder)
-                    HStack {
-                        Stepper("Top K: \(guidanceTopK)", value: $guidanceTopK, in: 1...20)
-                        Stepper("Retrieve: \(guidanceRetrieveTopK)", value: $guidanceRetrieveTopK, in: max(10, guidanceTopK)...200)
-                    }
-                    Button(action: { runGuidanceSearch() }) {
-                        HStack {
-                            if isSearchingGuidance { ProgressView().padding(.trailing, 8) }
-                            Text("Search")
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                    if let err = guidanceError {
-                        Text(err).foregroundStyle(.red)
-                    }
-                    List {
-                        ForEach(Array(guidanceResults.enumerated()), id: \.0) { _, item in
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text(item.text)
-                                HStack(spacing: 12) {
-                                    Text(String(format: "cos: %.4f", item.cosine)).font(.caption)
-                                    if let ce = item.ce, abs(ce) < 1e6 { Text(String(format: "ce: %.4f", ce)).font(.caption) }
-                                }.foregroundStyle(.secondary)
-                            }
-                        }
-                    }
+        Menu {
+            Section("Gita Guidance") {
+                Button {
+                    showGuidanceSheet = true
+                } label: {
+                    Label("Describe circumstance", systemImage: "pencil")
                 }
-                .padding()
-                .navigationTitle("Guidance")
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Close") { showGuidanceSheet = false }
-                    }
+                Button {
+//                    showGuidanceSheet = true
+                    showingEmotionWheel = true
+                } label: {
+                    Label("Pick Emotion", systemImage: "smallcircle.circle")
                 }
+                // Future options will be added here
             }
+        } label: {
+            actionIcon(systemName: "sparkles")
+        }
+        .fullScreenCover(isPresented: $showGuidanceSheet) {
+            GuidanceSheetView(
+                query: $guidanceQuery,
+                topK: $guidanceTopK,
+                retrieveTopK: $guidanceRetrieveTopK,
+                isSearching: isSearchingGuidance,
+                errorText: guidanceError,
+                results: guidanceResults,
+                onSearch: { runGuidanceSearch() },
+                onClose: { showGuidanceSheet = false },
+                isBookmarked: viewModel.bookmarked
+            )
+        }
+        .fullScreenCover(isPresented: $showingEmotionWheel) {
+            EmotionWheelContainerView(isBookmarked: viewModel.bookmarked, onQuery: { query in
+                showingEmotionWheel = false
+                runGuidanceSearch(text: query)
+            })
         }
     }
     
@@ -220,7 +212,7 @@ struct VerseView: View {
         generator.prepare()
         generator.impactOccurred(intensity: 0.6)
     }
-
+    
     // Reusable micro-animation wrapper for tap interactions
     private struct AnimatedTap<Content: View>: View {
         let content: () -> Content
@@ -368,6 +360,8 @@ struct VerseView: View {
         .allowsHitTesting(!isIntroAnimating)
         .onChange(of: scenePhase) { oldPhase, newPhase in
             viewModel.scenePhaseChange(from: oldPhase, to: newPhase)
+            // Do not dismiss presentations while guidance covers are shown
+            if showGuidanceSheet || showingEmotionWheel { return }
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                let window = windowScene.windows.first {
                 window.rootViewController?.dismiss(animated: false)
@@ -388,16 +382,19 @@ struct VerseView: View {
         }
         // Run intro animation when we arrive at verse-of-day via deeplink or cold start
         .onChange(of: viewModel.animateFromEndToken) { _, _ in
-            runIntroAnimationToCurrent()
+            let target = viewModel.currentGlobalIndex
+            animateTowardsVerse(globalIndex: target)
         }
         .onAppear {
             rebuildDataSource()
             selectedGlobalIndex = viewModel.currentGlobalIndex
             // Trigger intro after first layout pass
             DispatchQueue.main.async {
-                runIntroAnimationToCurrent()
+                let target = viewModel.currentGlobalIndex
+                animateTowardsVerse(globalIndex: target)
             }
         }
+        .onAppear { showingEmotionWheel = false }
     }
 }
 
@@ -411,41 +408,76 @@ struct VerseView: View {
 
 // MARK: - Intro animation
 extension VerseView {
-    private func runIntroAnimationToCurrent() {
+    // Animate away from the current verse by paging backwards
+    func animateAwayFromCurrentBackwards(pages: Int = 7) {
         guard !dataSource.isEmpty, !isIntroAnimating else { return }
-        let current = viewModel.currentGlobalIndex
-        // Find current's position within the dataSource; if absent, use nearest by distance
-        let currentPos: Int = dataSource.firstIndex(of: current)
-            ?? dataSource.enumerated().min(by: { abs($0.element - current) < abs($1.element - current) })?.offset
-            ?? 0
-        // Move 5 pages ahead within dataSource bounds
-        let targetPos = min(currentPos + 5, dataSource.count - 1)
-        let startIndex = dataSource[targetPos]
-        guard startIndex != current else { return }
-        // Disable interactions and set initial opacity (opacity currently unused)
+        // Use the currently displayed index to avoid mismatch with view model on first call
+        let currentDisplayed = selectedGlobalIndex
+        guard let currentPos = dataSource.firstIndex(of: currentDisplayed) else { return }
+        let targetPos = max(currentPos - max(1, pages), 0)
+        let backwardIndex = dataSource[targetPos]
+        guard backwardIndex != currentDisplayed else { return }
         isIntroAnimating = true
-        introOpacity = 0.0
+        let duration: Double = 0.8
+        // Start visible, end invisible
+        introOpacity = 1.0
+        // Separate transactions to ensure scroll commits on first call
+        DispatchQueue.main.async {
+            withAnimation(.easeIn(duration: duration)) {
+                introOpacity = 0.0
+            }
+            var txn = Transaction()
+            txn.animation = .easeIn(duration: duration)
+            withTransaction(txn) {
+                scrollPosition = backwardIndex
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+                // Sync model state to the new position and re-enable interactions
+                self.selectedGlobalIndex = backwardIndex
+                self.viewModel.setCurrentByGlobalIndex(backwardIndex)
+                self.setFooterQuoteAfterQuoteChange()
+                self.isIntroAnimating = false
+            }
+        }
+    }
+
+    // Animate towards a target verse (same feel as app startup animation)
+    func animateTowardsVerse(globalIndex target: Int, pagesAhead: Int = 5) {
+        guard !dataSource.isEmpty, !isIntroAnimating else { return }
+        // Find target's position within dataSource; fall back to nearest by distance
+        let targetPos: Int = dataSource.firstIndex(of: target)
+            ?? dataSource.enumerated().min(by: { abs($0.element - target) < abs($1.element - target) })?.offset
+            ?? 0
+        let aheadPos = min(targetPos + max(1, pagesAhead), dataSource.count - 1)
+        let aheadIndex = dataSource[aheadPos]
+        guard aheadIndex != target else {
+            // Already at the end, just set to target without animation
+            selectedGlobalIndex = target
+            viewModel.setCurrentByGlobalIndex(target)
+            setFooterQuoteAfterQuoteChange()
+            return
+        }
+        isIntroAnimating = true
         let duration: Double = 0.8
         let extraOpacityDuration = 0.1
-        // Phase 1: perform the jump without animation after layout
+        // Phase 1: jump ahead without animation
         DispatchQueue.main.async {
             var txn = Transaction()
             txn.disablesAnimations = true
             withTransaction(txn) {
-                scrollPosition = startIndex
+                scrollPosition = aheadIndex
             }
-            // Phase 2: animate to the current verse after a short delay so the jump is committed
+            // Phase 2: animate back to the target verse
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                 withAnimation(.spring(duration: duration, bounce: 0.15)) {
-                    scrollPosition = current
+                    scrollPosition = target
                 }
                 withAnimation(.easeInOut(duration: duration + extraOpacityDuration)) {
                     introOpacity = 1.0
                 }
-                // Finalize after animation completes
                 DispatchQueue.main.asyncAfter(deadline: .now() + duration + extraOpacityDuration) {
-                    selectedGlobalIndex = current
-                    viewModel.setCurrentByGlobalIndex(current)
+                    selectedGlobalIndex = target
+                    viewModel.setCurrentByGlobalIndex(target)
                     setFooterQuoteAfterQuoteChange()
                     isIntroAnimating = false
                 }
@@ -456,7 +488,18 @@ extension VerseView {
     private func runGuidanceSearch() {
         guidanceError = nil
         guidanceResults = []
-        guard !guidanceQuery.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+        // Close the sheet immediately on search tap
+        showGuidanceSheet = false
+        let text = guidanceQuery
+        runGuidanceSearch(text: text)
+    }
+
+    // Overload that executes the guidance flow for an arbitrary text (used by Emotion Wheel)
+    private func runGuidanceSearch(text: String) {
+        guidanceError = nil
+        guidanceResults = []
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
             guidanceError = "Please enter some text."
             return
         }
@@ -466,14 +509,65 @@ extension VerseView {
             return
         }
         isSearchingGuidance = true
-        let query = guidanceQuery
+        // Immediately animate away from current verse (backwards)
+        animateAwayFromCurrentBackwards()
         let k = guidanceTopK
         let rk = max(k, guidanceRetrieveTopK)
         DispatchQueue.global(qos: .userInitiated).async {
-            let results = helper.search(text: query, topK: k, retrieveTopK: rk, doRerank: true)
+            let results = helper.search(text: trimmed, topK: k, retrieveTopK: rk, doRerank: true)
             DispatchQueue.main.async {
                 self.guidanceResults = results
                 self.isSearchingGuidance = false
+                // Weighted pick from top K (default 0.5/0.3/0.2)
+                if !results.isEmpty {
+                    let chosenOffset = LessonNavigationHelper.pickWeightedTopIndex(count: results.count)
+                    let chosen = results[chosenOffset]
+                    let rowIndex = Int(chosen.id)
+                    if self.unitsIndex == nil { self.unitsIndex = LessonUnitsIndex() }
+                    if let uidx = self.unitsIndex {
+                        let units = uidx.units(forEmbeddingIndex: rowIndex)
+                        let cid = uidx.oldClusterId(forEmbeddingIndex: rowIndex) ?? -1
+                        let compact = units.map { "\($0.chapter).\($0.start)–\($0.end)" }.joined(separator: ", ")
+                        print("Chosen mapping (offset=\(chosenOffset)) → row=\(rowIndex) old_cluster_id=\(cid) units=[\(compact)]")
+                        // Navigate: pick a random UnitRange and animate towards it after away animation completes
+                        if let target = LessonNavigationHelper.pickRandomTarget(from: units) {
+                            let globalIdx = LessonNavigationHelper.globalIndex(forChapter: target.chapter, verse: target.verse)
+                            DispatchQueue.main.asyncAfter(deadline: .now() + LessonNavigationHelper.awayDuration) {
+                                self.animateTowardsVerse(globalIndex: globalIdx)
+                            }
+                        }
+                    } else {
+                        print("LessonUnitsIndex unavailable; cannot map units for top result")
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Emotion Wheel Container
+extension VerseView {
+    struct EmotionWheelContainerView: View {
+        @Environment(\.colorScheme) private var colorScheme
+        let isBookmarked: Bool
+        let onQuery: ((String) -> Void)?
+        @State private var nodes: [EmotionNode] = []
+        var body: some View {
+            ZStack {
+                (colorScheme == .light ? AppColors.parchment.linearGradient : (isBookmarked ? AppColors.lavender.linearGradient : AppColors.peacockBackground))
+                    .ignoresSafeArea()
+                Group {
+                    if nodes.isEmpty {
+                        ProgressView()
+                            .task {
+                                if let loaded = try? EmotionWheelLoader.load() { nodes = loaded }
+                            }
+                    } else {
+                        EmotionWheelView(roots: nodes) { query in
+                            onQuery?(query)
+                        }
+                    }
+                }
             }
         }
     }

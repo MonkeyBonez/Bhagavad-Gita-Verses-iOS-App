@@ -20,6 +20,15 @@ struct DeeplinkCoordinator {
             return .quoteOfTheDay
         case .verseOfDayIntent:
             return .quoteOfTheDay
+        case .verse:
+            if let queryItems = components.queryItems {
+                let ch = queryItems.first(where: { $0.name == "chapter" })?.value
+                let vs = queryItems.first(where: { $0.name == "verse" })?.value
+                if let ch = ch, let vs = vs, let chapter = Int(ch), let verse = Int(vs) {
+                    return .openVerse(chapter: chapter, verse: verse)
+                }
+            }
+            return .none
         default:
             return .none
         }

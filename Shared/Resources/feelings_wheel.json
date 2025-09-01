@@ -1,0 +1,667 @@
+{
+  "name": "Gloria Willcox Feelings Wheel",
+  "version": "1.0",
+  "license_note": "Terms and exact wording vary by reproduction; this dataset is compiled for app use based on commonly published versions attributed to Willcox (1982).",
+  "schema": {
+    "id": "string",
+    "label": "string",
+    "color": "#RRGGBB (optional at any level)",
+    "children": "array of nodes"
+  },
+  "data": [
+    {
+      "id": "sad",
+      "label": "Sad",
+      "color": "#5B6B7A",
+      "children": [
+        {
+          "id": "sad_lonely",
+          "label": "Lonely",
+          "children": [
+            {
+              "id": "sad_lonely_isolated",
+              "label": "Isolated",
+              "color": "#5F6D79"
+            },
+            {
+              "id": "sad_lonely_abandoned",
+              "label": "Abandoned",
+              "color": "#54626C"
+            }
+          ],
+          "color": "#5A6773"
+        },
+        {
+          "id": "sad_vulnerable",
+          "label": "Vulnerable",
+          "children": [
+            {
+              "id": "sad_vulnerable_fragile",
+              "label": "Fragile",
+              "color": "#626D7E"
+            },
+            {
+              "id": "sad_vulnerable_victimized",
+              "label": "Victimized",
+              "color": "#55626F"
+            }
+          ],
+          "color": "#5C6777"
+        },
+        {
+          "id": "sad_despaired",
+          "label": "Despair",
+          "children": [
+            {
+              "id": "sad_despaired_powerless",
+              "label": "Powerless",
+              "color": "#566571"
+            },
+            {
+              "id": "sad_despaired_grief",
+              "label": "Grief",
+              "color": "#4B5B64"
+            }
+          ],
+          "color": "#51606B"
+        },
+        {
+          "id": "sad_guilty",
+          "label": "Guilty",
+          "children": [
+            {
+              "id": "sad_guilty_remorse",
+              "label": "Remorse",
+              "color": "#5C6576"
+            },
+            {
+              "id": "sad_guilty_ashamed",
+              "label": "Ashamed",
+              "color": "#515A69"
+            }
+          ],
+          "color": "#575F70"
+        },
+        {
+          "id": "sad_depressed",
+          "label": "Depressed",
+          "children": [
+            {
+              "id": "sad_depressed_empty",
+              "label": "Empty",
+              "color": "#57666D"
+            },
+            {
+              "id": "sad_depressed_inferior",
+              "label": "Inferior",
+              "color": "#4C5C60"
+            }
+          ],
+          "color": "#526167"
+        },
+        {
+          "id": "sad_hurt",
+          "label": "Hurt",
+          "children": [
+            {
+              "id": "sad_hurt_disappointed",
+              "label": "Let down",
+              "color": "#646B7E"
+            },
+            {
+              "id": "sad_hurt_agonized",
+              "label": "Agonized",
+              "color": "#57606F"
+            }
+          ],
+          "color": "#5E6577"
+        }
+      ]
+    },
+    {
+      "id": "mad",
+      "label": "Mad",
+      "color": "#B34747",
+      "children": [
+        {
+          "id": "mad_critical",
+          "label": "Critical",
+          "children": [
+            {
+              "id": "mad_critical_skeptical",
+              "label": "Skeptical",
+              "color": "#B45F51"
+            },
+            {
+              "id": "mad_critical_judgmental",
+              "label": "Judging",
+              "color": "#9F4B44"
+            }
+          ],
+          "color": "#AA584B"
+        },
+        {
+          "id": "mad_distant",
+          "label": "Distant",
+          "children": [
+            {
+              "id": "mad_distant_withdrawn",
+              "label": "Withdrawn",
+              "color": "#B96C79"
+            },
+            {
+              "id": "mad_distant_numb",
+              "label": "Numb",
+              "color": "#A45D6D"
+            }
+          ],
+          "color": "#AF6571"
+        },
+        {
+          "id": "mad_frustrated",
+          "label": "Frustrated",
+          "children": [
+            {
+              "id": "mad_frustrated_annoyed",
+              "label": "Annoyed",
+              "color": "#B9674B"
+            },
+            {
+              "id": "mad_frustrated_bitter",
+              "label": "Bitter",
+              "color": "#A4513E"
+            }
+          ],
+          "color": "#AF6045"
+        },
+        {
+          "id": "mad_aggressive",
+          "label": "Aggressive",
+          "children": [
+            {
+              "id": "mad_aggressive_hostile",
+              "label": "Hostile",
+              "color": "#AA4040"
+            },
+            {
+              "id": "mad_aggressive_furious",
+              "label": "Furious",
+              "color": "#97353C"
+            }
+          ],
+          "color": "#A13B3B"
+        },
+        {
+          "id": "mad_hateful",
+          "label": "Hateful",
+          "children": [
+            {
+              "id": "mad_hateful_rage",
+              "label": "Rage",
+              "color": "#A1383E"
+            },
+            {
+              "id": "mad_hateful_violated",
+              "label": "Violated",
+              "color": "#8E2E3A"
+            }
+          ],
+          "color": "#983339"
+        },
+        {
+          "id": "mad_hurt",
+          "label": "Hurt",
+          "children": [
+            {
+              "id": "mad_hurt_jealous",
+              "label": "Jealous",
+              "color": "#BD705E"
+            },
+            {
+              "id": "mad_hurt_bashful",
+              "label": "Bashful",
+              "color": "#A85B50"
+            }
+          ],
+          "color": "#B36957"
+        }
+      ]
+    },
+    {
+      "id": "scared",
+      "label": "Scared",
+      "color": "#6C7CB0",
+      "children": [
+        {
+          "id": "scared_anxious",
+          "label": "Anxious",
+          "children": [
+            {
+              "id": "scared_anxious_worried",
+              "label": "Worried",
+              "color": "#7079B1"
+            },
+            {
+              "id": "scared_anxious_frightened",
+              "label": "Afraid",
+              "color": "#616E9C"
+            }
+          ],
+          "color": "#6972A7"
+        },
+        {
+          "id": "scared_insecure",
+          "label": "Insecure",
+          "children": [
+            {
+              "id": "scared_insecure_inadequate",
+              "label": "Inadequate",
+              "color": "#778CB1"
+            },
+            {
+              "id": "scared_insecure_inferior",
+              "label": "Inferior",
+              "color": "#687E9C"
+            }
+          ],
+          "color": "#7084A7"
+        },
+        {
+          "id": "scared_overwhelmed",
+          "label": "Swamped",
+          "children": [
+            {
+              "id": "scared_overwhelmed_helpless",
+              "label": "Helpless",
+              "color": "#7384BA"
+            },
+            {
+              "id": "scared_overwhelmed_insignificant",
+              "label": "Small",
+              "color": "#6477A5"
+            }
+          ],
+          "color": "#6C7CB0"
+        },
+        {
+          "id": "scared_rejected",
+          "label": "Rejected",
+          "children": [
+            {
+              "id": "scared_rejected_weak",
+              "label": "Weak",
+              "color": "#7688AA"
+            },
+            {
+              "id": "scared_rejected_submissive",
+              "label": "Submissive",
+              "color": "#677A97"
+            }
+          ],
+          "color": "#6F80A1"
+        },
+        {
+          "id": "scared_confused",
+          "label": "Confused",
+          "children": [
+            {
+              "id": "scared_confused_bewildered",
+              "label": "Baffled",
+              "color": "#7676B2"
+            },
+            {
+              "id": "scared_confused_discouraged",
+              "label": "Discouraged",
+              "color": "#676A9D"
+            }
+          ],
+          "color": "#6F6FA8"
+        },
+        {
+          "id": "scared_embarrassed",
+          "label": "Embarrassed",
+          "children": [
+            {
+              "id": "scared_embarrassed_foolish",
+              "label": "Foolish",
+              "color": "#817BB6"
+            },
+            {
+              "id": "scared_embarrassed_selfconscious",
+              "label": "Shy",
+              "color": "#6D6BA1"
+            }
+          ],
+          "color": "#7973AC"
+        }
+      ]
+    },
+    {
+      "id": "joyful",
+      "label": "Joyful",
+      "color": "#EFBF5B",
+      "children": [
+        {
+          "id": "joyful_playful",
+          "label": "Playful",
+          "children": [
+            {
+              "id": "joyful_playful_amused",
+              "label": "Amused",
+              "color": "#FDDF63"
+            },
+            {
+              "id": "joyful_playful_spirited",
+              "label": "Spirited",
+              "color": "#E0BB52"
+            }
+          ],
+          "color": "#E3B84D"
+        },
+        {
+          "id": "joyful_content",
+          "label": "Content",
+          "children": [
+            {
+              "id": "joyful_content_peaceful",
+              "label": "Peaceful",
+              "color": "#FFC370"
+            },
+            {
+              "id": "joyful_content_pleasant",
+              "label": "Pleasant",
+              "color": "#EBA861"
+            }
+          ],
+          "color": "#FABE6B"
+        },
+        {
+          "id": "joyful_interested",
+          "label": "Interested",
+          "children": [
+            {
+              "id": "joyful_interested_curious",
+              "label": "Curious",
+              "color": "#FDB46A"
+            },
+            {
+              "id": "joyful_interested_inquisitive",
+              "label": "Inquisitive",
+              "color": "#E09459"
+            }
+          ],
+          "color": "#EFA962"
+        },
+        {
+          "id": "joyful_proud",
+          "label": "Proud",
+          "children": [
+            {
+              "id": "joyful_proud_successful",
+              "label": "Achieved",
+              "color": "#F09E5E"
+            },
+            {
+              "id": "joyful_proud_confident",
+              "label": "Confident",
+              "color": "#D5804E"
+            }
+          ],
+          "color": "#E39456"
+        },
+        {
+          "id": "joyful_excited",
+          "label": "Excited",
+          "children": [
+            {
+              "id": "joyful_excited_eager",
+              "label": "Eager",
+              "color": "#FBFD5B"
+            },
+            {
+              "id": "joyful_excited_energetic",
+              "label": "Energetic",
+              "color": "#E0D84B"
+            }
+          ],
+          "color": "#D4C23F"
+        },
+        {
+          "id": "joyful_cheerful",
+          "label": "Cheerful",
+          "children": [
+            {
+              "id": "joyful_cheerful_delightful",
+              "label": "Delightful",
+              "color": "#FFCE67"
+            },
+            {
+              "id": "joyful_cheerful_optimistic",
+              "label": "Optimistic",
+              "color": "#EBB259"
+            }
+          ],
+          "color": "#FAC962"
+        }
+      ]
+    },
+    {
+      "id": "powerful",
+      "label": "Powerful",
+      "color": "#65A665",
+      "children": [
+        {
+          "id": "powerful_respected",
+          "label": "Respected",
+          "children": [
+            {
+              "id": "powerful_respected_valued",
+              "label": "Valuable",
+              "color": "#75AF6F"
+            },
+            {
+              "id": "powerful_respected_appreciated",
+              "label": "Valued",
+              "color": "#6A9C60"
+            }
+          ],
+          "color": "#6EA668"
+        },
+        {
+          "id": "powerful_courageous",
+          "label": "Courageous",
+          "children": [
+            {
+              "id": "powerful_courageous_daring",
+              "label": "Daring",
+              "color": "#68AB71"
+            },
+            {
+              "id": "powerful_courageous_bold",
+              "label": "Bold",
+              "color": "#59985E"
+            }
+          ],
+          "color": "#61A26A"
+        },
+        {
+          "id": "powerful_proud",
+          "label": "Proud",
+          "children": [
+            {
+              "id": "powerful_proud_successful",
+              "label": "Achieved",
+              "color": "#74A867"
+            },
+            {
+              "id": "powerful_proud_important",
+              "label": "Important",
+              "color": "#699559"
+            }
+          ],
+          "color": "#6D9F60"
+        },
+        {
+          "id": "powerful_creative",
+          "label": "Creative",
+          "children": [
+            {
+              "id": "powerful_creative_ingenious",
+              "label": "Ingenious",
+              "color": "#6CAF7C"
+            },
+            {
+              "id": "powerful_creative_resourceful",
+              "label": "Versatile",
+              "color": "#5D9C67"
+            }
+          ],
+          "color": "#65A674"
+        },
+        {
+          "id": "powerful_aware",
+          "label": "Aware",
+          "children": [
+            {
+              "id": "powerful_aware_present",
+              "label": "Present",
+              "color": "#73B373"
+            },
+            {
+              "id": "powerful_aware_focused",
+              "label": "Focused",
+              "color": "#689E64"
+            }
+          ],
+          "color": "#6CA96C"
+        },
+        {
+          "id": "powerful_confident",
+          "label": "Confident",
+          "children": [
+            {
+              "id": "powerful_confident_valued",
+              "label": "Capable",
+              "color": "#70AF6C"
+            },
+            {
+              "id": "powerful_confident_secure",
+              "label": "Secure",
+              "color": "#659C5D"
+            }
+          ],
+          "color": "#69A665"
+        }
+      ]
+    },
+    {
+      "id": "peaceful",
+      "label": "Peaceful",
+      "color": "#6CB3B9",
+      "children": [
+        {
+          "id": "peaceful_thankful",
+          "label": "Thankful",
+          "children": [
+            {
+              "id": "peaceful_thankful_grateful",
+              "label": "Grateful",
+              "color": "#7AC7C3"
+            },
+            {
+              "id": "peaceful_thankful_blessed",
+              "label": "Blessed",
+              "color": "#69B0A8"
+            }
+          ],
+          "color": "#72BCB8"
+        },
+        {
+          "id": "peaceful_loving",
+          "label": "Loving",
+          "children": [
+            {
+              "id": "peaceful_loving_affectionate",
+              "label": "Tender",
+              "color": "#7BB2C4"
+            },
+            {
+              "id": "peaceful_loving_compassionate",
+              "label": "Empathic",
+              "color": "#6AA2AD"
+            }
+          ],
+          "color": "#73A8B9"
+        },
+        {
+          "id": "peaceful_trusting",
+          "label": "Trusting",
+          "children": [
+            {
+              "id": "peaceful_trusting_receptive",
+              "label": "Receptive",
+              "color": "#7FC2C7"
+            },
+            {
+              "id": "peaceful_trusting_patient",
+              "label": "Patient",
+              "color": "#6EB0B0"
+            }
+          ],
+          "color": "#77B7BC"
+        },
+        {
+          "id": "peaceful_nurturing",
+          "label": "Nurturing",
+          "children": [
+            {
+              "id": "peaceful_nurturing_supportive",
+              "label": "Supportive",
+              "color": "#7BB6C4"
+            },
+            {
+              "id": "peaceful_nurturing_caring",
+              "label": "Caring",
+              "color": "#6AA5AD"
+            }
+          ],
+          "color": "#73ACB9"
+        },
+        {
+          "id": "peaceful_serene",
+          "label": "Serene",
+          "children": [
+            {
+              "id": "peaceful_serene_calm",
+              "label": "Calm",
+              "color": "#85CDC4"
+            },
+            {
+              "id": "peaceful_serene_content",
+              "label": "Content",
+              "color": "#74B6A9"
+            }
+          ],
+          "color": "#7DC2B9"
+        },
+        {
+          "id": "peaceful_hopeful",
+          "label": "Hopeful",
+          "children": [
+            {
+              "id": "peaceful_hopeful_optimistic",
+              "label": "Optimistic",
+              "color": "#7ECACB"
+            },
+            {
+              "id": "peaceful_hopeful_inspired",
+              "label": "Inspired",
+              "color": "#6DB4B0"
+            }
+          ],
+          "color": "#76BFC0"
+        }
+      ]
+    }
+  ]
+}

@@ -89,6 +89,14 @@ struct VersesReader {
         bookmarkedVersesModel.setCurrentToGlobalIndex(index)
     }
 
+    mutating func setCurrentByChapterVerse(_ chapter: Int, _ verse: Int) {
+        guard chapter > 0, chapter <= VersesInfo.versesPerChapter.count else { return }
+        guard verse > 0, verse <= VersesInfo.versesPerChapter[chapter - 1] else { return }
+        chapterNumber = chapter
+        verseNumber = verse
+        updateVerse(chapter: chapterNumber, verse: verseNumber)
+    }
+
     func verse(atGlobalIndex index: Int) -> Verse {
         verses[max(0, min(index, verses.count - 1))]
     }
