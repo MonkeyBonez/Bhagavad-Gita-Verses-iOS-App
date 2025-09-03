@@ -19,7 +19,7 @@ public final class LessonSearchHelper {
         tokenizer = tok; embedder = emb; index = idx; pairTokenizer = pt; reranker = rr
     }
 
-    public func search(text: String, topK: Int = 10, retrieveTopK: Int = 50, doRerank: Bool = true) -> [LessonResult] {
+    public func search(text: String, topK: Int = 10, retrieveTopK: Int = 20, doRerank: Bool = true) -> [LessonResult] {
         let enc = tokenizer.encode(text, maxLen: 128, prefix: "query: ")
         guard let q = embedder.embed(inputIds: enc.ids, attentionMask: enc.mask) else { return [] }
         let retrN = max(topK, retrieveTopK)

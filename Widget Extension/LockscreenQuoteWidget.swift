@@ -23,8 +23,8 @@ struct LockscreenQuoteWidget: Widget {
             LockscreenQuoteWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-        .configurationDisplayName("Quote of the Week")
-        .description("This is a widget to show the Quote of the week from the Bhagavad Gita.")
+        .configurationDisplayName("Lesson of the Week")
+        .description("Shows the Bhagavad Gita lesson of the week.")
         .supportedFamilies([.accessoryRectangular])
     }
 }

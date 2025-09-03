@@ -8,4 +8,16 @@ struct VersesInfo {
     static private func sum(_ numbers: [Int]) -> Int {
         numbers.reduce(0, +)
     }
+
+    // Map a global index back to (chapter, verse)
+    static func getVerseFromIndex(idx: Int) -> (Int, Int) {
+        var remaining = idx
+        for (chapterIdx, count) in versesPerChapter.enumerated() {
+            if remaining < count {
+                return (chapterIdx + 1, remaining + 1)
+            }
+            remaining -= count
+        }
+        return (1, 1)
+    }
 }

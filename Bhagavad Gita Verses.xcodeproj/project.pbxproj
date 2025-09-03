@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3310A48B2DEE9F2D00EBBA15 /* QuoteReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3310A48A2DEE9F2900EBBA15 /* QuoteReader.swift */; };
-		3310A48C2DEE9F2D00EBBA15 /* QuoteReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3310A48A2DEE9F2900EBBA15 /* QuoteReader.swift */; };
 		3310A48E2DEF606A00EBBA15 /* FileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3310A48D2DEF606700EBBA15 /* FileReader.swift */; };
 		3310A48F2DEF606A00EBBA15 /* FileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3310A48D2DEF606700EBBA15 /* FileReader.swift */; };
 		33182E082DD58B6000A82202 /* HomescreenVerseWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182E052DD5893A00A82202 /* HomescreenVerseWidget.swift */; };
@@ -50,8 +48,6 @@
 		33B4A9F62D2DF2A700AE1044 /* VersesReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */; };
 		33DB9A692DF6BAF900DB8935 /* QuoteWidgetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33DB9A682DF6BAF300DB8935 /* QuoteWidgetProvider.swift */; };
 		33DB9A6B2DF6BD0F00DB8935 /* HomescreenQuoteWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33DB9A6A2DF6BD0F00DB8935 /* HomescreenQuoteWidget.swift */; };
-		33E6E6B32DEE7BDE005B80E6 /* quotes-formatted.json in Resources */ = {isa = PBXBuildFile; fileRef = 33E6E6B22DEE7BDE005B80E6 /* quotes-formatted.json */; };
-		33E6E6B42DEE7BDE005B80E6 /* quotes-formatted.json in Resources */ = {isa = PBXBuildFile; fileRef = 33E6E6B22DEE7BDE005B80E6 /* quotes-formatted.json */; };
 		33FF16CC2D28FA83006E9888 /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF16CB2D28FA67006E9888 /* QuoteModel.swift */; };
 		33FF16D02D28FD5C006E9888 /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF16CB2D28FA67006E9888 /* QuoteModel.swift */; };
 		3619F1202E65344000128BB8 /* ColorPickerSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3619F11F2E65344000128BB8 /* ColorPickerSheetView.swift */; };
@@ -61,6 +57,17 @@
 		362F6F9D2E63DF5C004E22BF /* feelings_wheel.json in Resources */ = {isa = PBXBuildFile; fileRef = 362F6F9C2E63DF5C004E22BF /* feelings_wheel.json */; };
 		362F6FA72E63E93A004E22BF /* EmotionWheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F6FA62E63E93A004E22BF /* EmotionWheelView.swift */; };
 		362F6FAD2E63E99B004E22BF /* EmotionWheelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F6FAC2E63E99B004E22BF /* EmotionWheelModel.swift */; };
+		363230C42E661E86003264E7 /* LessonUnitsIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F75262E62C69E0013079A /* LessonUnitsIndex.swift */; };
+		363230C52E66213B003264E7 /* LessonEmbeddingIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74BF2E62A80F0013079A /* LessonEmbeddingIndex.swift */; };
+		363230C72E662254003264E7 /* WeeklySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230C62E662254003264E7 /* WeeklySelector.swift */; };
+		363230C82E662254003264E7 /* WeeklySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230C62E662254003264E7 /* WeeklySelector.swift */; };
+		363230CA2E66230C003264E7 /* LessonTextsIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230C92E66230C003264E7 /* LessonTextsIndex.swift */; };
+		363230CB2E66230C003264E7 /* LessonTextsIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230C92E66230C003264E7 /* LessonTextsIndex.swift */; };
+		363230CC2E6623F6003264E7 /* lessons_meta.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74B22E62A80F0013079A /* lessons_meta.json */; };
+		363230CD2E665E8D003264E7 /* lessons_f32.bin in Resources */ = {isa = PBXBuildFile; fileRef = 366F74B12E62A80F0013079A /* lessons_f32.bin */; };
+		363230CF2E668CB9003264E7 /* verse_to_lesson.json in Resources */ = {isa = PBXBuildFile; fileRef = 363230CE2E668CB9003264E7 /* verse_to_lesson.json */; };
+		363230D02E668CB9003264E7 /* verse_to_lesson.json in Resources */ = {isa = PBXBuildFile; fileRef = 363230CE2E668CB9003264E7 /* verse_to_lesson.json */; };
+		363230D42E67D1B1003264E7 /* BookmarkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230D32E67D1B1003264E7 /* BookmarkListView.swift */; };
 		366F74DA2E62A80F0013079A /* tokenizer_config_retriever.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74B82E62A80F0013079A /* tokenizer_config_retriever.json */; };
 		366F74DB2E62A80F0013079A /* vocab_retriever.txt in Resources */ = {isa = PBXBuildFile; fileRef = 366F74BA2E62A80F0013079A /* vocab_retriever.txt */; };
 		366F74DC2E62A80F0013079A /* tokenizer_config_ce.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74AD2E62A80F0013079A /* tokenizer_config_ce.json */; };
@@ -84,6 +91,8 @@
 		366F75252E62C5940013079A /* lesson_units.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F75232E62C5940013079A /* lesson_units.json */; };
 		366F75282E62C69E0013079A /* LessonUnitsIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F75262E62C69E0013079A /* LessonUnitsIndex.swift */; };
 		366F75322E6364D70013079A /* LessonNavigationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F75312E6364D70013079A /* LessonNavigationHelper.swift */; };
+		36E7D9E12E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */; };
+		36E7D9E22E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,7 +148,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3310A48A2DEE9F2900EBBA15 /* QuoteReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteReader.swift; sourceTree = "<group>"; };
 		3310A48D2DEF606700EBBA15 /* FileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReader.swift; sourceTree = "<group>"; };
 		33182E052DD5893A00A82202 /* HomescreenVerseWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomescreenVerseWidget.swift; sourceTree = "<group>"; };
 		33182E092DD58B7400A82202 /* VerseWidgetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseWidgetProvider.swift; sourceTree = "<group>"; };
@@ -171,7 +179,6 @@
 		33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersesReader.swift; sourceTree = "<group>"; };
 		33DB9A682DF6BAF300DB8935 /* QuoteWidgetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteWidgetProvider.swift; sourceTree = "<group>"; };
 		33DB9A6A2DF6BD0F00DB8935 /* HomescreenQuoteWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomescreenQuoteWidget.swift; sourceTree = "<group>"; };
-		33E6E6B22DEE7BDE005B80E6 /* quotes-formatted.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "quotes-formatted.json"; sourceTree = "<group>"; };
 		33FF16CB2D28FA67006E9888 /* QuoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteModel.swift; sourceTree = "<group>"; };
 		3619F11F2E65344000128BB8 /* ColorPickerSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerSheetView.swift; sourceTree = "<group>"; };
 		3619F1212E6534FF00128BB8 /* ColorEmotionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorEmotionEngine.swift; sourceTree = "<group>"; };
@@ -180,6 +187,10 @@
 		362F6F9C2E63DF5C004E22BF /* feelings_wheel.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = feelings_wheel.json; sourceTree = "<group>"; };
 		362F6FA62E63E93A004E22BF /* EmotionWheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionWheelView.swift; sourceTree = "<group>"; };
 		362F6FAC2E63E99B004E22BF /* EmotionWheelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionWheelModel.swift; sourceTree = "<group>"; };
+		363230C62E662254003264E7 /* WeeklySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklySelector.swift; sourceTree = "<group>"; };
+		363230C92E66230C003264E7 /* LessonTextsIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonTextsIndex.swift; sourceTree = "<group>"; };
+		363230CE2E668CB9003264E7 /* verse_to_lesson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = verse_to_lesson.json; sourceTree = "<group>"; };
+		363230D32E67D1B1003264E7 /* BookmarkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkListView.swift; sourceTree = "<group>"; };
 		366F74A92E62A80F0013079A /* MiniLML6CE.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = MiniLML6CE.mlpackage; sourceTree = "<group>"; };
 		366F74AB2E62A80F0013079A /* special_tokens_map_ce.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = special_tokens_map_ce.json; sourceTree = "<group>"; };
 		366F74AC2E62A80F0013079A /* tokenizer_ce.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tokenizer_ce.json; sourceTree = "<group>"; };
@@ -203,6 +214,7 @@
 		366F75232E62C5940013079A /* lesson_units.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = lesson_units.json; sourceTree = "<group>"; };
 		366F75262E62C69E0013079A /* LessonUnitsIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonUnitsIndex.swift; sourceTree = "<group>"; };
 		366F75312E6364D70013079A /* LessonNavigationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonNavigationHelper.swift; sourceTree = "<group>"; };
+		36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSans3-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -366,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				339B0B062DE0307600BFC39D /* EBGaramond-VariableFont_wght.ttf */,
+				36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */,
 			);
 			path = EB_Garamond;
 			sourceTree = "<group>";
@@ -386,7 +399,6 @@
 				339B0B0A2DE0307600BFC39D /* Colors.swift */,
 				339B0B0B2DE0307600BFC39D /* Verses.swift */,
 				339B0B0C2DE0307600BFC39D /* verses-formatted.json */,
-				33E6E6B22DEE7BDE005B80E6 /* quotes-formatted.json */,
 				339B0B0D2DE0307600BFC39D /* VersesInfo.swift */,
 				362F6F9C2E63DF5C004E22BF /* feelings_wheel.json */,
 			);
@@ -400,7 +412,6 @@
 				339B0B032DE0267F00BFC39D /* BookmarkedVersesModel.swift */,
 				33FF16CB2D28FA67006E9888 /* QuoteModel.swift */,
 				33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */,
-				3310A48A2DEE9F2900EBBA15 /* QuoteReader.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -428,6 +439,7 @@
 				362F6FA62E63E93A004E22BF /* EmotionWheelView.swift */,
 				362F6F7E2E63C756004E22BF /* GuidanceSheetView.swift */,
 				3619F11F2E65344000128BB8 /* ColorPickerSheetView.swift */,
+				363230D32E67D1B1003264E7 /* BookmarkListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -521,6 +533,9 @@
 				366F75232E62C5940013079A /* lesson_units.json */,
 				366F75262E62C69E0013079A /* LessonUnitsIndex.swift */,
 				366F75312E6364D70013079A /* LessonNavigationHelper.swift */,
+				363230C62E662254003264E7 /* WeeklySelector.swift */,
+				363230C92E66230C003264E7 /* LessonTextsIndex.swift */,
+				363230CE2E668CB9003264E7 /* verse_to_lesson.json */,
 			);
 			path = swift;
 			sourceTree = "<group>";
@@ -655,8 +670,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				363230CF2E668CB9003264E7 /* verse_to_lesson.json in Resources */,
 				334762CE2D4F5A3C0078FCB4 /* Preview Assets.xcassets in Resources */,
-				33E6E6B32DEE7BDE005B80E6 /* quotes-formatted.json in Resources */,
 				334762CF2D4F5A3C0078FCB4 /* Assets.xcassets in Resources */,
 				339B0B192DE0307600BFC39D /* EBGaramond-VariableFont_wght.ttf in Resources */,
 				339B0B1A2DE0307600BFC39D /* verses-formatted.json in Resources */,
@@ -668,6 +683,7 @@
 				366F74DE2E62A80F0013079A /* lessons_meta.json in Resources */,
 				366F74DF2E62A80F0013079A /* lessons_f32.bin in Resources */,
 				366F74E02E62A80F0013079A /* tokenizer_retriever.json in Resources */,
+				36E7D9E22E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf in Resources */,
 				366F74E12E62A80F0013079A /* special_tokens_map_retriever.json in Resources */,
 				366F74E22E62A80F0013079A /* special_tokens_map_ce.json in Resources */,
 				366F74E32E62A80F0013079A /* tokenizer_ce.json in Resources */,
@@ -679,10 +695,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33E6E6B42DEE7BDE005B80E6 /* quotes-formatted.json in Resources */,
 				339B0B0F2DE0307600BFC39D /* EBGaramond-VariableFont_wght.ttf in Resources */,
+				363230CD2E665E8D003264E7 /* lessons_f32.bin in Resources */,
+				363230CC2E6623F6003264E7 /* lessons_meta.json in Resources */,
+				36E7D9E12E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf in Resources */,
 				339B0B102DE0307600BFC39D /* verses-formatted.json in Resources */,
 				366F75242E62C5940013079A /* lesson_units.json in Resources */,
+				363230D02E668CB9003264E7 /* verse_to_lesson.json in Resources */,
 				334762D92D4F5B1B0078FCB4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -704,13 +723,13 @@
 				3619F1202E65344000128BB8 /* ColorPickerSheetView.swift in Sources */,
 				339B0B152DE0307600BFC39D /* Verses.swift in Sources */,
 				362F6FAD2E63E99B004E22BF /* EmotionWheelModel.swift in Sources */,
+				363230C72E662254003264E7 /* WeeklySelector.swift in Sources */,
 				339B0B162DE0307600BFC39D /* Colors.swift in Sources */,
 				3310A48F2DEF606A00EBBA15 /* FileReader.swift in Sources */,
 				339B0B172DE0307600BFC39D /* VersesInfo.swift in Sources */,
 				339B0B182DE0307600BFC39D /* Fonts.swift in Sources */,
 				337BB69B2DCD9B5E00F5EF82 /* DeeplinkConstants.swift in Sources */,
 				337BB69A2DCD9B3200F5EF82 /* DeeplinkCoordinator.swift in Sources */,
-				3310A48B2DEE9F2D00EBBA15 /* QuoteReader.swift in Sources */,
 				362F6F7F2E63C756004E22BF /* GuidanceSheetView.swift in Sources */,
 				3619F1222E6534FF00128BB8 /* ColorEmotionEngine.swift in Sources */,
 				33B4A9F52D2DF2A700AE1044 /* VersesReader.swift in Sources */,
@@ -722,8 +741,10 @@
 				366F75322E6364D70013079A /* LessonNavigationHelper.swift in Sources */,
 				366F74E92E62A80F0013079A /* RetrieverWordPieceTokenizer.swift in Sources */,
 				366F75282E62C69E0013079A /* LessonUnitsIndex.swift in Sources */,
+				363230CB2E66230C003264E7 /* LessonTextsIndex.swift in Sources */,
 				366F74EA2E62A80F0013079A /* LessonEmbeddingIndex.swift in Sources */,
 				366F74EB2E62A80F0013079A /* MiniLML6CE.mlpackage in Sources */,
+				363230D42E67D1B1003264E7 /* BookmarkListView.swift in Sources */,
 				366F74EC2E62A80F0013079A /* E5RetrieverEmbedder.swift in Sources */,
 				366F74ED2E62A80F0013079A /* RetrieverEmbeddingIndex.swift in Sources */,
 				334762D12D4F5A3C0078FCB4 /* VerseView.swift in Sources */,
@@ -739,8 +760,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				337BB69C2DCD9B7C00F5EF82 /* DeeplinkConstants.swift in Sources */,
+				363230CA2E66230C003264E7 /* LessonTextsIndex.swift in Sources */,
 				33A7D3E72DD97D7500900DFF /* LockscreenEasyViewQuoteWidget.swift in Sources */,
 				334762DA2D4F5B1B0078FCB4 /* WidgetBundle.swift in Sources */,
+				363230C82E662254003264E7 /* WeeklySelector.swift in Sources */,
 				339B0B112DE0307600BFC39D /* Verses.swift in Sources */,
 				339B0B122DE0307600BFC39D /* Colors.swift in Sources */,
 				335445C52DE42EF0000D38E2 /* BookmarkedVersesModel.swift in Sources */,
@@ -752,8 +775,9 @@
 				33DB9A6B2DF6BD0F00DB8935 /* HomescreenQuoteWidget.swift in Sources */,
 				334762DC2D4F5B1B0078FCB4 /* ControlWidget.swift in Sources */,
 				33B4A9F62D2DF2A700AE1044 /* VersesReader.swift in Sources */,
+				363230C42E661E86003264E7 /* LessonUnitsIndex.swift in Sources */,
+				363230C52E66213B003264E7 /* LessonEmbeddingIndex.swift in Sources */,
 				33FF16D02D28FD5C006E9888 /* QuoteModel.swift in Sources */,
-				3310A48C2DEE9F2D00EBBA15 /* QuoteReader.swift in Sources */,
 				33182E0C2DD58E4100A82202 /* VerseWidgetProvider.swift in Sources */,
 				33182E082DD58B6000A82202 /* HomescreenVerseWidget.swift in Sources */,
 			);

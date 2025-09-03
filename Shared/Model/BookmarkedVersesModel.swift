@@ -3,7 +3,9 @@ import Algorithms
 
 struct BookmarkedVersesModel {
     private var bookmarkedVerseIndices: [Int] = []
+    private var indexToTimestamp: [Int: TimeInterval] = [:]
     private let userDefaultsKey = "SavedVerses"
+    private let userDefaultsKeyV2 = "SavedVersesV2"
     private var bookmarkedVerseIndex = 0
 
     init() {
@@ -36,10 +38,25 @@ struct BookmarkedVersesModel {
     }
 
     private mutating func getData() {
-        guard let array = UserDefaults.standard.array(forKey: userDefaultsKey) as? [Int] else {
+        if let data = UserDefaults.standard.data(forKey: userDefaultsKeyV2),
+           let arr = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
+            var indices: [Int] = []
+            var tsMap: [Int: TimeInterval] = [:]
+            for obj in arr {
+                if let idx = obj["index"] as? Int {
+                    indices.append(idx)
+                    if let ts = obj["ts"] as? TimeInterval { tsMap[idx] = ts }
+                }
+            }
+            bookmarkedVerseIndices = indices
+            indexToTimestamp = tsMap
             return
         }
-        bookmarkedVerseIndices = array
+        if let array = UserDefaults.standard.array(forKey: userDefaultsKey) as? [Int] {
+            bookmarkedVerseIndices = array
+            let now = Date().timeIntervalSince1970
+            for idx in array { indexToTimestamp[idx] = now }
+        }
     }
 
     func markBookmarked(allVerses: [Verse]) -> [Verse] {
@@ -55,17 +72,20 @@ struct BookmarkedVersesModel {
         // If already bookmarked, move pointer to that entry and return
         if let existing = bookmarkedVerseIndices.firstIndex(of: globalIndex) {
             bookmarkedVerseIndex = existing
+            // Do not change timestamp for existing bookmark
             return
         }
         // Insert in sorted order using binary search (partitioningIndex)
         let insertPos = bookmarkedVerseIndices.partitioningIndex { $0 >= globalIndex }
         bookmarkedVerseIndices.insert(globalIndex, at: insertPos)
+        indexToTimestamp[globalIndex] = Date().timeIntervalSince1970
         bookmarkedVerseIndex = insertPos
     }
 
     mutating func removeCurrentVerse() -> Int {
         let removalIndex = bookmarkedVerseIndices[bookmarkedVerseIndex]
         bookmarkedVerseIndices.remove(at: bookmarkedVerseIndex)
+        indexToTimestamp.removeValue(forKey: removalIndex)
         if bookmarkedVerseIndex > 0 {
             bookmarkedVerseIndex -= 1
         }
@@ -75,6 +95,15 @@ struct BookmarkedVersesModel {
     func persistData() {
         let array = Array(bookmarkedVerseIndices)
         UserDefaults.standard.setValue(array, forKey: userDefaultsKey)
+        var v2: [[String: Any]] = []
+        v2.reserveCapacity(array.count)
+        for idx in array {
+            let ts = indexToTimestamp[idx] ?? Date().timeIntervalSince1970
+            v2.append(["index": idx, "ts": ts])
+        }
+        if let data = try? JSONSerialization.data(withJSONObject: v2) {
+            UserDefaults.standard.set(data, forKey: userDefaultsKeyV2)
+        }
     }
     
     private var bookmarkArrayNextVerseIndex: Int {

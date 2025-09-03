@@ -2,7 +2,7 @@ import Foundation
 
 struct VersesReader {
     let versesFilePath = Bundle.main.path(forResource: "verses-formatted", ofType: "json")
-    let quoteReader = QuoteReader()
+    let weeklyLessonIndex = LessonUnitsIndex()
     var chapterNumber: Int = 0
     var verseNumber: Int = 0
     var verses: [Verse]
@@ -19,8 +19,15 @@ struct VersesReader {
                 } else {
                     getCurrentBookmarkedVerse()
                 }
+                // Keep chapter/verse numbers in sync with the visible bookmarked verse
+                chapterNumber = currentVerse.chapterNumber
+                verseNumber = currentVerse.verseNumber
             }
             if !bookmarkedOnlyMode {
+                // Exiting bookmarked mode: preserve the currently visible verse by syncing
+                // chapter/verse first, then run the standard update to refresh internal pointers.
+                chapterNumber = currentVerse.chapterNumber
+                verseNumber = currentVerse.verseNumber
                 updateVerse(chapter: chapterNumber, verse: verseNumber)
             }
         }
@@ -120,10 +127,15 @@ struct VersesReader {
     }
     
     private func getChapterAndVerseNumber(for date: Date) -> (Int, Int) {
-        let quoteForDate = quoteReader.quoteOfDayFor(date: date)
-        let chapterNumber = quoteForDate.chapterNumber
-        let verseNumber = quoteForDate.verseNumber
-        return (chapterNumber, verseNumber)
+        // Fallback weekly selection using lesson_units.json
+        guard let idx = weeklyLessonIndex, idx.count > 0 else { return (1, 1) }
+        let cal = Calendar.current
+        // Locale-specific week numbering
+        let week = cal.component(.weekOfYear, from: date)
+        let lessonIndex = max(0, (week - 1) % idx.count)
+        let units = idx.units(forEmbeddingIndex: lessonIndex)
+        guard let first = units.first else { return (1, 1) }
+        return (first.chapter, first.start)
     }
     
     var nextVerse: Verse? {
@@ -207,7 +219,11 @@ struct VersesReader {
     }
 
     mutating func setNextBookmarkedVerse() {
-        currentVerse = verses[bookmarkedVersesModel.setNextVerseIndex()]
+        let idx = bookmarkedVersesModel.setNextVerseIndex()
+        currentVerse = verses[idx]
+        // Keep chapter/verse numbers in sync while in bookmarked mode
+        chapterNumber = currentVerse.chapterNumber
+        verseNumber = currentVerse.verseNumber
     }
     
     var prevBookmarkedVerse: Verse {
@@ -215,11 +231,18 @@ struct VersesReader {
     }
 
     mutating func getPrevBookmarkedVerse() {
-        currentVerse = verses[bookmarkedVersesModel.setPrevVerseIndex()]
+        let idx = bookmarkedVersesModel.setPrevVerseIndex()
+        currentVerse = verses[idx]
+        // Keep chapter/verse numbers in sync while in bookmarked mode
+        chapterNumber = currentVerse.chapterNumber
+        verseNumber = currentVerse.verseNumber
     }
 
     mutating func getCurrentBookmarkedVerse() {
         currentVerse = verses[bookmarkedVersesModel.currentBookmarkedVerseIndex]
+        // Keep chapter/verse numbers in sync while in bookmarked mode
+        chapterNumber = currentVerse.chapterNumber
+        verseNumber = currentVerse.verseNumber
     }
 
     mutating func bookmarkCurrentVerse() {

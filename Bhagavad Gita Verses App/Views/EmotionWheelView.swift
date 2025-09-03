@@ -5,7 +5,7 @@ import Combine
 struct EmotionWheelView: View {
     let roots: [EmotionNode]
     let onSelect: (String) -> Void
-    let initialVelocity = 0.25
+    let initialVelocity = 0.07
     let initialInertiaDecay = 0.99
 
     @Environment(\.colorScheme) private var colorScheme

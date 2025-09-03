@@ -17,6 +17,7 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SourceSans3-VariableFont_wght.ttf</string>
 		<string>EBGaramond-VariableFont_wght.ttf</string>
 	</array>
 	<key>UILaunchScreen</key>

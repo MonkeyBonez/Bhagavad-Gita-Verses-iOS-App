@@ -3,6 +3,10 @@ import SwiftUI
 
 @Observable class QuoteModel {
     private var versesReader: VersesReader
+    private let weeklyHeuristic: SattvaWeeklyHeuristic = {
+        let url = Bundle.main.url(forResource: "verse_to_lesson", withExtension: "json")
+        return SattvaWeeklyHeuristic(verseToLessonJSON: url)
+    }()
     private let currentDate: Date = Date()
     private var userInteracted: Bool = false
     private var shownVerseOfDay: Verse?
@@ -68,7 +72,7 @@ import SwiftUI
 
     init() {
         self.versesReader = VersesReader()
-        versesReader.setVerseOfDay()
+        setToWeeklyPick()
         self.shownVerseOfDay = versesReader.currentVerse
     }
     
@@ -77,7 +81,7 @@ import SwiftUI
     }
     
     func setToVerseOfDay() {
-        versesReader.setVerseOfDay()
+        setToWeeklyPick()
         animateFromEndToken &+= 1
     }
 
@@ -110,9 +114,7 @@ extension QuoteModel {
             versesReader.bookmarkedVersesModel.persistData()
         }
         else if newPhase == .inactive && oldPhase == .background {
-            if !versesReader.checkNewQuoteOfDay(shownVerseOfDay: shownVerseOfDay!) {
-                checkResetToQuoteOfDay()
-            }
+            checkResetToQuoteOfDay()
         }
     }
 
@@ -162,5 +164,13 @@ extension QuoteModel {
         return versesReader.verseOfDayForDate(date)
     }
 
+}
+
+// MARK: - Weekly pick sync
+extension QuoteModel {
+    private func setToWeeklyPick(for date: Date = Date()) {
+        let pick = WeeklyPickSync.getOrComputePick(forWeekOf: date, with: weeklyHeuristic)
+        versesReader.setCurrentByChapterVerse(pick.chapter, pick.verse)
+    }
 }
 

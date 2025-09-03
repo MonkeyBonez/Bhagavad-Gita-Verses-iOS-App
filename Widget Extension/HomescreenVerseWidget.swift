@@ -11,8 +11,8 @@ struct HomescreenVerseWidget: Widget {
             HomescreenVerseWidgetEntryView(entry: entry)
         }
         .supportedFamilies([.systemMedium])
-        .configurationDisplayName("Quote of the Week")
-        .description("This is a widget to show the quote of the week from the Bhagavad Gita.")
+        .configurationDisplayName("Verse of the Week")
+        .description("Shows the Bhagavad Gita verse of the week.")
     }
 }
 

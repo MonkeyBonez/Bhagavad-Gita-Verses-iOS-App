@@ -66,14 +66,14 @@ struct GuidanceSheetView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     if #available(iOS 26.0, *) {
                         Button(action: { onSearch(); onClose() }) {
-                            Image(systemName: "magnifyingglass")
+                            Image(systemName: "sparkle.magnifyingglass")
                         }
                         .buttonStyle(.glassProminent)
                         .tint(AppColors.vividPurple)
                         .disabled(isSearching)
                     } else {
                         Button(action: { onSearch(); onClose() }) {
-                            Image(systemName: "magnifyingglass")
+                            Image(systemName: "sparkle.magnifyingglass")
                         }
                         .tint(foregroundColor)
                         .disabled(isSearching)

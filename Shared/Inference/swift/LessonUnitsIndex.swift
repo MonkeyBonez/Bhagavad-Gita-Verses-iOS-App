@@ -18,6 +18,8 @@ public final class LessonUnitsIndex {
         // Try to locate lesson_units.json in bundle
         let candidates: [URL?] = [
             Bundle.main.url(forResource: "lesson_units", withExtension: "json"),
+            Bundle.main.url(forResource: "lesson_units", withExtension: "json", subdirectory: "Shared/Inference/swift"),
+            Bundle.main.url(forResource: "lesson_units", withExtension: "json", subdirectory: "Shared/Inference"),
         ]
         guard let url = candidates.compactMap({ $0 }).first else {
             assertionFailure("LessonUnitsIndex: lesson_units.json not found in bundle")
@@ -31,6 +33,10 @@ public final class LessonUnitsIndex {
             print("LessonUnitsIndex: failed to load/parse lesson_units.json: \(error)")
             return nil
         }
+    }
+
+    public var count: Int {
+        return entries.count
     }
 
     public func units(forEmbeddingIndex index: Int) -> [UnitRange] {

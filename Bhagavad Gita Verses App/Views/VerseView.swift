@@ -17,10 +17,12 @@ struct VerseView: View {
     @State private var selectedGlobalIndex: Int = 0
     @State private var introOpacity: CGFloat = 0.0
     @State private var isIntroAnimating: Bool = false
+    @State private var isSwitchingDataSource: Bool = false
     // Guidance sheet state
     @State private var showGuidanceSheet: Bool = false
     @State private var showingEmotionWheel: Bool = false
     @State private var showingColorPicker: Bool = false
+    @State private var showingBookmarkList: Bool = false
     @State private var guidanceQuery: String = ""
     @State private var guidanceTopK: Int = 3
     @State private var guidanceRetrieveTopK: Int = 10
@@ -29,6 +31,7 @@ struct VerseView: View {
     @State private var guidanceError: String? = nil
     @State private var searchHelper: LessonSearchHelper? = nil
     @State private var unitsIndex: LessonUnitsIndex? = LessonUnitsIndex()
+    @State private var isCentered: Bool = true
     
     let buttonClickPadding = 30.0
     private let fadeThreshold: CGFloat = 0.4
@@ -56,8 +59,16 @@ struct VerseView: View {
         self._dataSource = State(initialValue: [])
     }
     
+    private var isDisplayBookmarked: Bool {
+        if isSwitchingDataSource {
+            let verse = viewModel.verse(atGlobalIndex: selectedGlobalIndex)
+            return verse.bookmarked
+        }
+        return viewModel.bookmarked
+    }
+
     private var foregroundColor: Color {
-        colorScheme == .light ? AppColors.lightPeacock : viewModel.bookmarked ? AppColors.lavender : AppColors.parchment
+        colorScheme == .light ? AppColors.lightPeacock : isDisplayBookmarked ? AppColors.lavender : AppColors.parchment
     }
     
     private func foregroundColorForQuote(bookmarked: Bool) -> Color {
@@ -133,8 +144,14 @@ struct VerseView: View {
                 .foregroundStyle(viewModel.hasBookmarks ? foregroundColor : .clear)
                 .symbolEffect(.bounce, value: viewModel.viewBookmarkAddIndicator)
         }, onTap: {
-            toggleBookmarkedOnly()
+            if viewModel.hasBookmarks {
+                showingBookmarkList = true
+            }
         })
+    }
+
+    private var canToggleBookmarkMode: Bool {
+        isCentered && !isIntroAnimating && !isSwitchingDataSource
     }
 
     private var guidanceButtonView: some View {
@@ -187,26 +204,63 @@ struct VerseView: View {
                                      runGuidanceSearch(text: query)
                                  })
         }
+        .sheet(isPresented: $showingBookmarkList) {
+            BookmarkListView(
+                isBookmarkedTheme: viewModel.bookmarked,
+                indices: viewModel.bookmarkedGlobalIndices,
+                verseProvider: { idx in viewModel.verse(atGlobalIndex: idx) },
+                onSelect: { idx in
+                    showingBookmarkList = false
+                    // Navigate to the tapped bookmark after the sheet dismisses
+                    DispatchQueue.main.async {
+                        // Ensure data source contains all verses so we can jump anywhere
+                        if !viewModel.viewingBookmarked { rebuildDataSource() }
+                        let current = viewModel.currentGlobalIndex
+                        if idx == current {
+                            // No animation if already at target
+                            selectedGlobalIndex = current
+                            scrollPosition = current
+                        } else if idx > current {
+                            // Moving forward: animate from start side (target scrolls in appropriately)
+                            animateTowardsVerseFromStart(globalIndex: idx)
+                        } else {
+                            // Moving backward or to earlier verse: keep existing animation style
+                            animateTowardsVerse(globalIndex: idx)
+                        }
+                    }
+                },
+                onClose: { showingBookmarkList = false }
+            )
+            .presentationDetents([.medium, .large])
+            .presentationContentInteraction(.scrolls)
+        }
     }
     
     private func toggleBookmarkedOnly() {
+        guard canToggleBookmarkMode else { return }
+        isSwitchingDataSource = true
+        let currentIndex = selectedGlobalIndex
         viewModel.viewingBookmarkedTapped()
         rebuildDataSource()
-        // Ensure the current selected index is visible in the new dataSource
+        var targetIndex = currentIndex
         if viewModel.viewingBookmarked {
-            // Jump to the nearest bookmarked to the current verse
-            let current = viewModel.currentGlobalIndex
-            if let nearest = dataSource.min(by: { abs($0 - current) < abs($1 - current) }) {
-                selectedGlobalIndex = nearest
-                scrollPosition = nearest
-                viewModel.setCurrentByGlobalIndex(nearest)
-                setFooterQuoteAfterQuoteChange()
+            // Map to nearest bookmarked verse to the currently visible global index
+            if let nearest = dataSource.min(by: { abs($0 - currentIndex) < abs($1 - currentIndex) }) {
+                targetIndex = nearest
             } else if let first = dataSource.first {
-                selectedGlobalIndex = first
-                scrollPosition = first
-                viewModel.setCurrentByGlobalIndex(first)
-                setFooterQuoteAfterQuoteChange()
+                targetIndex = first
             }
+        }
+        var txn = Transaction()
+        txn.disablesAnimations = true
+        withTransaction(txn) {
+            selectedGlobalIndex = targetIndex
+            scrollPosition = targetIndex
+        }
+        viewModel.setCurrentByGlobalIndex(targetIndex)
+        setFooterQuoteAfterQuoteChange()
+        DispatchQueue.main.async {
+            self.isSwitchingDataSource = false
         }
     }
 
@@ -268,11 +322,12 @@ struct VerseView: View {
     }
     
     private func quoteFooterView(quote: Verse) -> some View {
-        VStack(spacing: 0) {
+        VStack(spacing: -1) {
             Text(viewModel.author)
                 .font(.custom(Fonts.verseFontName, size: 20))
                 .bold()
             Text("\(quote.chapterNumber).\(quote.verseNumber)")
+                .font(.custom(Fonts.supportingFontName, size: 18))
         }
     }
     
@@ -285,6 +340,8 @@ struct VerseView: View {
             let distanceFromCenter = abs(dx) / max(screenWidth, 1)
             let normalized = min(distanceFromCenter / fadeThreshold, 1)
             let opacity = max(0, 1.0 - easeInOut01(normalized))
+            let isCurrent = (globalIndex == selectedGlobalIndex)
+            let centeredNow = abs(dx) < 0.5
             VStack(spacing: 16) {
                 Text(verse.text)
                     .font(.custom(Fonts.verseFontName, size: 30))
@@ -298,13 +355,25 @@ struct VerseView: View {
             .padding(25)
             .padding(.bottom, 144) // leave toolbar area free
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                Group {
+                    if isCurrent {
+                        Color.clear
+                            .onChange(of: centeredNow) { _, newValue in
+                                if newValue != isCentered { isCentered = newValue }
+                            }
+                    } else {
+                        Color.clear
+                    }
+                }
+            )
         }
         .containerRelativeFrame(.horizontal)
         .id(globalIndex)
     }
     
     var background: some View {
-        colorScheme == .light ? viewModel.bookmarked ? AppColors.lavender.linearGradient : AppColors.parchment.linearGradient : AppColors.peacockBackground
+        colorScheme == .light ? (isDisplayBookmarked ? AppColors.lavender.linearGradient : AppColors.parchment.linearGradient) : AppColors.peacockBackground
     }
     
     var body: some View {
@@ -335,7 +404,7 @@ struct VerseView: View {
             .scrollIndicators(.hidden)
             .coordinateSpace(.named("scroll"))
             .scrollPosition(id: $scrollPosition, anchor: .center)
-            .opacity(introOpacity)
+            .opacity(isSwitchingDataSource ? 0.0 : introOpacity)
             .background(
                 GeometryReader { geometry in
                     Color.clear
@@ -347,7 +416,7 @@ struct VerseView: View {
                 }
             )
             .onChange(of: scrollPosition) { _, newValue in
-                if isIntroAnimating { return }
+                if isIntroAnimating || isSwitchingDataSource { return }
                 if let newValue = newValue {
                     selectedGlobalIndex = newValue
                     viewModel.setCurrentByGlobalIndex(newValue)
@@ -370,11 +439,11 @@ struct VerseView: View {
             .ignoresSafeArea()
             
         }
-        .allowsHitTesting(!isIntroAnimating)
+        .allowsHitTesting(!isIntroAnimating && !isSwitchingDataSource)
         .onChange(of: scenePhase) { oldPhase, newPhase in
             viewModel.scenePhaseChange(from: oldPhase, to: newPhase)
             // Do not dismiss presentations while guidance covers are shown
-            if showGuidanceSheet || showingEmotionWheel || showingColorPicker { return }
+            if showGuidanceSheet || showingEmotionWheel || showingColorPicker || showingBookmarkList { return }
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                let window = windowScene.windows.first {
                 window.rootViewController?.dismiss(animated: false)
@@ -382,7 +451,7 @@ struct VerseView: View {
         }
         // Respond to external mode changes (e.g., deeplink resets)
         .onChange(of: viewModel.bookmarkedOnlyMode) { _, _ in
-            if isIntroAnimating { return }
+            if isIntroAnimating || isSwitchingDataSource { return }
             rebuildDataSource()
             selectedGlobalIndex = viewModel.currentGlobalIndex
             scrollPosition = selectedGlobalIndex
@@ -422,6 +491,41 @@ struct VerseView: View {
 
 // MARK: - Intro animation
 extension VerseView {
+    // MARK: Bookmark List Sheet
+    struct BookmarkListSheet: View {
+        let indices: [Int]
+        let getVerse: (Int) -> Verse
+        let onSelect: (Int) -> Void
+        let onClose: () -> Void
+        var body: some View {
+            NavigationStack {
+                List(indices, id: \.self) { idx in
+                    let verse = getVerse(idx)
+                    Button {
+                        onSelect(idx)
+                    } label: {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(verse.text)
+                                .font(.custom(Fonts.verseFontName, size: 20))
+                                .foregroundStyle(AppColors.lightPeacock)
+                                .lineLimit(3)
+                            Text("\(verse.chapterNumber).\(verse.verseNumber)")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+                .listStyle(.insetGrouped)
+                .navigationTitle("Bookmarked Verses")
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Done") { onClose() }
+                    }
+                }
+            }
+        }
+    }
     // Animate away from the current verse by paging backwards
     func animateAwayFromCurrentBackwards(pages: Int = 7) {
         guard !dataSource.isEmpty, !isIntroAnimating else { return }
@@ -482,6 +586,50 @@ extension VerseView {
                 scrollPosition = aheadIndex
             }
             // Phase 2: animate back to the target verse
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                withAnimation(.spring(duration: duration, bounce: 0.15)) {
+                    scrollPosition = target
+                }
+                withAnimation(.easeInOut(duration: duration + extraOpacityDuration)) {
+                    introOpacity = 1.0
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + duration + extraOpacityDuration) {
+                    selectedGlobalIndex = target
+                    viewModel.setCurrentByGlobalIndex(target)
+                    setFooterQuoteAfterQuoteChange()
+                    isIntroAnimating = false
+                }
+            }
+        }
+    }
+
+    // Animate towards a target verse from the start side (jump behind, then page forward)
+    func animateTowardsVerseFromStart(globalIndex target: Int, pagesBehind: Int = 5) {
+        guard !dataSource.isEmpty, !isIntroAnimating else { return }
+        // Find target's position within dataSource; fall back to nearest by distance
+        let targetPos: Int = dataSource.firstIndex(of: target)
+            ?? dataSource.enumerated().min(by: { abs($0.element - target) < abs($1.element - target) })?.offset
+            ?? 0
+        let behindPos = max(targetPos - max(1, pagesBehind), 0)
+        let behindIndex = dataSource[behindPos]
+        guard behindIndex != target else {
+            // Already at the start, just set to target without animation
+            selectedGlobalIndex = target
+            viewModel.setCurrentByGlobalIndex(target)
+            setFooterQuoteAfterQuoteChange()
+            return
+        }
+        isIntroAnimating = true
+        let duration: Double = 0.8
+        let extraOpacityDuration = 0.1
+        // Phase 1: jump behind without animation
+        DispatchQueue.main.async {
+            var txn = Transaction()
+            txn.disablesAnimations = true
+            withTransaction(txn) {
+                scrollPosition = behindIndex
+            }
+            // Phase 2: animate forward to the target verse
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                 withAnimation(.spring(duration: duration, bounce: 0.15)) {
                     scrollPosition = target
@@ -569,7 +717,7 @@ extension VerseView {
         @State private var nodes: [EmotionNode] = []
         var body: some View {
             ZStack {
-                (colorScheme == .light ? AppColors.parchment.linearGradient : (isBookmarked ? AppColors.lavender.linearGradient : AppColors.peacockBackground))
+                (colorScheme == .light ? AppColors.parchment.linearGradient : AppColors.peacockBackground)
                     .ignoresSafeArea()
                 Group {
                     if nodes.isEmpty {
@@ -587,8 +735,3 @@ extension VerseView {
         }
     }
 }
-
-
-
-
-
