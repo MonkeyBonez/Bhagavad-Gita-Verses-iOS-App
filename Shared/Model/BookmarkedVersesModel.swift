@@ -38,7 +38,7 @@ struct BookmarkedVersesModel {
     }
 
     private mutating func getData() {
-        if let data = UserDefaults.standard.data(forKey: userDefaultsKeyV2),
+        if let data = SharedDefaults.defaults.data(forKey: userDefaultsKeyV2),
            let arr = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
             var indices: [Int] = []
             var tsMap: [Int: TimeInterval] = [:]
@@ -52,7 +52,7 @@ struct BookmarkedVersesModel {
             indexToTimestamp = tsMap
             return
         }
-        if let array = UserDefaults.standard.array(forKey: userDefaultsKey) as? [Int] {
+        if let array = SharedDefaults.defaults.array(forKey: userDefaultsKey) as? [Int] {
             bookmarkedVerseIndices = array
             let now = Date().timeIntervalSince1970
             for idx in array { indexToTimestamp[idx] = now }
@@ -94,7 +94,7 @@ struct BookmarkedVersesModel {
 
     func persistData() {
         let array = Array(bookmarkedVerseIndices)
-        UserDefaults.standard.setValue(array, forKey: userDefaultsKey)
+        SharedDefaults.defaults.setValue(array, forKey: userDefaultsKey)
         var v2: [[String: Any]] = []
         v2.reserveCapacity(array.count)
         for idx in array {
@@ -102,7 +102,7 @@ struct BookmarkedVersesModel {
             v2.append(["index": idx, "ts": ts])
         }
         if let data = try? JSONSerialization.data(withJSONObject: v2) {
-            UserDefaults.standard.set(data, forKey: userDefaultsKeyV2)
+            SharedDefaults.defaults.set(data, forKey: userDefaultsKeyV2)
         }
     }
     

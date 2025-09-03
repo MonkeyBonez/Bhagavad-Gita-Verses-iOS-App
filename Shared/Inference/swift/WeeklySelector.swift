@@ -1,5 +1,14 @@
 import Foundation
 
+// Shared App Group defaults for cross-process consistency (App + Widgets)
+public enum SharedDefaults {
+    // Update to your actual App Group identifier configured in entitlements
+    private static let suiteName = "group.sattva"
+    public static var defaults: UserDefaults {
+        UserDefaults(suiteName: suiteName) ?? .standard
+    }
+}
+
 public struct WeeklyPick {
     public let lessonIndex: Int
     public let lessonText: String
@@ -176,7 +185,7 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
 
     private func loadBookmarkTimestamps() -> [Int: TimeInterval] {
         // Prefer V2 structure: array of {index, ts}
-        if let data = UserDefaults.standard.data(forKey: "SavedVersesV2"),
+        if let data = SharedDefaults.defaults.data(forKey: "SavedVersesV2"),
            let arr = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
             var map: [Int: TimeInterval] = [:]
             for obj in arr {
@@ -185,7 +194,7 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
             return map
         }
         // Fallback: legacy list → give them a uniform recent timestamp
-        if let legacy = UserDefaults.standard.array(forKey: "SavedVerses") as? [Int] {
+        if let legacy = SharedDefaults.defaults.array(forKey: "SavedVerses") as? [Int] {
             let now = Date().timeIntervalSince1970
             var map: [Int: TimeInterval] = [:]
             for idx in legacy { map[idx] = now }
@@ -197,7 +206,7 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
     private func loadSeedLessonIndices() -> [Int] {
         // Pull bookmarks from UserDefaults (SavedVerses) and map via verseMap if present
         var seeds: [Int] = []
-        if let array = UserDefaults.standard.array(forKey: "SavedVerses") as? [Int] {
+        if let array = SharedDefaults.defaults.array(forKey: "SavedVerses") as? [Int] {
             for gi in array {
                 let (ch,v) = VersesInfo.getVerseFromIndex(idx: gi)
                 let key = "\(ch):\(v)"
@@ -211,7 +220,7 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
     }
 
     private func loadShown(excludingNewerThanDays days: Int) -> Set<Int> {
-        guard let data = UserDefaults.standard.data(forKey: shownKey), let arr = try? JSONSerialization.jsonObject(with: data) as? [[String:Any]] else { return [] }
+        guard let data = SharedDefaults.defaults.data(forKey: shownKey), let arr = try? JSONSerialization.jsonObject(with: data) as? [[String:Any]] else { return [] }
         let cutoff = Date().addingTimeInterval(TimeInterval(-days * 24 * 3600))
         var set = Set<Int>()
         for obj in arr {
@@ -225,12 +234,12 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
 
     private func saveShown(index: Int, date: Date) {
         var arr: [[String:Any]] = []
-        if let data = UserDefaults.standard.data(forKey: shownKey), let existing = try? JSONSerialization.jsonObject(with: data) as? [[String:Any]] {
+        if let data = SharedDefaults.defaults.data(forKey: shownKey), let existing = try? JSONSerialization.jsonObject(with: data) as? [[String:Any]] {
             arr = existing
         }
         arr.append(["index": index, "ts": date.timeIntervalSince1970])
         if let data = try? JSONSerialization.data(withJSONObject: arr) {
-            UserDefaults.standard.set(data, forKey: shownKey)
+            SharedDefaults.defaults.set(data, forKey: shownKey)
         }
     }
 }
@@ -264,7 +273,7 @@ public struct WeeklyPickSync {
     public static func loadPick(forWeekOf date: Date) -> WeeklyPick? {
         let anchor = sundayStart(for: date)
         let key = pickKeyPrefix + String(Int(anchor.timeIntervalSince1970))
-        guard let dict = UserDefaults.standard.dictionary(forKey: key) as? [String: Any] else { return nil }
+        guard let dict = SharedDefaults.defaults.dictionary(forKey: key) as? [String: Any] else { return nil }
         guard let li = dict["lessonIndex"] as? Int,
               let lt = dict["lessonText"] as? String,
               let ch = dict["chapter"] as? Int,
@@ -281,7 +290,7 @@ public struct WeeklyPickSync {
             "chapter": pick.chapter,
             "verse": pick.verse
         ]
-        UserDefaults.standard.set(dict, forKey: key)
+        SharedDefaults.defaults.set(dict, forKey: key)
     }
 
     public static func getOrComputePick(forWeekOf date: Date, with heuristic: WeeklyHeuristic) -> WeeklyPick {
