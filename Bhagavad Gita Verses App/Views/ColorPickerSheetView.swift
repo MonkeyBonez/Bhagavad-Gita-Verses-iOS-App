@@ -55,72 +55,57 @@ struct ColorPickerSheetView: View {
                 let result = engine.evaluate(color: selectedColor)
                 let top3 = Array(result.top5.prefix(3))
 
-                // Top 3 selectable options (single selection)
+                // Top 3 selectable options (single selection) — iOS 18+ compatible implementation
                 if !top3.isEmpty {
-                    if #available(iOS 26.0, *) {
-                        LiquidGlassSegmentedPicker(
-                            items: top3.map { $0.0.capitalized },
-                            selection: Binding<String>(
-                                get: { (selectedEmotionKey ?? top3.first?.0)?.capitalized ?? top3[0].0.capitalized },
-                                set: { selectedEmotionKey = $0.lowercased() }
-                            ),
-                            tint: foregroundColor,
-                            selectedTextColor: (colorScheme == .light ? AppColors.lavender : AppColors.greenPeacock),
-                            selectedPillTint: (colorScheme == .light ? AppColors.greenPeacock : .indigo)
-                        )
-                        .padding(.horizontal)
-                    } else {
-                        // iOS < 26: center-pin the middle emotion using width measurement and manual offsets
-                        let spacing: CGFloat = 20
-                        let labels = top3.map { $0.0.capitalized }
-                        ZStack {
-                            if labels.count == 3 {
-                                ForEach(labels, id: \.self) { label in
-                                    let isSelected = (selectedEmotionKey ?? top3.first?.0)?.capitalized == label
-                                    let centerLabel = labels[1]
-                                    let isLeft = label == labels[0]
-                                    let isCenter = label == centerLabel
-                                    let isRight = label == labels[2]
+                    let spacing: CGFloat = 20
+                    let labels = top3.map { $0.0.capitalized }
+                    ZStack {
+                        if labels.count == 3 {
+                            ForEach(labels, id: \.self) { label in
+                                let isSelected = (selectedEmotionKey ?? top3.first?.0)?.capitalized == label
+                                let centerLabel = labels[1]
+                                let isLeft = label == labels[0]
+                                let isCenter = label == centerLabel
+                                let isRight = label == labels[2]
 
-                                    Button(action: { selectedEmotionKey = label.lowercased() }) {
-                                        Text(label)
-                                            .font(.subheadline)
-                                            .padding(.vertical, 8)
-                                            .padding(.horizontal, 12)
-                                            .frame(minHeight: 36)
-                                            .background(
-                                                Capsule().fill(
-                                                    isSelected
-                                                    ? (colorScheme == .dark ? AppColors.lavender : foregroundColor.opacity(0.95))
-                                                    : Color.clear
-                                                )
+                                Button(action: { selectedEmotionKey = label.lowercased() }) {
+                                    Text(label)
+                                        .font(.subheadline)
+                                        .padding(.vertical, 8)
+                                        .padding(.horizontal, 12)
+                                        .frame(minHeight: 36)
+                                        .background(
+                                            Capsule().fill(
+                                                isSelected
+                                                ? (colorScheme == .dark ? AppColors.lavender : foregroundColor.opacity(0.95))
+                                                : Color.clear
                                             )
-                                            .overlay(
-                                                Capsule().stroke(foregroundColor.opacity(0.6), lineWidth: 1)
-                                            )
-                                            .foregroundStyle(isSelected ? (colorScheme == .light ? AppColors.lavender : AppColors.greenPeacock) : foregroundColor)
-                                            .background(
-                                                GeometryReader { g in
-                                                    Color.clear.preference(key: FallbackWidthPrefKey.self, value: [label: g.size.width])
-                                                }
-                                            )
-                                    }
-                                    .buttonStyle(.plain)
-                                    .offset(x: {
-                                        let centerW = fallbackItemWidths[labels[1]] ?? 0
-                                        let meW = fallbackItemWidths[label] ?? 0
-                                        if isCenter { return 0 }
-                                        if isLeft { return -((centerW / 2) + spacing + (meW / 2)) }
-                                        if isRight { return (centerW / 2) + spacing + (meW / 2) }
-                                        return 0
-                                    }())
+                                        )
+                                        .overlay(
+                                            Capsule().stroke(foregroundColor.opacity(0.6), lineWidth: 1)
+                                        )
+                                        .foregroundStyle(isSelected ? (colorScheme == .light ? AppColors.lavender : AppColors.greenPeacock) : foregroundColor)
+                                        .background(
+                                            GeometryReader { g in
+                                                Color.clear.preference(key: FallbackWidthPrefKey.self, value: [label: g.size.width])
+                                            }
+                                        )
                                 }
+                                .buttonStyle(.plain)
+                                .offset(x: {
+                                    let centerW = fallbackItemWidths[labels[1]] ?? 0
+                                    let meW = fallbackItemWidths[label] ?? 0
+                                    if isCenter { return 0 }
+                                    if isLeft { return -((centerW / 2) + spacing + (meW / 2)) }
+                                    if isRight { return (centerW / 2) + spacing + (meW / 2) }
+                                    return 0
+                                }())
                             }
                         }
-                        .frame(maxWidth: .infinity)
-                        .onPreferenceChange(FallbackWidthPrefKey.self) { fallbackItemWidths = $0 }
-                        .padding(.horizontal)
                     }
+                    .frame(maxWidth: .infinity)
+                    .onPreferenceChange(FallbackWidthPrefKey.self) { fallbackItemWidths = $0 }
+                    .padding(.horizontal)
                 }
 
                 Spacer()
@@ -134,30 +119,17 @@ struct ColorPickerSheetView: View {
                     .tint(foregroundColor)
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    if #available(iOS 26.0, *) {
-                        Button(action: {
-                            if let key = selectedEmotionKey {
-                                onSubmitQuery?("I feel \(key.capitalized)")
-                            }
-                            onPick(selectedColor)
-                            onClose()
-                        }) {
-                            Image(systemName: "checkmark")
+                    Button(action: {
+                        if let key = selectedEmotionKey {
+                            onSubmitQuery?("I feel \(key.capitalized)")
                         }
-                        .buttonStyle(.glassProminent)
-                        .tint(AppColors.vividPurple)
-                    } else {
-                        Button(action: {
-                            if let key = selectedEmotionKey {
-                                onSubmitQuery?("I feel \(key.capitalized)")
-                            }
-                            onPick(selectedColor)
-                            onClose()
-                        }) {
-                            Image(systemName: "checkmark")
-                        }
-                        .tint(foregroundColor)
+                        onPick(selectedColor)
+                        onClose()
+                    }) {
+                        Image(systemName: "sparkle.magnifyingglass")
                     }
+//                    .buttonStyle(.borderedProminent)
+                    .tint(AppColors.vividPurple)
                 }
             }
             .sheet(isPresented: $showUIKitPicker) {
@@ -174,139 +146,6 @@ struct ColorPickerSheetView: View {
             }
         }
         .background(background.ignoresSafeArea())
-    }
-}
-
-#if canImport(UIKit)
-@available(iOS 26.0, *)
-private struct LiquidGlassSegmentedPicker: View {
-    let items: [String]
-    @Binding var selection: String
-    var tint: Color
-    var selectedTextColor: Color
-    var selectedPillTint: Color
-
-    @Namespace private var ns
-    @State private var itemWidths: [String: CGFloat] = [:]
-
-    private struct WidthPrefKey: PreferenceKey {
-        static var defaultValue: [String: CGFloat] = [:]
-        static func reduce(value: inout [String: CGFloat], nextValue: () -> [String: CGFloat]) {
-            value.merge(nextValue(), uniquingKeysWith: { $1 })
-        }
-    }
-
-    var body: some View {
-        let spacing: CGFloat = 20
-        let labels = items
-
-        ZStack {
-            if labels.count == 3 {
-                // Place center item exactly at center; left/right positioned by measured widths
-                ForEach(labels, id: \.self) { label in
-                    let isSelected = label == selection
-                    let centerLabel = labels[1]
-                    let isLeft = label == labels[0]
-                    let isCenter = label == centerLabel
-                    let isRight = label == labels[2]
-
-                    Button(action: {
-                        withAnimation(.smooth(duration: 0.25)) {
-                            selection = label
-                        }
-                    }) {
-                        Text(label)
-                            .font(.subheadline)
-                            .fontWeight(isSelected ? .semibold : .regular)
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 12)
-                            .frame(minHeight: 36)
-                            .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.plain)
-                    .foregroundStyle(isSelected ? .clear : tint)
-                    .background(
-                        GeometryReader { g in
-                            Color.clear
-                                .preference(key: WidthPrefKey.self, value: [label: g.size.width])
-                        }
-                    )
-                    .overlay(
-                        Group {
-                            if isSelected {
-                                Capsule()
-                                    .glassEffect(.regular.tint(selectedPillTint.opacity(0.4)))
-                                    .overlay(Text(label)
-                                        .font(.subheadline)
-                                        .fontWeight(.semibold)
-                                        .padding(.vertical, 8)
-                                        .padding(.horizontal, 12)
-                                        .frame(minHeight: 36)
-                                        .contentShape(Rectangle())
-                                        .foregroundStyle(selectedTextColor)
-                                        .allowsHitTesting(false)
-                                    )
-                                    .matchedGeometryEffect(id: "lg-pill", in: ns)
-                            }
-                        }
-                    )
-                    .overlay {
-                        if !isSelected {
-                            Capsule().stroke(tint.opacity(0.6), lineWidth: 1)
-                        }
-                    }
-                    .offset(x: {
-                        let centerW = itemWidths[labels[1]] ?? 0
-                        let meW = itemWidths[label] ?? 0
-                        if isCenter { return 0 }
-                        if isLeft { return -((centerW / 2) + spacing + (meW / 2)) }
-                        if isRight { return (centerW / 2) + spacing + (meW / 2) }
-                        return 0
-                    }())
-                }
-            } else {
-                // Fallback: simple HStack
-                HStack(spacing: spacing) {
-                    ForEach(labels, id: \.self) { label in
-                        let isSelected = label == selection
-                        Button(action: { withAnimation(.smooth(duration: 0.25)) { selection = label } }) {
-                            Text(label)
-                                .font(.subheadline)
-                                .fontWeight(isSelected ? .semibold : .regular)
-                                .padding(.vertical, 8)
-                                .padding(.horizontal, 12)
-                                .frame(minHeight: 36)
-                                .contentShape(Rectangle())
-                        }
-                        .buttonStyle(.plain)
-                        .foregroundStyle(isSelected ? .clear : tint)
-                        .overlay(
-                            Group {
-                                if isSelected {
-                                    Capsule()
-                                        .glassEffect(.regular.tint(selectedPillTint.opacity(0.4)))
-                                        .overlay(Text(label)
-                                            .font(.subheadline)
-                                            .fontWeight(.semibold)
-                                            .padding(.vertical, 8)
-                                            .padding(.horizontal, 12)
-                                            .frame(minHeight: 36)
-                                            .contentShape(Rectangle())
-                                            .foregroundStyle(selectedTextColor)
-                                            .allowsHitTesting(false)
-                                        )
-                                        .matchedGeometryEffect(id: "lg-pill", in: ns)
-                                }
-                            }
-                        )
-                        .overlay { if !isSelected { Capsule().stroke(tint.opacity(0.6), lineWidth: 1) } }
-                    }
-                }
-            }
-        }
-        .frame(maxWidth: .infinity)
-        .onPreferenceChange(WidthPrefKey.self) { itemWidths = $0 }
-        .animation(.smooth(duration: 0.25), value: selection)
     }
 }
 
@@ -352,7 +191,6 @@ private struct UIKitColorPickerView: UIViewControllerRepresentable {
         }
     }
 }
-#endif
 
 #Preview("Color Picker Sheet") {
     ColorPickerSheetView(initialColor: .blue, onPick: { _ in }, onClose: {})

@@ -178,31 +178,46 @@ struct VerseView: View {
             actionIcon(systemName: "sparkles")
         }
         .fullScreenCover(isPresented: $showGuidanceSheet) {
-            GuidanceSheetView(
-                query: $guidanceQuery,
-                topK: $guidanceTopK,
-                retrieveTopK: $guidanceRetrieveTopK,
-                isSearching: isSearchingGuidance,
-                errorText: guidanceError,
-                results: guidanceResults,
-                onSearch: { runGuidanceSearch() },
-                onClose: { showGuidanceSheet = false }
-            )
+            ZStack {
+                (colorScheme == .light ? AppColors.parchment.linearGradient : AppColors.peacockBackground)
+                    .ignoresSafeArea()
+                GuidanceSheetView(
+                    query: $guidanceQuery,
+                    topK: $guidanceTopK,
+                    retrieveTopK: $guidanceRetrieveTopK,
+                    isSearching: isSearchingGuidance,
+                    errorText: guidanceError,
+                    results: guidanceResults,
+                    onSearch: { runGuidanceSearch() },
+                    onClose: { showGuidanceSheet = false }
+                )
+            }
+            .presentationBackground(.clear)
         }
         .fullScreenCover(isPresented: $showingEmotionWheel) {
-            EmotionWheelContainerView(isBookmarked: viewModel.bookmarked, onQuery: { query in
-                showingEmotionWheel = false
-                runGuidanceSearch(text: query)
-            })
+            ZStack {
+                (colorScheme == .light ? AppColors.parchment.linearGradient : AppColors.peacockBackground)
+                    .ignoresSafeArea()
+                EmotionWheelContainerView(isBookmarked: viewModel.bookmarked, onQuery: { query in
+                    showingEmotionWheel = false
+                    runGuidanceSearch(text: query)
+                })
+            }
+            .presentationBackground(.clear)
         }
         .fullScreenCover(isPresented: $showingColorPicker) {
-            ColorPickerSheetView(initialColor: colorScheme == .light ? AppColors.lightPeacock : AppColors.lavender,
-                                 onPick: { _ in showingColorPicker = false },
-                                 onClose: { showingColorPicker = false },
-                                 onSubmitQuery: { query in
-                                     showingColorPicker = false
-                                     runGuidanceSearch(text: query)
-                                 })
+            ZStack {
+                (colorScheme == .light ? AppColors.parchment.linearGradient : AppColors.peacockBackground)
+                    .ignoresSafeArea()
+                ColorPickerSheetView(initialColor: colorScheme == .light ? AppColors.lightPeacock : AppColors.lavender,
+                                     onPick: { _ in showingColorPicker = false },
+                                     onClose: { showingColorPicker = false },
+                                     onSubmitQuery: { query in
+                                         showingColorPicker = false
+                                         runGuidanceSearch(text: query)
+                                     })
+            }
+            .presentationBackground(.clear)
         }
         .sheet(isPresented: $showingBookmarkList) {
             BookmarkListView(

@@ -64,20 +64,12 @@ struct GuidanceSheetView: View {
                     .tint(foregroundColor)
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    if #available(iOS 26.0, *) {
-                        Button(action: { onSearch(); onClose() }) {
-                            Image(systemName: "sparkle.magnifyingglass")
-                        }
-                        .buttonStyle(.glassProminent)
-                        .tint(AppColors.vividPurple)
-                        .disabled(isSearching)
-                    } else {
-                        Button(action: { onSearch(); onClose() }) {
-                            Image(systemName: "sparkle.magnifyingglass")
-                        }
-                        .tint(foregroundColor)
-                        .disabled(isSearching)
+                    Button(action: { onSearch(); onClose() }) {
+                        Image(systemName: "sparkle.magnifyingglass")
                     }
+//                    .buttonStyle(.borderedProminent)
+                    .tint(AppColors.vividPurple)
+                    .disabled(isSearching)
                 }
             }
         }

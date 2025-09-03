@@ -45,6 +45,10 @@ struct EmotionWheelView: View {
 
     private enum Stage { case idle, bringToCenter, expandToOuter, completed }
 
+    private var background: some View {
+        colorScheme == .light ? AppColors.parchment.linearGradient : AppColors.peacockBackground
+    }
+
     private var displayNodes: [EmotionNode] {
         if let last = path.last, let kids = last.children, !kids.isEmpty { return kids }
         // Reorder top-level to match reference layout
@@ -304,6 +308,7 @@ struct EmotionWheelView: View {
                 }
             }
         }
+        .background(background.ignoresSafeArea())
     }
 
     // MARK: - Helpers
