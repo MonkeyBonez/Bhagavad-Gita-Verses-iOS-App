@@ -291,6 +291,8 @@ public struct WeeklyPickSync {
             "verse": pick.verse
         ]
         SharedDefaults.defaults.set(dict, forKey: key)
+        // Prune older weekly picks: keep only current and previous week
+        pruneOldPicks(keepingAnchors: [anchor, Calendar.current.date(byAdding: .day, value: -7, to: anchor)!])
     }
 
     public static func getOrComputePick(forWeekOf date: Date, with heuristic: WeeklyHeuristic) -> WeeklyPick {
@@ -300,6 +302,17 @@ public struct WeeklyPickSync {
         let computed = heuristic.pick(for: date)
         savePick(computed, forWeekOf: date)
         return computed
+    }
+
+    private static func pruneOldPicks(keepingAnchors anchors: [Date]) {
+        let allowedKeys: Set<String> = Set(anchors.map { pickKeyPrefix + String(Int(Calendar.current.startOfDay(for: $0).timeIntervalSince1970)) })
+        let allKeys = SharedDefaults.defaults.dictionaryRepresentation().keys
+        for key in allKeys {
+            guard key.hasPrefix(pickKeyPrefix) else { continue }
+            if !allowedKeys.contains(key) {
+                SharedDefaults.defaults.removeObject(forKey: key)
+            }
+        }
     }
 }
 

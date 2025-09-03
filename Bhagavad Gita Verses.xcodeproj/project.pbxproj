@@ -215,6 +215,8 @@
 		366F75262E62C69E0013079A /* LessonUnitsIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonUnitsIndex.swift; sourceTree = "<group>"; };
 		366F75312E6364D70013079A /* LessonNavigationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonNavigationHelper.swift; sourceTree = "<group>"; };
 		36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSans3-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		36E7D9E52E682BB100EE6990 /* Bhagavad Gita Verses.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bhagavad Gita Verses.entitlements"; sourceTree = "<group>"; };
+		36E7D9E62E682BE200EE6990 /* Widgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Widgets.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -287,6 +289,8 @@
 		33440B1B2D263D6E007321E2 = {
 			isa = PBXGroup;
 			children = (
+				36E7D9E62E682BE200EE6990 /* Widgets.entitlements */,
+				36E7D9E52E682BB100EE6990 /* Bhagavad Gita Verses.entitlements */,
 				334762CC2D4F5A3C0078FCB4 /* Bhagavad Gita Verses App */,
 				334762D72D4F5B1B0078FCB4 /* Widget Extension */,
 				334762E32D5071400078FCB4 /* App Intent Extension */,
@@ -931,6 +935,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Bhagavad Gita Verses.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -963,6 +968,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Bhagavad Gita Verses.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -995,6 +1001,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = Widgets.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FMDJTXM4W7;
@@ -1022,6 +1029,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = Widgets.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FMDJTXM4W7;
