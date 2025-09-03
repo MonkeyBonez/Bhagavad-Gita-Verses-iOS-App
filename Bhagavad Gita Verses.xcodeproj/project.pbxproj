@@ -93,6 +93,7 @@
 		366F75322E6364D70013079A /* LessonNavigationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F75312E6364D70013079A /* LessonNavigationHelper.swift */; };
 		36E7D9E12E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */; };
 		36E7D9E22E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */; };
+		36E7D9E92E68310500EE6990 /* WeeklyNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E7D9E72E68310500EE6990 /* WeeklyNotificationScheduler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -217,6 +218,7 @@
 		36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSans3-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		36E7D9E52E682BB100EE6990 /* Bhagavad Gita Verses.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bhagavad Gita Verses.entitlements"; sourceTree = "<group>"; };
 		36E7D9E62E682BE200EE6990 /* Widgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Widgets.entitlements; sourceTree = "<group>"; };
+		36E7D9E72E68310500EE6990 /* WeeklyNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyNotificationScheduler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -365,6 +367,7 @@
 				33FF16CA2D28FA5C006E9888 /* Model */,
 				366F74C52E62A80F0013079A /* Inference */,
 				362F6F922E63CB42004E22BF /* Views */,
+				36E7D9E82E68310500EE6990 /* Notifications */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -554,6 +557,14 @@
 			path = Inference;
 			sourceTree = "<group>";
 		};
+		36E7D9E82E68310500EE6990 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				36E7D9E72E68310500EE6990 /* WeeklyNotificationScheduler.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -735,6 +746,7 @@
 				337BB69B2DCD9B5E00F5EF82 /* DeeplinkConstants.swift in Sources */,
 				337BB69A2DCD9B3200F5EF82 /* DeeplinkCoordinator.swift in Sources */,
 				362F6F7F2E63C756004E22BF /* GuidanceSheetView.swift in Sources */,
+				36E7D9E92E68310500EE6990 /* WeeklyNotificationScheduler.swift in Sources */,
 				3619F1222E6534FF00128BB8 /* ColorEmotionEngine.swift in Sources */,
 				33B4A9F52D2DF2A700AE1044 /* VersesReader.swift in Sources */,
 				334762D02D4F5A3C0078FCB4 /* BhagavadGitaApp.swift in Sources */,

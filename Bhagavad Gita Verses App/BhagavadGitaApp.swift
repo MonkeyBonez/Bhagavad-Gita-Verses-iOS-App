@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 
 @main
 struct BhagavadGitaApp: App {
@@ -10,6 +11,7 @@ struct BhagavadGitaApp: App {
         WindowGroup {
             VerseView(dailyQuoteModel: quoteModel)
                 .onOpenURL(perform: {handleUrl($0)})
+                .onAppear { WeeklyNotificationScheduler.onAppOpen() }
         }
     }
 
@@ -20,8 +22,10 @@ struct BhagavadGitaApp: App {
             break
         case .quoteOfTheDay:
             setToQuoteOfDay()
+            WeeklyNotificationScheduler.onAppOpen()
         case .openVerse(let chapter, let verse):
             openSpecificVerse(chapter: chapter, verse: verse)
+            WeeklyNotificationScheduler.onAppOpen()
         }
     }
 
