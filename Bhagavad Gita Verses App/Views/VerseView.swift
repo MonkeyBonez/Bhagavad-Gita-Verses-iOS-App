@@ -3,6 +3,7 @@ import UIKit
 
 struct VerseView: View {
     @State var viewModel: QuoteModel
+    @Binding var isExternalCoverPresented: Bool
     
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.scenePhase) var scenePhase
@@ -18,6 +19,7 @@ struct VerseView: View {
     @State private var introOpacity: CGFloat = 0.0
     @State private var isIntroAnimating: Bool = false
     @State private var isSwitchingDataSource: Bool = false
+    @State private var pendingIntroAfterCover: Bool = false
     // Guidance sheet state
     @State private var showGuidanceSheet: Bool = false
     @State private var showingEmotionWheel: Bool = false
@@ -42,17 +44,19 @@ struct VerseView: View {
         return (3 * x * x) - (2 * x * x * x)
     }
     
-    init(dailyQuoteModel: QuoteModel = QuoteModel()) {
+    init(dailyQuoteModel: QuoteModel = QuoteModel(), isExternalCoverPresented: Binding<Bool> = .constant(false)) {
         self._viewModel = State(initialValue: dailyQuoteModel)
+        self._isExternalCoverPresented = isExternalCoverPresented
         self._footerVerseInfo = State(initialValue: dailyQuoteModel.quote)
         self._selectedGlobalIndex = State(initialValue: dailyQuoteModel.currentGlobalIndex)
         self._scrollPosition = State(initialValue: dailyQuoteModel.currentGlobalIndex)
         self._dataSource = State(initialValue: [])
     }
     
-    init(quote: String, author: String, chapter: Int, verse: Int) {
+    init(quote: String, author: String, chapter: Int, verse: Int, isExternalCoverPresented: Binding<Bool> = .constant(false)) {
         let quoteModel = QuoteModel(quote: quote, author: author, chapter: chapter, verse: verse)
         self._viewModel = State(initialValue: quoteModel)
+        self._isExternalCoverPresented = isExternalCoverPresented
         self._footerVerseInfo = State(initialValue: quoteModel.quote)
         self._selectedGlobalIndex = State(initialValue: quoteModel.currentGlobalIndex)
         self._scrollPosition = State(initialValue: quoteModel.currentGlobalIndex)
@@ -443,7 +447,7 @@ struct VerseView: View {
         .onChange(of: scenePhase) { oldPhase, newPhase in
             viewModel.scenePhaseChange(from: oldPhase, to: newPhase)
             // Do not dismiss presentations while guidance covers are shown
-            if showGuidanceSheet || showingEmotionWheel || showingColorPicker || showingBookmarkList { return }
+            if isExternalCoverPresented || showGuidanceSheet || showingEmotionWheel || showingColorPicker || showingBookmarkList { return }
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                let window = windowScene.windows.first {
                 window.rootViewController?.dismiss(animated: false)
@@ -464,16 +468,32 @@ struct VerseView: View {
         }
         // Run intro animation when we arrive at verse-of-day via deeplink or cold start
         .onChange(of: viewModel.animateFromEndToken) { _, _ in
+            if isExternalCoverPresented {
+                pendingIntroAfterCover = true
+                return
+            }
             let target = viewModel.currentGlobalIndex
             animateTowardsVerse(globalIndex: target)
+        }
+        .onChange(of: isExternalCoverPresented) { oldValue, newValue in
+            // When an external cover (onboarding) is dismissed, run intro animation once
+            if oldValue == true && newValue == false {
+                let target = viewModel.currentGlobalIndex
+                animateTowardsVerse(globalIndex: target)
+                pendingIntroAfterCover = false
+            }
         }
         .onAppear {
             rebuildDataSource()
             selectedGlobalIndex = viewModel.currentGlobalIndex
-            // Trigger intro after first layout pass
-            DispatchQueue.main.async {
-                let target = viewModel.currentGlobalIndex
-                animateTowardsVerse(globalIndex: target)
+            // Skip intro when an external cover (onboarding) is active
+            if !isExternalCoverPresented {
+                DispatchQueue.main.async {
+                    let target = viewModel.currentGlobalIndex
+                    animateTowardsVerse(globalIndex: target)
+                }
+            } else {
+                pendingIntroAfterCover = true
             }
         }
         .onAppear { showingEmotionWheel = false }

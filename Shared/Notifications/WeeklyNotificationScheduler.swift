@@ -8,25 +8,63 @@ enum WeeklyNotificationScheduler {
     static func onAppOpen(now: Date = Date()) {
         requestAuthorizationIfNeeded { granted in
             guard granted else { return }
+            handleWeeklyLifecycle(now: now)
+        }
+    }
+
+    // Call this on app open, but only if notifications are already authorized.
+    // This will NOT prompt for authorization.
+    static func onAppOpenIfAuthorized(now: Date = Date()) {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            switch settings.authorizationStatus {
+            case .authorized, .provisional, .ephemeral:
+                handleWeeklyLifecycle(now: now)
+            default:
+                break
+            }
+        }
+    }
+
+    // Invoke when the user explicitly taps "Enable notifications" during onboarding.
+    // Requests permission and, if granted, schedules the first reminder 7 days from now.
+    static func userTappedEnableNotifications(now: Date = Date(), completion: ((Bool) -> Void)? = nil) {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, _ in
+            guard granted else {
+                completion?(false)
+                return
+            }
+            // Schedule the initial reminder in 7 days from the tap time.
             let anchor = WeeklyPickSync.sundayStart(for: now)
             let anchorTs = Int(anchor.timeIntervalSince1970)
             var map = loadScheduledMap()
-            if let entry = map[anchorTs] {
-                // There is a pending notification for this week's first entry
-                // If the user opened the app before it fires, cancel it and clear
-                let fireTs = entry["fireTs"] as? TimeInterval ?? 0
-                if now.timeIntervalSince1970 < fireTs {
-                    let id = entry["id"] as? String ?? ""
-                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
-                    map.removeValue(forKey: anchorTs)
-                    saveScheduledMap(map)
-                }
-                return
+            if map[anchorTs] == nil {
+                let fireAt = Calendar.current.date(byAdding: .day, value: 7, to: now) ?? now.addingTimeInterval(7 * 24 * 3600)
+                scheduleWeeklyReminder(fireAt: fireAt, anchorTs: anchorTs)
             }
-            // First open of this week → schedule exactly 1 week from now
-            let fireAt = Calendar.current.date(byAdding: .day, value: 7, to: now) ?? now.addingTimeInterval(7 * 24 * 3600)
-            scheduleWeeklyReminder(fireAt: fireAt, anchorTs: anchorTs)
+            completion?(true)
         }
+    }
+
+    // Internal: manage cancel/reschedule behavior tied to weekly lifecycle without prompting.
+    private static func handleWeeklyLifecycle(now: Date) {
+        let anchor = WeeklyPickSync.sundayStart(for: now)
+        let anchorTs = Int(anchor.timeIntervalSince1970)
+        var map = loadScheduledMap()
+        if let entry = map[anchorTs] {
+            // There is a pending notification for this week's first entry
+            // If the user opened the app before it fires, cancel it and clear
+            let fireTs = entry["fireTs"] as? TimeInterval ?? 0
+            if now.timeIntervalSince1970 < fireTs {
+                let id = entry["id"] as? String ?? ""
+                UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
+                map.removeValue(forKey: anchorTs)
+                saveScheduledMap(map)
+            }
+            return
+        }
+        // First open of this week → schedule exactly 1 week from now
+        let fireAt = Calendar.current.date(byAdding: .day, value: 7, to: now) ?? now.addingTimeInterval(7 * 24 * 3600)
+        scheduleWeeklyReminder(fireAt: fireAt, anchorTs: anchorTs)
     }
 
     private static func scheduleWeeklyReminder(fireAt: Date, anchorTs: Int) {

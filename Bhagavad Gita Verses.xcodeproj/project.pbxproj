@@ -57,6 +57,14 @@
 		362F6F9D2E63DF5C004E22BF /* feelings_wheel.json in Resources */ = {isa = PBXBuildFile; fileRef = 362F6F9C2E63DF5C004E22BF /* feelings_wheel.json */; };
 		362F6FA72E63E93A004E22BF /* EmotionWheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F6FA62E63E93A004E22BF /* EmotionWheelView.swift */; };
 		362F6FAD2E63E99B004E22BF /* EmotionWheelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F6FAC2E63E99B004E22BF /* EmotionWheelModel.swift */; };
+		36306EDA2E68FB1F00CFBD1D /* PhoneHomeScreenSketchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36306ED92E68FB1F00CFBD1D /* PhoneHomeScreenSketchView.swift */; };
+		36306EDD2E6908C900CFBD1D /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36306EDB2E6908C900CFBD1D /* OnboardingView.swift */; };
+		36306EE12E690AA700CFBD1D /* NotificationPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36306EE02E690AA700CFBD1D /* NotificationPage.swift */; };
+		36306EE22E690AA700CFBD1D /* AppIconHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36306EDE2E690AA700CFBD1D /* AppIconHeader.swift */; };
+		36306EE32E690AA700CFBD1D /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36306EDF2E690AA700CFBD1D /* Buttons.swift */; };
+		36306EE72E690AAE00CFBD1D /* ThemedBlankSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36306EE42E690AAE00CFBD1D /* ThemedBlankSheet.swift */; };
+		36306EE82E690AAE00CFBD1D /* WelcomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36306EE52E690AAE00CFBD1D /* WelcomePage.swift */; };
+		36306EE92E690AAE00CFBD1D /* WidgetsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36306EE62E690AAE00CFBD1D /* WidgetsPage.swift */; };
 		363230C42E661E86003264E7 /* LessonUnitsIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F75262E62C69E0013079A /* LessonUnitsIndex.swift */; };
 		363230C52E66213B003264E7 /* LessonEmbeddingIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74BF2E62A80F0013079A /* LessonEmbeddingIndex.swift */; };
 		363230C72E662254003264E7 /* WeeklySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230C62E662254003264E7 /* WeeklySelector.swift */; };
@@ -68,6 +76,7 @@
 		363230CF2E668CB9003264E7 /* verse_to_lesson.json in Resources */ = {isa = PBXBuildFile; fileRef = 363230CE2E668CB9003264E7 /* verse_to_lesson.json */; };
 		363230D02E668CB9003264E7 /* verse_to_lesson.json in Resources */ = {isa = PBXBuildFile; fileRef = 363230CE2E668CB9003264E7 /* verse_to_lesson.json */; };
 		363230D42E67D1B1003264E7 /* BookmarkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230D32E67D1B1003264E7 /* BookmarkListView.swift */; };
+		36350FF32E6913CF00CA994F /* OnboardingMandalaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36350FF22E6913CF00CA994F /* OnboardingMandalaView.swift */; };
 		366F74DA2E62A80F0013079A /* tokenizer_config_retriever.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74B82E62A80F0013079A /* tokenizer_config_retriever.json */; };
 		366F74DB2E62A80F0013079A /* vocab_retriever.txt in Resources */ = {isa = PBXBuildFile; fileRef = 366F74BA2E62A80F0013079A /* vocab_retriever.txt */; };
 		366F74DC2E62A80F0013079A /* tokenizer_config_ce.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74AD2E62A80F0013079A /* tokenizer_config_ce.json */; };
@@ -91,6 +100,7 @@
 		366F75252E62C5940013079A /* lesson_units.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F75232E62C5940013079A /* lesson_units.json */; };
 		366F75282E62C69E0013079A /* LessonUnitsIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F75262E62C69E0013079A /* LessonUnitsIndex.swift */; };
 		366F75322E6364D70013079A /* LessonNavigationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F75312E6364D70013079A /* LessonNavigationHelper.swift */; };
+		368559A92E68F4E600177D96 /* MinimalLockScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368559A82E68F4E600177D96 /* MinimalLockScreenView.swift */; };
 		36E7D9E12E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */; };
 		36E7D9E22E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */; };
 		36E7D9E92E68310500EE6990 /* WeeklyNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E7D9E72E68310500EE6990 /* WeeklyNotificationScheduler.swift */; };
@@ -188,10 +198,19 @@
 		362F6F9C2E63DF5C004E22BF /* feelings_wheel.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = feelings_wheel.json; sourceTree = "<group>"; };
 		362F6FA62E63E93A004E22BF /* EmotionWheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionWheelView.swift; sourceTree = "<group>"; };
 		362F6FAC2E63E99B004E22BF /* EmotionWheelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionWheelModel.swift; sourceTree = "<group>"; };
+		36306ED92E68FB1F00CFBD1D /* PhoneHomeScreenSketchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneHomeScreenSketchView.swift; sourceTree = "<group>"; };
+		36306EDB2E6908C900CFBD1D /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		36306EDE2E690AA700CFBD1D /* AppIconHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconHeader.swift; sourceTree = "<group>"; };
+		36306EDF2E690AA700CFBD1D /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		36306EE02E690AA700CFBD1D /* NotificationPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPage.swift; sourceTree = "<group>"; };
+		36306EE42E690AAE00CFBD1D /* ThemedBlankSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemedBlankSheet.swift; sourceTree = "<group>"; };
+		36306EE52E690AAE00CFBD1D /* WelcomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePage.swift; sourceTree = "<group>"; };
+		36306EE62E690AAE00CFBD1D /* WidgetsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsPage.swift; sourceTree = "<group>"; };
 		363230C62E662254003264E7 /* WeeklySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklySelector.swift; sourceTree = "<group>"; };
 		363230C92E66230C003264E7 /* LessonTextsIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonTextsIndex.swift; sourceTree = "<group>"; };
 		363230CE2E668CB9003264E7 /* verse_to_lesson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = verse_to_lesson.json; sourceTree = "<group>"; };
 		363230D32E67D1B1003264E7 /* BookmarkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkListView.swift; sourceTree = "<group>"; };
+		36350FF22E6913CF00CA994F /* OnboardingMandalaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMandalaView.swift; sourceTree = "<group>"; };
 		366F74A92E62A80F0013079A /* MiniLML6CE.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = MiniLML6CE.mlpackage; sourceTree = "<group>"; };
 		366F74AB2E62A80F0013079A /* special_tokens_map_ce.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = special_tokens_map_ce.json; sourceTree = "<group>"; };
 		366F74AC2E62A80F0013079A /* tokenizer_ce.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tokenizer_ce.json; sourceTree = "<group>"; };
@@ -215,6 +234,7 @@
 		366F75232E62C5940013079A /* lesson_units.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = lesson_units.json; sourceTree = "<group>"; };
 		366F75262E62C69E0013079A /* LessonUnitsIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonUnitsIndex.swift; sourceTree = "<group>"; };
 		366F75312E6364D70013079A /* LessonNavigationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonNavigationHelper.swift; sourceTree = "<group>"; };
+		368559A82E68F4E600177D96 /* MinimalLockScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalLockScreenView.swift; sourceTree = "<group>"; };
 		36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSans3-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		36E7D9E52E682BB100EE6990 /* Bhagavad Gita Verses.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bhagavad Gita Verses.entitlements"; sourceTree = "<group>"; };
 		36E7D9E62E682BE200EE6990 /* Widgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Widgets.entitlements; sourceTree = "<group>"; };
@@ -442,11 +462,13 @@
 		362F6FAA2E63E970004E22BF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				368559A72E68F4DA00177D96 /* ViewComponents */,
 				334762CB2D4F5A3C0078FCB4 /* VerseView.swift */,
 				362F6FA62E63E93A004E22BF /* EmotionWheelView.swift */,
 				362F6F7E2E63C756004E22BF /* GuidanceSheetView.swift */,
 				3619F11F2E65344000128BB8 /* ColorPickerSheetView.swift */,
 				363230D32E67D1B1003264E7 /* BookmarkListView.swift */,
+				36306EDC2E6908C900CFBD1D /* Onboarding */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -458,6 +480,21 @@
 				3619F1212E6534FF00128BB8 /* ColorEmotionEngine.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		36306EDC2E6908C900CFBD1D /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				36306EDB2E6908C900CFBD1D /* OnboardingView.swift */,
+				36306EDE2E690AA700CFBD1D /* AppIconHeader.swift */,
+				36306EDF2E690AA700CFBD1D /* Buttons.swift */,
+				36306EE02E690AA700CFBD1D /* NotificationPage.swift */,
+				36306EE42E690AAE00CFBD1D /* ThemedBlankSheet.swift */,
+				36306EE52E690AAE00CFBD1D /* WelcomePage.swift */,
+				36306EE62E690AAE00CFBD1D /* WidgetsPage.swift */,
+				36350FF22E6913CF00CA994F /* OnboardingMandalaView.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		366F74AA2E62A80F0013079A /* Model */ = {
@@ -555,6 +592,15 @@
 				366F74C42E62A80F0013079A /* swift */,
 			);
 			path = Inference;
+			sourceTree = "<group>";
+		};
+		368559A72E68F4DA00177D96 /* ViewComponents */ = {
+			isa = PBXGroup;
+			children = (
+				36306ED92E68FB1F00CFBD1D /* PhoneHomeScreenSketchView.swift */,
+				368559A82E68F4E600177D96 /* MinimalLockScreenView.swift */,
+			);
+			path = ViewComponents;
 			sourceTree = "<group>";
 		};
 		36E7D9E82E68310500EE6990 /* Notifications */ = {
@@ -739,6 +785,9 @@
 				339B0B152DE0307600BFC39D /* Verses.swift in Sources */,
 				362F6FAD2E63E99B004E22BF /* EmotionWheelModel.swift in Sources */,
 				363230C72E662254003264E7 /* WeeklySelector.swift in Sources */,
+				36306EE72E690AAE00CFBD1D /* ThemedBlankSheet.swift in Sources */,
+				36306EE82E690AAE00CFBD1D /* WelcomePage.swift in Sources */,
+				36306EE92E690AAE00CFBD1D /* WidgetsPage.swift in Sources */,
 				339B0B162DE0307600BFC39D /* Colors.swift in Sources */,
 				3310A48F2DEF606A00EBBA15 /* FileReader.swift in Sources */,
 				339B0B172DE0307600BFC39D /* VersesInfo.swift in Sources */,
@@ -749,6 +798,7 @@
 				36E7D9E92E68310500EE6990 /* WeeklyNotificationScheduler.swift in Sources */,
 				3619F1222E6534FF00128BB8 /* ColorEmotionEngine.swift in Sources */,
 				33B4A9F52D2DF2A700AE1044 /* VersesReader.swift in Sources */,
+				36306EDA2E68FB1F00CFBD1D /* PhoneHomeScreenSketchView.swift in Sources */,
 				334762D02D4F5A3C0078FCB4 /* BhagavadGitaApp.swift in Sources */,
 				366F74E42E62A80F0013079A /* MiniLMReranker.swift in Sources */,
 				366F74E52E62A80F0013079A /* PairWordPieceTokenizer.swift in Sources */,
@@ -756,9 +806,12 @@
 				366F74E82E62A80F0013079A /* LessonSearchHelper.swift in Sources */,
 				366F75322E6364D70013079A /* LessonNavigationHelper.swift in Sources */,
 				366F74E92E62A80F0013079A /* RetrieverWordPieceTokenizer.swift in Sources */,
+				368559A92E68F4E600177D96 /* MinimalLockScreenView.swift in Sources */,
 				366F75282E62C69E0013079A /* LessonUnitsIndex.swift in Sources */,
 				363230CB2E66230C003264E7 /* LessonTextsIndex.swift in Sources */,
 				366F74EA2E62A80F0013079A /* LessonEmbeddingIndex.swift in Sources */,
+				36350FF32E6913CF00CA994F /* OnboardingMandalaView.swift in Sources */,
+				36306EDD2E6908C900CFBD1D /* OnboardingView.swift in Sources */,
 				366F74EB2E62A80F0013079A /* MiniLML6CE.mlpackage in Sources */,
 				363230D42E67D1B1003264E7 /* BookmarkListView.swift in Sources */,
 				366F74EC2E62A80F0013079A /* E5RetrieverEmbedder.swift in Sources */,
@@ -768,6 +821,9 @@
 				33FF16CC2D28FA83006E9888 /* QuoteModel.swift in Sources */,
 				362F6F932E63CB42004E22BF /* ActionIconButton.swift in Sources */,
 				339B0B052DE0268500BFC39D /* BookmarkedVersesModel.swift in Sources */,
+				36306EE12E690AA700CFBD1D /* NotificationPage.swift in Sources */,
+				36306EE22E690AA700CFBD1D /* AppIconHeader.swift in Sources */,
+				36306EE32E690AA700CFBD1D /* Buttons.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
