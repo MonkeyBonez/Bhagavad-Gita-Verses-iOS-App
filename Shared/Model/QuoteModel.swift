@@ -101,7 +101,7 @@ extension QuoteModel {
     }
 
     var shareText: String {
-        "\"\(quote.text)\"\n\(author)\n\(chapter).\(verse)\nSee more at: \(DeeplinkScheme.appstoreUrl)"
+        "\"\(quote.text)\"\n\(author)\n\(chapter).\(verse)\nSee more at: \(DeeplinkScheme.trackedAppStoreURL)"
     }
 
     var hasBookmarks: Bool {

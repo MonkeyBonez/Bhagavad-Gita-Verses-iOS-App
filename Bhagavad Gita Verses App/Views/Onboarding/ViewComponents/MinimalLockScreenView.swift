@@ -43,6 +43,7 @@ struct PhoneScreenWithDateTimeAndWidgetTextView: View {
     var showDynamicIsland: Bool = true
     var showDateAndTime: Bool = true
     var showBottomControls: Bool = true
+    var showSmallBottomControls: Bool = false
     var showInnerOutline: Bool = false
 
     var body: some View {
@@ -98,6 +99,23 @@ struct PhoneScreenWithDateTimeAndWidgetTextView: View {
                             .frame(width: w * 0.80, height: h * 0.06)
                             .position(x: w * 0.50, y: h * 0.30)
                     }
+                    if showSmallBottomControls {
+                        // Camera (right circle)
+                        Circle()
+                            .stroke(strokeColor, lineWidth: lineWidth)
+                            .frame(width: h * 0.072, height: h * 0.072)
+                            .position(x: w * 0.82, y: h * 0.9)
+                        // Flashlight (left circle)
+                        Circle()
+                            .stroke(strokeColor, lineWidth: lineWidth)
+                            .frame(width: h * 0.072, height: h * 0.072)
+                            .position(x: w * 0.18, y: h * 0.9)
+                        // Home indicator (swipe bar)
+    //                    Capsule(style: .continuous)
+    //                        .fill(strokeColor.opacity(0.9))
+    //                        .frame(width: w * 0.32, height: h * 0.008)
+    //                        .position(x: w * 0.50, y: h * 0.985)
+                    }
                 }
                 .frame(width: w, height: h)
                 .position(x: w * 0.5, y: h * 0.5)
@@ -115,10 +133,10 @@ struct PhoneScreenWithDateTimeAndWidgetTextView: View {
                         .frame(width: h * 0.072, height: h * 0.072)
                         .position(x: w * 0.18, y: h * 0.9)
                     // Home indicator (swipe bar)
-                    Capsule(style: .continuous)
-                        .fill(strokeColor.opacity(0.9))
-                        .frame(width: w * 0.32, height: h * 0.008)
-                        .position(x: w * 0.50, y: h * 0.985)
+//                    Capsule(style: .continuous)
+//                        .fill(strokeColor.opacity(0.9))
+//                        .frame(width: w * 0.32, height: h * 0.008)
+//                        .position(x: w * 0.50, y: h * 0.985)
                 }
 
                 // Customize pill (onboarding step) at 1.0 scale on top

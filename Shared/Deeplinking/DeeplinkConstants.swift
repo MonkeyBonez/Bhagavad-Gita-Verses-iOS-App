@@ -4,7 +4,8 @@ struct DeeplinkScheme {
     static func createDeeplink(path: DeeplinkPaths?) -> URL {
         return URL(string: "\(app)://bhagavadgitaverses/\(path ?? .empty)")!
     }
-    static let appstoreUrl = "https://apps.apple.com/us/app/sattva/id6746705264"
+    static let appstoreUrl = "https://apps.apple.com/app/sattva/id6746705264"
+    static let trackedAppStoreURL = "https://rb.gy/h4hrpd"
 }
 
 enum DeeplinkPaths: String, CaseIterable {

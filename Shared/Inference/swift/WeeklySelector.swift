@@ -53,12 +53,12 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
 
     public func pick(for date: Date) -> WeeklyPick {
         guard let emb = embeddings, let ui = unitsIndex, let lt = textsIndex, emb.count > 0, ui.count > 0, lt.count > 0 else {
-            return FallbackWeeklyHeuristic().pick(for: date)
+            return ColdStartWeeklyHeuristic().pick(for: date)
         }
         // 1) Collect seeds from bookmarks
         let seeds = loadSeedLessonIndices()
         if seeds.isEmpty {
-            return FallbackWeeklyHeuristic().pick(for: date)
+            return ColdStartWeeklyHeuristic().pick(for: date)
         }
         // 2) Compute k
         let k = max(1, min(3, Int((Float(seeds.count)).squareRoot().rounded())))
@@ -132,7 +132,7 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
                 if shownSet.contains(idx) { continue }
                 alt = (idx, scores[idx]); break
             }
-            guard let a = alt else { return FallbackWeeklyHeuristic().pick(for: date) }
+            guard let a = alt else { return ColdStartWeeklyHeuristic().pick(for: date) }
             chosen = a
         }
         // 8) Verse selection: earliest unit
@@ -316,64 +316,56 @@ public struct WeeklyPickSync {
     }
 }
 
-fileprivate final class FallbackWeeklyHeuristic: WeeklyHeuristic {
-    private let unitsIndex: LessonUnitsIndex?
+fileprivate final class ColdStartWeeklyHeuristic: WeeklyHeuristic {
+    private struct ColdStartEntry: Decodable { let index: Int; let chapter: Int; let verse: Int }
+    private struct ColdStartMap: Decodable { let lessons: [ColdStartEntry] }
+
     private let lessonTexts: LessonTextsIndex?
     private let shownKey = "weekly_shown_history"
+    private let entries: [ColdStartEntry]
 
     fileprivate init() {
-        self.unitsIndex = LessonUnitsIndex()
         self.lessonTexts = LessonTextsIndex()
+        // Load cold_start_map.json from bundle (search common subdirectories)
+        let candidates: [URL?] = [
+            Bundle.main.url(forResource: "cold_start_map", withExtension: "json"),
+            Bundle.main.url(forResource: "cold_start_map", withExtension: "json", subdirectory: "Shared/Inference/swift"),
+            Bundle.main.url(forResource: "cold_start_map", withExtension: "json", subdirectory: "Shared/Inference"),
+        ]
+        if let url = candidates.compactMap({ $0 }).first,
+           let data = try? Data(contentsOf: url),
+           let map = try? JSONDecoder().decode(ColdStartMap.self, from: data) {
+            self.entries = map.lessons
+        } else {
+            self.entries = []
+        }
     }
 
     fileprivate func pick(for date: Date) -> WeeklyPick {
-        guard let ui = unitsIndex, let lt = lessonTexts, ui.count > 0, lt.count > 0 else {
+        guard let lt = lessonTexts, lt.count > 0, !entries.isEmpty else {
             return WeeklyPick(lessonIndex: 0, lessonText: "Lesson of the Week", chapter: 1, verse: 1)
         }
 
-        // Curated old_cluster_id list mapped to lesson indices
-        let curatedOldClusterIds: Set<Int> = [77, 42, 133, 125, 218, 265, 273, 449, 645]
-        var curatedLessonIndices: [Int] = []
-        curatedLessonIndices.reserveCapacity(curatedOldClusterIds.count)
-        for idx in 0..<ui.count {
-            if let cid = ui.oldClusterId(forEmbeddingIndex: idx), curatedOldClusterIds.contains(cid) {
-                curatedLessonIndices.append(idx)
-            }
-        }
-
-        // 180-day no-repeat window (match WeeklyParams.noRepeatDays default)
         let shownSet = loadShown(excludingNewerThanDays: 180)
-
-        // Try random from curated set first (excluding shown)
-        let availableCurated = curatedLessonIndices.filter { !shownSet.contains($0) }
-        var chosenIndex: Int? = availableCurated.randomElement()
-
-        // If curated exhausted, pick random from all lessons excluding shown
-        if chosenIndex == nil {
-            let allAvailable = (0..<ui.count).filter { !shownSet.contains($0) }
-            chosenIndex = allAvailable.randomElement()
+        // First available not shown recently
+        if let e = entries.first(where: { !shownSet.contains($0.index) }) {
+            let text = lt.text(forIndex: e.index)
+            saveShown(index: e.index, date: date)
+            return WeeklyPick(lessonIndex: e.index, lessonText: text, chapter: e.chapter, verse: e.verse)
         }
 
-        // As a last resort, fall back to deterministic week-of-year
-        if chosenIndex == nil {
-            let cal = Calendar.current
-            let week = cal.component(.weekOfYear, from: date)
-            chosenIndex = max(0, (week - 1) % ui.count)
-        }
-
-        let finalIndex = chosenIndex ?? 0
-        let units = ui.units(forEmbeddingIndex: finalIndex)
-        let first = units.first
-        let chapter = first?.chapter ?? 1
-        let verse = first?.start ?? 1
-        let text = lt.text(forIndex: finalIndex)
-        saveShown(index: finalIndex, date: date)
-        return WeeklyPick(lessonIndex: finalIndex, lessonText: text, chapter: chapter, verse: verse)
+        // Deterministic week-of-year fallback over the cold-start list
+        let cal = Calendar.current
+        let week = cal.component(.weekOfYear, from: date)
+        let e = entries[max(0, (week - 1) % entries.count)]
+        let text = lt.text(forIndex: e.index)
+        saveShown(index: e.index, date: date)
+        return WeeklyPick(lessonIndex: e.index, lessonText: text, chapter: e.chapter, verse: e.verse)
     }
 
-    // MARK: - Shown history (shared format/key with SattvaWeeklyHeuristic)
+    // MARK: - Shown history (shared format/key with SattvaWeeklyHeuristic; use SharedDefaults)
     private func loadShown(excludingNewerThanDays days: Int) -> Set<Int> {
-        guard let data = UserDefaults.standard.data(forKey: shownKey), let arr = try? JSONSerialization.jsonObject(with: data) as? [[String:Any]] else { return [] }
+        guard let data = SharedDefaults.defaults.data(forKey: shownKey), let arr = try? JSONSerialization.jsonObject(with: data) as? [[String:Any]] else { return [] }
         let cutoff = Date().addingTimeInterval(TimeInterval(-days * 24 * 3600))
         var set = Set<Int>()
         for obj in arr {
@@ -387,12 +379,12 @@ fileprivate final class FallbackWeeklyHeuristic: WeeklyHeuristic {
 
     private func saveShown(index: Int, date: Date) {
         var arr: [[String:Any]] = []
-        if let data = UserDefaults.standard.data(forKey: shownKey), let existing = try? JSONSerialization.jsonObject(with: data) as? [[String:Any]] {
+        if let data = SharedDefaults.defaults.data(forKey: shownKey), let existing = try? JSONSerialization.jsonObject(with: data) as? [[String:Any]] {
             arr = existing
         }
         arr.append(["index": index, "ts": date.timeIntervalSince1970])
         if let data = try? JSONSerialization.data(withJSONObject: arr) {
-            UserDefaults.standard.set(data, forKey: shownKey)
+            SharedDefaults.defaults.set(data, forKey: shownKey)
         }
     }
 }

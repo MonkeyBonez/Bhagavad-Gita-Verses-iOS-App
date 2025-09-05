@@ -11,6 +11,8 @@ struct LockScreenWidgetOnboarding: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
     @State private var step: Int = 0
+    @State private var pulseToPurple: Bool = false
+    @State private var pulseTimer: Timer? = nil
 
     private var foreground: Color {
         colorScheme == .light ? AppColors.lightPeacock : AppColors.parchment
@@ -52,6 +54,7 @@ struct LockScreenWidgetOnboarding: View {
                                 showDynamicIsland: true,
                                 showDateAndTime: true,
                                 showBottomControls: false,
+                                showSmallBottomControls: true,
                                 showInnerOutline: true
                             )
                                 .frame(maxWidth: .infinity)
@@ -65,9 +68,11 @@ struct LockScreenWidgetOnboarding: View {
                                 .frame(maxWidth: .infinity)
                                 .padding(.horizontal, 16)
                         default:
-                            PhoneScreenWithDateTimeAndWidgetTextView(showWidgetText: true, overrideAllToVividPurple: true, disableWidgetTextShadow: true)
+                            PhoneScreenWithDateTimeAndWidgetTextView(showWidgetText: true, useStrokeForWidget: true, overrideAllToVividPurple: pulseToPurple, disableWidgetTextShadow: true)
                                 .frame(maxWidth: .infinity)
                                 .padding(.horizontal, 16)
+                                .onAppear { startColorPulse() }
+                                .onDisappear { stopColorPulse() }
                         }
                     }
                     
@@ -130,6 +135,23 @@ struct LockScreenWidgetOnboarding: View {
         default:
             return ""
         }
+    }
+}
+
+// MARK: - Color pulse helpers
+extension LockScreenWidgetOnboarding {
+    private func startColorPulse() {
+        stopColorPulse()
+        pulseToPurple = false
+        pulseTimer = Timer.scheduledTimer(withTimeInterval: 1.3, repeats: true) { _ in
+            withAnimation(.easeOut(duration: 1.3)) {
+                pulseToPurple.toggle()
+            }
+        }
+    }
+    private func stopColorPulse() {
+        pulseTimer?.invalidate(); pulseTimer = nil
+        pulseToPurple = false
     }
 }
 

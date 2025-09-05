@@ -60,7 +60,7 @@ struct WidgetsPage: View {
                     .font(.custom(Fonts.verseFontName, size: 32))
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
-                Text("Keep the week’s lesson visible on your lock or home screen — gentle reminders to stay aligned throughout your day.\nTap screen to learn how.")
+                Text("Keep the week’s lesson visible on your lock or home screen — gentle reminders to stay aligned throughout your day. Tap screen to learn how.")
                     .font(.custom(Fonts.supportingFontName, size: 18))
                     .opacity(0.80)
                     .multilineTextAlignment(.center)

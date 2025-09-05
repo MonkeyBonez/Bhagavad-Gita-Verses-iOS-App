@@ -82,20 +82,17 @@ struct OnboardingView: View {
         Group {
             if selection == 0 {
                 Button("Begin") {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     spinToken += 1 // trigger mandala spin at transition start
                     withAnimation { selection += 1 }
                 }
                     .buttonStyle(PrimaryButtonStyle(accent: foreground, foreground: backgroundColor, fullWidth: true))
             } else if selection == 1 {
                 Button("Enable notifications") {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     withAnimation { requestNotifications() }
                 }
                     .buttonStyle(PrimaryButtonStyle(accent: foreground, foreground: backgroundColor, fullWidth: true))
             } else {
                 Button("Done") {
-                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     SharedDefaults.defaults.set(true, forKey: "onboarding_completed_v1")
                     dismiss()
                 }
