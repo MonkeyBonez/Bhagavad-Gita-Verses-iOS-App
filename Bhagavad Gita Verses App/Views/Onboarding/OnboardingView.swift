@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct OnboardingView: View {
     @Environment(\.colorScheme) private var colorScheme
@@ -73,26 +74,28 @@ struct OnboardingView: View {
             }
         }
         .foregroundStyle(foreground)
-        .sheet(isPresented: $showWidgetSheet) { ThemedBlankSheet() }
-        .sheet(isPresented: $showLockSheet) { ThemedBlankSheet() }
+        .sheet(isPresented: $showWidgetSheet) { HomeScreenWidgetOnboarding() }
+        .sheet(isPresented: $showLockSheet) { LockScreenWidgetOnboarding() }
     }
     
     var buttonView: some View {
         Group {
             if selection == 0 {
                 Button("Begin") {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    spinToken += 1 // trigger mandala spin at transition start
                     withAnimation { selection += 1 }
-                    spinToken += 1
                 }
                     .buttonStyle(PrimaryButtonStyle(accent: foreground, foreground: backgroundColor, fullWidth: true))
             } else if selection == 1 {
                 Button("Enable notifications") {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     withAnimation { requestNotifications() }
-                    spinToken += 1
                 }
                     .buttonStyle(PrimaryButtonStyle(accent: foreground, foreground: backgroundColor, fullWidth: true))
             } else {
                 Button("Done") {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     SharedDefaults.defaults.set(true, forKey: "onboarding_completed_v1")
                     dismiss()
                 }
@@ -108,6 +111,7 @@ struct OnboardingView: View {
         isRequestingNotifications = true
         WeeklyNotificationScheduler.userTappedEnableNotifications { _ in
             isRequestingNotifications = false
+            spinToken += 1 // trigger mandala spin exactly when transitioning to page 2
             withAnimation { selection = 2 }
         }
     }

@@ -77,6 +77,8 @@
 		363230D02E668CB9003264E7 /* verse_to_lesson.json in Resources */ = {isa = PBXBuildFile; fileRef = 363230CE2E668CB9003264E7 /* verse_to_lesson.json */; };
 		363230D42E67D1B1003264E7 /* BookmarkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230D32E67D1B1003264E7 /* BookmarkListView.swift */; };
 		36350FF32E6913CF00CA994F /* OnboardingMandalaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36350FF22E6913CF00CA994F /* OnboardingMandalaView.swift */; };
+		36350FF52E6A5ED900CA994F /* HomeScreenWidgetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36350FF42E6A5ED900CA994F /* HomeScreenWidgetOnboarding.swift */; };
+		36350FF92E6A72FF00CA994F /* LockScreenWidgetOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36350FF82E6A72FF00CA994F /* LockScreenWidgetOnboarding.swift */; };
 		366F74DA2E62A80F0013079A /* tokenizer_config_retriever.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74B82E62A80F0013079A /* tokenizer_config_retriever.json */; };
 		366F74DB2E62A80F0013079A /* vocab_retriever.txt in Resources */ = {isa = PBXBuildFile; fileRef = 366F74BA2E62A80F0013079A /* vocab_retriever.txt */; };
 		366F74DC2E62A80F0013079A /* tokenizer_config_ce.json in Resources */ = {isa = PBXBuildFile; fileRef = 366F74AD2E62A80F0013079A /* tokenizer_config_ce.json */; };
@@ -211,6 +213,8 @@
 		363230CE2E668CB9003264E7 /* verse_to_lesson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = verse_to_lesson.json; sourceTree = "<group>"; };
 		363230D32E67D1B1003264E7 /* BookmarkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkListView.swift; sourceTree = "<group>"; };
 		36350FF22E6913CF00CA994F /* OnboardingMandalaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMandalaView.swift; sourceTree = "<group>"; };
+		36350FF42E6A5ED900CA994F /* HomeScreenWidgetOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenWidgetOnboarding.swift; sourceTree = "<group>"; };
+		36350FF82E6A72FF00CA994F /* LockScreenWidgetOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenWidgetOnboarding.swift; sourceTree = "<group>"; };
 		366F74A92E62A80F0013079A /* MiniLML6CE.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = MiniLML6CE.mlpackage; sourceTree = "<group>"; };
 		366F74AB2E62A80F0013079A /* special_tokens_map_ce.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = special_tokens_map_ce.json; sourceTree = "<group>"; };
 		366F74AC2E62A80F0013079A /* tokenizer_ce.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tokenizer_ce.json; sourceTree = "<group>"; };
@@ -462,7 +466,6 @@
 		362F6FAA2E63E970004E22BF /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				368559A72E68F4DA00177D96 /* ViewComponents */,
 				334762CB2D4F5A3C0078FCB4 /* VerseView.swift */,
 				362F6FA62E63E93A004E22BF /* EmotionWheelView.swift */,
 				362F6F7E2E63C756004E22BF /* GuidanceSheetView.swift */,
@@ -485,6 +488,7 @@
 		36306EDC2E6908C900CFBD1D /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				368559A72E68F4DA00177D96 /* ViewComponents */,
 				36306EDB2E6908C900CFBD1D /* OnboardingView.swift */,
 				36306EDE2E690AA700CFBD1D /* AppIconHeader.swift */,
 				36306EDF2E690AA700CFBD1D /* Buttons.swift */,
@@ -599,6 +603,8 @@
 			children = (
 				36306ED92E68FB1F00CFBD1D /* PhoneHomeScreenSketchView.swift */,
 				368559A82E68F4E600177D96 /* MinimalLockScreenView.swift */,
+				36350FF42E6A5ED900CA994F /* HomeScreenWidgetOnboarding.swift */,
+				36350FF82E6A72FF00CA994F /* LockScreenWidgetOnboarding.swift */,
 			);
 			path = ViewComponents;
 			sourceTree = "<group>";
@@ -794,12 +800,14 @@
 				339B0B182DE0307600BFC39D /* Fonts.swift in Sources */,
 				337BB69B2DCD9B5E00F5EF82 /* DeeplinkConstants.swift in Sources */,
 				337BB69A2DCD9B3200F5EF82 /* DeeplinkCoordinator.swift in Sources */,
+				36350FF52E6A5ED900CA994F /* HomeScreenWidgetOnboarding.swift in Sources */,
 				362F6F7F2E63C756004E22BF /* GuidanceSheetView.swift in Sources */,
 				36E7D9E92E68310500EE6990 /* WeeklyNotificationScheduler.swift in Sources */,
 				3619F1222E6534FF00128BB8 /* ColorEmotionEngine.swift in Sources */,
 				33B4A9F52D2DF2A700AE1044 /* VersesReader.swift in Sources */,
 				36306EDA2E68FB1F00CFBD1D /* PhoneHomeScreenSketchView.swift in Sources */,
 				334762D02D4F5A3C0078FCB4 /* BhagavadGitaApp.swift in Sources */,
+				36350FF92E6A72FF00CA994F /* LockScreenWidgetOnboarding.swift in Sources */,
 				366F74E42E62A80F0013079A /* MiniLMReranker.swift in Sources */,
 				366F74E52E62A80F0013079A /* PairWordPieceTokenizer.swift in Sources */,
 				366F74E62E62A80F0013079A /* E5SmallV2.mlpackage in Sources */,
