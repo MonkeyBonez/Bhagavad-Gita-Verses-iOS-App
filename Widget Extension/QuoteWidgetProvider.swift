@@ -19,10 +19,12 @@ struct QuoteWidgetProvider: TimelineProvider {
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<QuoteEntry>) -> ()) {
         let now = Date()
-        let pick = WeeklyPickSync.getOrComputePick(forWeekOf: now, with: heuristic)
-        let entry = QuoteEntry(date: now, quote: pick.lessonText)
+        // Current week pick
+        let currentPick = WeeklyPickSync.getOrComputePick(forWeekOf: now, with: heuristic)
+        let currentEntry = QuoteEntry(date: now, quote: currentPick.lessonText)
+
         let nextRefresh = WeeklyPickSync.nextSundayStart(after: now)
-        let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
+        let timeline = Timeline(entries: [currentEntry], policy: .after(nextRefresh))
         completion(timeline)
     }
 

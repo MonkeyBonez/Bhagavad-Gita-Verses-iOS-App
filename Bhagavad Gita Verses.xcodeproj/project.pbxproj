@@ -43,11 +43,10 @@
 		339B0B182DE0307600BFC39D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 339B0B082DE0307600BFC39D /* Fonts.swift */; };
 		339B0B192DE0307600BFC39D /* EBGaramond-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 339B0B062DE0307600BFC39D /* EBGaramond-VariableFont_wght.ttf */; };
 		339B0B1A2DE0307600BFC39D /* verses-formatted.json in Resources */ = {isa = PBXBuildFile; fileRef = 339B0B0C2DE0307600BFC39D /* verses-formatted.json */; };
-		33A7D3E72DD97D7500900DFF /* LockscreenEasyViewQuoteWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A7D3E62DD97D7500900DFF /* LockscreenEasyViewQuoteWidget.swift */; };
 		33B4A9F52D2DF2A700AE1044 /* VersesReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */; };
 		33B4A9F62D2DF2A700AE1044 /* VersesReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */; };
 		33DB9A692DF6BAF900DB8935 /* QuoteWidgetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33DB9A682DF6BAF300DB8935 /* QuoteWidgetProvider.swift */; };
-		33DB9A6B2DF6BD0F00DB8935 /* HomescreenQuoteWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33DB9A6A2DF6BD0F00DB8935 /* HomescreenQuoteWidget.swift */; };
+		33DB9A6B2DF6BD0F00DB8935 /* HomescreenLessonWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33DB9A6A2DF6BD0F00DB8935 /* HomescreenLessonWidget.swift */; };
 		33FF16CC2D28FA83006E9888 /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF16CB2D28FA67006E9888 /* QuoteModel.swift */; };
 		33FF16D02D28FD5C006E9888 /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF16CB2D28FA67006E9888 /* QuoteModel.swift */; };
 		3619F1202E65344000128BB8 /* ColorPickerSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3619F11F2E65344000128BB8 /* ColorPickerSheetView.swift */; };
@@ -104,6 +103,8 @@
 		366F74ED2E62A80F0013079A /* RetrieverEmbeddingIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74BC2E62A80F0013079A /* RetrieverEmbeddingIndex.swift */; };
 		366F75282E62C69E0013079A /* LessonUnitsIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F75262E62C69E0013079A /* LessonUnitsIndex.swift */; };
 		366F75322E6364D70013079A /* LessonNavigationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F75312E6364D70013079A /* LessonNavigationHelper.swift */; };
+		3680C2522E792F770036D216 /* AppGroupMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3680C2512E792F770036D216 /* AppGroupMigration.swift */; };
+		3680C2532E792F770036D216 /* AppGroupMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3680C2512E792F770036D216 /* AppGroupMigration.swift */; };
 		368559A92E68F4E600177D96 /* MinimalLockScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368559A82E68F4E600177D96 /* MinimalLockScreenView.swift */; };
 		36E7D9E12E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */; };
 		36E7D9E22E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */; };
@@ -190,10 +191,9 @@
 		339B0B0B2DE0307600BFC39D /* Verses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Verses.swift; sourceTree = "<group>"; };
 		339B0B0C2DE0307600BFC39D /* verses-formatted.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "verses-formatted.json"; sourceTree = "<group>"; };
 		339B0B0D2DE0307600BFC39D /* VersesInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersesInfo.swift; sourceTree = "<group>"; };
-		33A7D3E62DD97D7500900DFF /* LockscreenEasyViewQuoteWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockscreenEasyViewQuoteWidget.swift; sourceTree = "<group>"; };
 		33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersesReader.swift; sourceTree = "<group>"; };
 		33DB9A682DF6BAF300DB8935 /* QuoteWidgetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteWidgetProvider.swift; sourceTree = "<group>"; };
-		33DB9A6A2DF6BD0F00DB8935 /* HomescreenQuoteWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomescreenQuoteWidget.swift; sourceTree = "<group>"; };
+		33DB9A6A2DF6BD0F00DB8935 /* HomescreenLessonWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomescreenLessonWidget.swift; sourceTree = "<group>"; };
 		33FF16CB2D28FA67006E9888 /* QuoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteModel.swift; sourceTree = "<group>"; };
 		3619F11F2E65344000128BB8 /* ColorPickerSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerSheetView.swift; sourceTree = "<group>"; };
 		3619F1212E6534FF00128BB8 /* ColorEmotionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorEmotionEngine.swift; sourceTree = "<group>"; };
@@ -241,6 +241,7 @@
 		366F74C32E62A80F0013079A /* RetrieverWordPieceTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieverWordPieceTokenizer.swift; sourceTree = "<group>"; };
 		366F75262E62C69E0013079A /* LessonUnitsIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonUnitsIndex.swift; sourceTree = "<group>"; };
 		366F75312E6364D70013079A /* LessonNavigationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonNavigationHelper.swift; sourceTree = "<group>"; };
+		3680C2512E792F770036D216 /* AppGroupMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupMigration.swift; sourceTree = "<group>"; };
 		368559A82E68F4E600177D96 /* MinimalLockScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalLockScreenView.swift; sourceTree = "<group>"; };
 		36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSans3-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		36E7D9E52E682BB100EE6990 /* Bhagavad Gita Verses.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bhagavad Gita Verses.entitlements"; sourceTree = "<group>"; };
@@ -372,7 +373,7 @@
 		334762D72D4F5B1B0078FCB4 /* Widget Extension */ = {
 			isa = PBXGroup;
 			children = (
-				33DB9A6A2DF6BD0F00DB8935 /* HomescreenQuoteWidget.swift */,
+				33DB9A6A2DF6BD0F00DB8935 /* HomescreenLessonWidget.swift */,
 				33DB9A682DF6BAF300DB8935 /* QuoteWidgetProvider.swift */,
 				33182E092DD58B7400A82202 /* VerseWidgetProvider.swift */,
 				334762D22D4F5B1B0078FCB4 /* Assets.xcassets */,
@@ -380,7 +381,6 @@
 				334762D32D4F5B1B0078FCB4 /* ControlWidget.swift */,
 				334762D42D4F5B1B0078FCB4 /* Info.plist */,
 				334762D52D4F5B1B0078FCB4 /* LockscreenQuoteWidget.swift */,
-				33A7D3E62DD97D7500900DFF /* LockscreenEasyViewQuoteWidget.swift */,
 				334762D62D4F5B1B0078FCB4 /* WidgetBundle.swift */,
 			);
 			path = "Widget Extension";
@@ -442,6 +442,7 @@
 		33FF16CA2D28FA5C006E9888 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3680C2512E792F770036D216 /* AppGroupMigration.swift */,
 				3310A48D2DEF606700EBBA15 /* FileReader.swift */,
 				339B0B032DE0267F00BFC39D /* BookmarkedVersesModel.swift */,
 				33FF16CB2D28FA67006E9888 /* QuoteModel.swift */,
@@ -800,6 +801,7 @@
 				36306EE72E690AAE00CFBD1D /* ThemedBlankSheet.swift in Sources */,
 				36306EE82E690AAE00CFBD1D /* WelcomePage.swift in Sources */,
 				36306EE92E690AAE00CFBD1D /* WidgetsPage.swift in Sources */,
+				3680C2522E792F770036D216 /* AppGroupMigration.swift in Sources */,
 				339B0B162DE0307600BFC39D /* Colors.swift in Sources */,
 				3310A48F2DEF606A00EBBA15 /* FileReader.swift in Sources */,
 				339B0B172DE0307600BFC39D /* VersesInfo.swift in Sources */,
@@ -847,7 +849,6 @@
 			files = (
 				337BB69C2DCD9B7C00F5EF82 /* DeeplinkConstants.swift in Sources */,
 				363230CA2E66230C003264E7 /* LessonTextsIndex.swift in Sources */,
-				33A7D3E72DD97D7500900DFF /* LockscreenEasyViewQuoteWidget.swift in Sources */,
 				334762DA2D4F5B1B0078FCB4 /* WidgetBundle.swift in Sources */,
 				363230C82E662254003264E7 /* WeeklySelector.swift in Sources */,
 				339B0B112DE0307600BFC39D /* Verses.swift in Sources */,
@@ -858,7 +859,8 @@
 				339B0B142DE0307600BFC39D /* Fonts.swift in Sources */,
 				3310A48E2DEF606A00EBBA15 /* FileReader.swift in Sources */,
 				334762DB2D4F5B1B0078FCB4 /* LockscreenQuoteWidget.swift in Sources */,
-				33DB9A6B2DF6BD0F00DB8935 /* HomescreenQuoteWidget.swift in Sources */,
+				33DB9A6B2DF6BD0F00DB8935 /* HomescreenLessonWidget.swift in Sources */,
+				3680C2532E792F770036D216 /* AppGroupMigration.swift in Sources */,
 				334762DC2D4F5B1B0078FCB4 /* ControlWidget.swift in Sources */,
 				33B4A9F62D2DF2A700AE1044 /* VersesReader.swift in Sources */,
 				363230C42E661E86003264E7 /* LessonUnitsIndex.swift in Sources */,
@@ -1035,13 +1037,15 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Sne.LockScreenWidgetSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1068,13 +1072,15 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Sne.LockScreenWidgetSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -37,8 +37,9 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
     private let verseMap: [String:Int]
     private let params: WeeklyParams
     private let shownKey = "weekly_shown_history"
+    private let shouldPersistShown: Bool
 
-    public init(params: WeeklyParams = WeeklyParams(), verseToLessonJSON: URL? = nil) {
+    public init(params: WeeklyParams = WeeklyParams(), verseToLessonJSON: URL? = nil, shouldPersistShown: Bool = true) {
         self.embeddings = LessonEmbeddingIndex()
         self.unitsIndex = LessonUnitsIndex()
         self.textsIndex = LessonTextsIndex()
@@ -49,16 +50,17 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
             self.verseMap = [:]
         }
         self.params = params
+        self.shouldPersistShown = shouldPersistShown
     }
 
     public func pick(for date: Date) -> WeeklyPick {
         guard let emb = embeddings, let ui = unitsIndex, let lt = textsIndex, emb.count > 0, ui.count > 0, lt.count > 0 else {
-            return ColdStartWeeklyHeuristic().pick(for: date)
+            return ColdStartWeeklyHeuristic(shouldPersistShown: shouldPersistShown).pick(for: date)
         }
         // 1) Collect seeds from bookmarks
         let seeds = loadSeedLessonIndices()
         if seeds.isEmpty {
-            return ColdStartWeeklyHeuristic().pick(for: date)
+            return ColdStartWeeklyHeuristic(shouldPersistShown: shouldPersistShown).pick(for: date)
         }
         // 2) Compute k
         let k = max(1, min(3, Int((Float(seeds.count)).squareRoot().rounded())))
@@ -132,7 +134,7 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
                 if shownSet.contains(idx) { continue }
                 alt = (idx, scores[idx]); break
             }
-            guard let a = alt else { return ColdStartWeeklyHeuristic().pick(for: date) }
+            guard let a = alt else { return ColdStartWeeklyHeuristic(shouldPersistShown: shouldPersistShown).pick(for: date) }
             chosen = a
         }
         // 8) Verse selection: earliest unit
@@ -142,7 +144,7 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
         let verse = first?.start ?? 1
         let text = lt.text(forIndex: chosen.0)
         // Persist shown
-        saveShown(index: chosen.0, date: date)
+        if shouldPersistShown { saveShown(index: chosen.0, date: date) }
         return WeeklyPick(lessonIndex: chosen.0, lessonText: text, chapter: chapter, verse: verse)
     }
 
@@ -249,15 +251,13 @@ public struct WeeklyPickSync {
     private static let pickKeyPrefix = "weekly_pick_"
 
     public static func sundayStart(for date: Date) -> Date {
+        // Return the start of the current week's Sunday (most recent Sunday, including today if Sunday)
         let cal = Calendar.current
         let startOfDay = cal.startOfDay(for: date)
         let weekday = cal.component(.weekday, from: startOfDay) // 1 = Sunday
-        if weekday == 1 {
-            return startOfDay
-        }
-        let daysUntilSunday = (8 - weekday) % 7
-        let nextSunday = cal.date(byAdding: .day, value: daysUntilSunday, to: startOfDay)!
-        return cal.startOfDay(for: nextSunday)
+        let daysSinceSunday = (weekday + 6) % 7 // 0 if Sunday, 1 if Monday, ... 6 if Saturday
+        let thisSunday = cal.date(byAdding: .day, value: -daysSinceSunday, to: startOfDay)!
+        return cal.startOfDay(for: thisSunday)
     }
 
     public static func nextSundayStart(after date: Date) -> Date {
@@ -271,9 +271,20 @@ public struct WeeklyPickSync {
     }
 
     public static func loadPick(forWeekOf date: Date) -> WeeklyPick? {
+        // Try current-week anchor first (correct behavior)
         let anchor = sundayStart(for: date)
         let key = pickKeyPrefix + String(Int(anchor.timeIntervalSince1970))
-        guard let dict = SharedDefaults.defaults.dictionary(forKey: key) as? [String: Any] else { return nil }
+        if let dict = SharedDefaults.defaults.dictionary(forKey: key) as? [String: Any] {
+            guard let li = dict["lessonIndex"] as? Int,
+                  let lt = dict["lessonText"] as? String,
+                  let ch = dict["chapter"] as? Int,
+                  let vs = dict["verse"] as? Int else { return nil }
+            return WeeklyPick(lessonIndex: li, lessonText: lt, chapter: ch, verse: vs)
+        }
+        // Fallback once: read legacy key that used upcoming Sunday's anchor (pre-fix)
+        let legacyAnchor = legacyUpcomingSundayStart(for: date)
+        let legacyKey = pickKeyPrefix + String(Int(legacyAnchor.timeIntervalSince1970))
+        guard let dict = SharedDefaults.defaults.dictionary(forKey: legacyKey) as? [String: Any] else { return nil }
         guard let li = dict["lessonIndex"] as? Int,
               let lt = dict["lessonText"] as? String,
               let ch = dict["chapter"] as? Int,
@@ -304,6 +315,28 @@ public struct WeeklyPickSync {
         return computed
     }
 
+    /// Migration: For users updating from versions that anchored picks to the upcoming Sunday,
+    /// copy the legacy key's pick into the new current-week key if the new key is missing.
+    /// Returns true if a migration occurred (i.e., we copied a legacy value).
+    @discardableResult
+    public static func migrateLegacyAnchorIfNeeded(now: Date = Date()) -> Bool {
+        let currentAnchor = sundayStart(for: now)
+        let currentKey = pickKeyPrefix + String(Int(currentAnchor.timeIntervalSince1970))
+        if SharedDefaults.defaults.dictionary(forKey: currentKey) != nil {
+            return false
+        }
+        let legacyAnchor = legacyUpcomingSundayStart(for: now)
+        let legacyKey = pickKeyPrefix + String(Int(legacyAnchor.timeIntervalSince1970))
+        guard let dict = SharedDefaults.defaults.dictionary(forKey: legacyKey) as? [String: Any] else {
+            return false
+        }
+        SharedDefaults.defaults.set(dict, forKey: currentKey)
+        // Keep both keys temporarily; prune will clean old keys later.
+        return true
+    }
+
+    // (Removed DEBUG-only test helpers for production experience)
+
     private static func pruneOldPicks(keepingAnchors anchors: [Date]) {
         let allowedKeys: Set<String> = Set(anchors.map { pickKeyPrefix + String(Int(Calendar.current.startOfDay(for: $0).timeIntervalSince1970)) })
         let allKeys = SharedDefaults.defaults.dictionaryRepresentation().keys
@@ -314,6 +347,17 @@ public struct WeeklyPickSync {
             }
         }
     }
+
+    // MARK: - Legacy (pre-fix) behavior: upcoming Sunday's anchor
+    private static func legacyUpcomingSundayStart(for date: Date) -> Date {
+        let cal = Calendar.current
+        let startOfDay = cal.startOfDay(for: date)
+        let weekday = cal.component(.weekday, from: startOfDay) // 1 = Sunday
+        if weekday == 1 { return startOfDay }
+        let daysUntilSunday = (8 - weekday) % 7
+        let nextSunday = cal.date(byAdding: .day, value: daysUntilSunday, to: startOfDay)!
+        return cal.startOfDay(for: nextSunday)
+    }
 }
 
 fileprivate final class ColdStartWeeklyHeuristic: WeeklyHeuristic {
@@ -323,9 +367,11 @@ fileprivate final class ColdStartWeeklyHeuristic: WeeklyHeuristic {
     private let lessonTexts: LessonTextsIndex?
     private let shownKey = "weekly_shown_history"
     private let entries: [ColdStartEntry]
+    private let shouldPersistShown: Bool
 
-    fileprivate init() {
+    fileprivate init(shouldPersistShown: Bool = true) {
         self.lessonTexts = LessonTextsIndex()
+        self.shouldPersistShown = shouldPersistShown
         // Load cold_start_map.json from bundle (search common subdirectories)
         let candidates: [URL?] = [
             Bundle.main.url(forResource: "cold_start_map", withExtension: "json"),
@@ -350,7 +396,7 @@ fileprivate final class ColdStartWeeklyHeuristic: WeeklyHeuristic {
         // First available not shown recently
         if let e = entries.first(where: { !shownSet.contains($0.index) }) {
             let text = lt.text(forIndex: e.index)
-            saveShown(index: e.index, date: date)
+            if shouldPersistShown { saveShown(index: e.index, date: date) }
             return WeeklyPick(lessonIndex: e.index, lessonText: text, chapter: e.chapter, verse: e.verse)
         }
 
@@ -359,7 +405,7 @@ fileprivate final class ColdStartWeeklyHeuristic: WeeklyHeuristic {
         let week = cal.component(.weekOfYear, from: date)
         let e = entries[max(0, (week - 1) % entries.count)]
         let text = lt.text(forIndex: e.index)
-        saveShown(index: e.index, date: date)
+        if shouldPersistShown { saveShown(index: e.index, date: date) }
         return WeeklyPick(lessonIndex: e.index, lessonText: text, chapter: e.chapter, verse: e.verse)
     }
 

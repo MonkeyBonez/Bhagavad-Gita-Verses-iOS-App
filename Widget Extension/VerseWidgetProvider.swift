@@ -21,12 +21,14 @@ struct VerseWidgetProvider: TimelineProvider {
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<VerseEntry>) -> ()) {
         let now = Date()
-        let pick = WeeklyPickSync.getOrComputePick(forWeekOf: now, with: heuristic)
         let versesReader = VersesReader()
-        let verseText = versesReader.verse(atGlobalIndex: VersesInfo.getIndexOfVerse(chapter: pick.chapter, verse: pick.verse)).text
-        let entry = VerseEntry(date: now, verse: verseText)
+        // Current week pick
+        let currentPick = WeeklyPickSync.getOrComputePick(forWeekOf: now, with: heuristic)
+        let currentText = versesReader.verse(atGlobalIndex: VersesInfo.getIndexOfVerse(chapter: currentPick.chapter, verse: currentPick.verse)).text
+        let currentEntry = VerseEntry(date: now, verse: currentText)
+
         let nextRefresh = WeeklyPickSync.nextSundayStart(after: now)
-        let timeline = Timeline(entries: [entry], policy: .after(nextRefresh))
+        let timeline = Timeline(entries: [currentEntry], policy: .after(nextRefresh))
         completion(timeline)
     }
 

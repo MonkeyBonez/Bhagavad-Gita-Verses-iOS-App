@@ -376,7 +376,8 @@ struct EmotionWheelView: View {
                     let top = path.first?.label ?? tapped.label
                     let second = path.dropFirst().first?.label ?? tapped.label
                     let third = tapped.label
-                    pendingQuery = "I feel \(top) because I feel \(second), because I feel \(third)"
+                    // DEMO: override leaf query with demo sentinel
+                    pendingQuery = "demo://force/2/47"
                 }
                 triggerExpandHaptic(depth: targetDepth)
                 didTriggerHapticForCurrentTap = true

@@ -18,6 +18,8 @@ enum WeeklyNotificationScheduler {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             switch settings.authorizationStatus {
             case .authorized, .provisional, .ephemeral:
+                // DEBUG: Print any pending weekly reminder requests and our saved map
+                debugPrintWeeklyPending(now: now)
                 handleWeeklyLifecycle(now: now)
             default:
                 break
@@ -123,6 +125,36 @@ enum WeeklyNotificationScheduler {
         if let data = try? JSONSerialization.data(withJSONObject: obj) {
             SharedDefaults.defaults.set(data, forKey: scheduledMapKey)
         }
+    }
+
+    // MARK: - DEBUG helpers
+    private static func debugPrintWeeklyPending(now: Date) {
+        #if DEBUG
+        let anchor = WeeklyPickSync.sundayStart(for: now)
+        let anchorTs = Int(anchor.timeIntervalSince1970)
+        let map = loadScheduledMap()
+        print("[WeeklyNotificationScheduler][DEBUG] Current week anchorTs=\(anchorTs)")
+        if let entry = map[anchorTs] {
+            print("[WeeklyNotificationScheduler][DEBUG] Saved scheduledMap entry for this week: id=\(entry["id"] ?? "") fireTs=\(entry["fireTs"] ?? 0)")
+        } else {
+            print("[WeeklyNotificationScheduler][DEBUG] No saved scheduledMap entry for this week")
+        }
+        UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
+            let weekly = requests.filter { $0.identifier.hasPrefix("weekly_lesson_reminder_") }
+            print("[WeeklyNotificationScheduler][DEBUG] Pending weekly requests count=\(weekly.count)")
+            for req in weekly {
+                var triggerInfo = ""
+                if let trig = req.trigger as? UNTimeIntervalNotificationTrigger {
+                    triggerInfo = "timeInterval=\(trig.timeInterval) repeats=\(trig.repeats)"
+                } else if let dc = req.trigger as? UNCalendarNotificationTrigger {
+                    triggerInfo = "calendarTrigger dateComponents=\(dc.dateComponents) repeats=\(dc.repeats)"
+                } else {
+                    triggerInfo = String(describing: type(of: req.trigger))
+                }
+                print("[WeeklyNotificationScheduler][DEBUG] id=\(req.identifier) title=\(req.content.title) body=\(req.content.body) trigger=\(triggerInfo)")
+            }
+        }
+        #endif
     }
 }
 

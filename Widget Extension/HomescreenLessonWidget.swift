@@ -10,7 +10,7 @@ import SwiftUI
 import WidgetKit
 
 
-struct HomescreenQuoteWidget: Widget {
+struct HomescreenLessonWidget: Widget {
 
     let kind = "HomescreenQuoteWidget"
 

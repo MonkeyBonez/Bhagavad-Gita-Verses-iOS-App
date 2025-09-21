@@ -1,17 +1,29 @@
 import SwiftUI
+import WidgetKit
 import UserNotifications
 
 @main
 struct BhagavadGitaApp: App {
     @Environment(\.openURL) var openURL
-    let quoteModel: QuoteModel = QuoteModel()
+    let quoteModel: QuoteModel
     let deeplinkCoordinator = DeeplinkCoordinator()
+
+    init() {
+        // 1) Move data from standard defaults → App Group so widgets can see it on first run
+        AppGroupMigration.migrateStandardToAppGroupIfNeeded()
+        // 2) Ensure legacy weekly pick is migrated BEFORE any consumers compute/read the pick
+        WeeklyPickSync.migrateLegacyAnchorIfNeeded()
+        self.quoteModel = QuoteModel()
+    }
 
     var body: some Scene {
         WindowGroup {
             RootContent(quoteModel: quoteModel)
                 .onOpenURL(perform: {handleUrl($0)})
-                .onAppear { WeeklyNotificationScheduler.onAppOpenIfAuthorized() }
+                .onAppear {
+                    WeeklyNotificationScheduler.onAppOpenIfAuthorized()
+                    refreshWidgetsIfNewWeek()
+                }
         }
     }
 
@@ -37,6 +49,18 @@ struct BhagavadGitaApp: App {
     private func openSpecificVerse(chapter: Int, verse: Int) {
         quoteModel.viewingBookmarkedDisable()
         quoteModel.setToChapterVerse(chapter: chapter, verse: verse)
+    }
+
+    // MARK: - Safety: reload widgets on first app open after midnight
+    private func refreshWidgetsIfNewWeek(now: Date = Date()) {
+        let anchor = WeeklyPickSync.sundayStart(for: now)
+        let key = "last_widget_refresh_anchor_ts"
+        let lastTs = SharedDefaults.defaults.double(forKey: key)
+        let anchorTs = anchor.timeIntervalSince1970
+        if lastTs < anchorTs {
+            WidgetCenter.shared.reloadAllTimelines()
+            SharedDefaults.defaults.set(anchorTs, forKey: key)
+        }
     }
 }
 
