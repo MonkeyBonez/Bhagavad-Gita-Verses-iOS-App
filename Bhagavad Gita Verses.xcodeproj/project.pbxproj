@@ -106,6 +106,8 @@
 		3680C2522E792F770036D216 /* AppGroupMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3680C2512E792F770036D216 /* AppGroupMigration.swift */; };
 		3680C2532E792F770036D216 /* AppGroupMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3680C2512E792F770036D216 /* AppGroupMigration.swift */; };
 		368559A92E68F4E600177D96 /* MinimalLockScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368559A82E68F4E600177D96 /* MinimalLockScreenView.swift */; };
+		369B2A7F2E99C26C000C278B /* VersePagingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369B2A7E2E99C26C000C278B /* VersePagingViewModel.swift */; };
+		369B2A802E99C26C000C278B /* VersePagingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369B2A7E2E99C26C000C278B /* VersePagingViewModel.swift */; };
 		36E7D9E12E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */; };
 		36E7D9E22E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */; };
 		36E7D9E92E68310500EE6990 /* WeeklyNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E7D9E72E68310500EE6990 /* WeeklyNotificationScheduler.swift */; };
@@ -243,6 +245,7 @@
 		366F75312E6364D70013079A /* LessonNavigationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonNavigationHelper.swift; sourceTree = "<group>"; };
 		3680C2512E792F770036D216 /* AppGroupMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupMigration.swift; sourceTree = "<group>"; };
 		368559A82E68F4E600177D96 /* MinimalLockScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalLockScreenView.swift; sourceTree = "<group>"; };
+		369B2A7E2E99C26C000C278B /* VersePagingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersePagingViewModel.swift; sourceTree = "<group>"; };
 		36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SourceSans3-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		36E7D9E52E682BB100EE6990 /* Bhagavad Gita Verses.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bhagavad Gita Verses.entitlements"; sourceTree = "<group>"; };
 		36E7D9E62E682BE200EE6990 /* Widgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Widgets.entitlements; sourceTree = "<group>"; };
@@ -447,6 +450,7 @@
 				339B0B032DE0267F00BFC39D /* BookmarkedVersesModel.swift */,
 				33FF16CB2D28FA67006E9888 /* QuoteModel.swift */,
 				33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */,
+				369B2A7E2E99C26C000C278B /* VersePagingViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -805,6 +809,7 @@
 				339B0B162DE0307600BFC39D /* Colors.swift in Sources */,
 				3310A48F2DEF606A00EBBA15 /* FileReader.swift in Sources */,
 				339B0B172DE0307600BFC39D /* VersesInfo.swift in Sources */,
+				369B2A802E99C26C000C278B /* VersePagingViewModel.swift in Sources */,
 				339B0B182DE0307600BFC39D /* Fonts.swift in Sources */,
 				337BB69B2DCD9B5E00F5EF82 /* DeeplinkConstants.swift in Sources */,
 				337BB69A2DCD9B3200F5EF82 /* DeeplinkCoordinator.swift in Sources */,
@@ -868,6 +873,7 @@
 				33FF16D02D28FD5C006E9888 /* QuoteModel.swift in Sources */,
 				33182E0C2DD58E4100A82202 /* VerseWidgetProvider.swift in Sources */,
 				33182E082DD58B6000A82202 /* HomescreenVerseWidget.swift in Sources */,
+				369B2A7F2E99C26C000C278B /* VersePagingViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

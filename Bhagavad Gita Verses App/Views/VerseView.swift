@@ -13,7 +13,7 @@ struct VerseView: View {
     @State var footerVerseInfo: Verse
     
     // Paging state
-    @State private var dataSource: [Int] = [] // global verse indices
+    @State private var pagingVM: VersePagingViewModel
     @State private var scrollPosition: Int?
     @State private var selectedGlobalIndex: Int = 0
     @State private var introOpacity: CGFloat = 0.0
@@ -25,14 +25,7 @@ struct VerseView: View {
     @State private var showingEmotionWheel: Bool = false
     @State private var showingColorPicker: Bool = false
     @State private var showingBookmarkList: Bool = false
-    @State private var guidanceQuery: String = ""
-    @State private var guidanceTopK: Int = 3
-    @State private var guidanceRetrieveTopK: Int = 10
-    @State private var guidanceResults: [LessonResult] = []
-    @State private var isSearchingGuidance: Bool = false
-    @State private var guidanceError: String? = nil
-    @State private var searchHelper: LessonSearchHelper? = nil
-    @State private var unitsIndex: LessonUnitsIndex? = LessonUnitsIndex()
+    @State private var guidanceVM = GuidanceViewModel()
     @State private var isCentered: Bool = true
     
     let buttonClickPadding = 30.0
@@ -50,7 +43,7 @@ struct VerseView: View {
         self._footerVerseInfo = State(initialValue: dailyQuoteModel.quote)
         self._selectedGlobalIndex = State(initialValue: dailyQuoteModel.currentGlobalIndex)
         self._scrollPosition = State(initialValue: dailyQuoteModel.currentGlobalIndex)
-        self._dataSource = State(initialValue: [])
+        self._pagingVM = State(initialValue: VersePagingViewModel(model: dailyQuoteModel))
     }
     
     init(quote: String, author: String, chapter: Int, verse: Int, isExternalCoverPresented: Binding<Bool> = .constant(false)) {
@@ -60,7 +53,7 @@ struct VerseView: View {
         self._footerVerseInfo = State(initialValue: quoteModel.quote)
         self._selectedGlobalIndex = State(initialValue: quoteModel.currentGlobalIndex)
         self._scrollPosition = State(initialValue: quoteModel.currentGlobalIndex)
-        self._dataSource = State(initialValue: [])
+        self._pagingVM = State(initialValue: VersePagingViewModel(model: quoteModel))
     }
     
     private var isDisplayBookmarked: Bool {
@@ -135,7 +128,7 @@ struct VerseView: View {
                 }
             } else if wasViewingBookmarked {
                 viewModel.viewingBookmarkedDisable()
-                rebuildDataSource()
+                pagingVM.rebuildDataSource()
                 selectedGlobalIndex = viewModel.currentGlobalIndex
                 scrollPosition = selectedGlobalIndex
             }
@@ -162,7 +155,7 @@ struct VerseView: View {
         Menu {
             Section("Gita Guidance") {
                 Button {
-                    guidanceQuery = ""
+                    guidanceVM.query = ""
                     showGuidanceSheet = true
                 } label: {
                     Label("Describe circumstance", systemImage: "pencil")
@@ -183,20 +176,20 @@ struct VerseView: View {
         }
         .fullScreenCover(isPresented: $showGuidanceSheet) {
             GuidanceSheetView(
-                query: $guidanceQuery,
-                topK: $guidanceTopK,
-                retrieveTopK: $guidanceRetrieveTopK,
-                isSearching: isSearchingGuidance,
-                errorText: guidanceError,
-                results: guidanceResults,
-                onSearch: { runGuidanceSearch() },
+                query: $guidanceVM.query,
+                topK: $guidanceVM.topK,
+                retrieveTopK: $guidanceVM.retrieveTopK,
+                isSearching: guidanceVM.isSearching,
+                errorText: guidanceVM.errorText,
+                results: guidanceVM.results,
+                onSearch: { runGuidanceViaVM() },
                 onClose: { showGuidanceSheet = false }
             )
         }
         .fullScreenCover(isPresented: $showingEmotionWheel) {
             EmotionWheelContainerView(isBookmarked: viewModel.bookmarked, onQuery: { query in
                 showingEmotionWheel = false
-                runGuidanceSearch(text: query)
+                runGuidanceViaVM(text: query)
             })
         }
         .fullScreenCover(isPresented: $showingColorPicker) {
@@ -205,7 +198,7 @@ struct VerseView: View {
                                  onClose: { showingColorPicker = false },
                                  onSubmitQuery: { query in
                                      showingColorPicker = false
-                                     runGuidanceSearch(text: query)
+                                     runGuidanceViaVM(text: query)
                                  })
         }
         .sheet(isPresented: $showingBookmarkList) {
@@ -218,7 +211,7 @@ struct VerseView: View {
                     // Navigate to the tapped bookmark after the sheet dismisses
                     DispatchQueue.main.async {
                         // Ensure data source contains all verses so we can jump anywhere
-                        if !viewModel.viewingBookmarked { rebuildDataSource() }
+                        if !viewModel.viewingBookmarked { pagingVM.rebuildDataSource() }
                         let current = viewModel.currentGlobalIndex
                         if idx == current {
                             // No animation if already at target
@@ -244,24 +237,13 @@ struct VerseView: View {
         guard canToggleBookmarkMode else { return }
         isSwitchingDataSource = true
         let currentIndex = selectedGlobalIndex
-        viewModel.viewingBookmarkedTapped()
-        rebuildDataSource()
-        var targetIndex = currentIndex
-        if viewModel.viewingBookmarked {
-            // Map to nearest bookmarked verse to the currently visible global index
-            if let nearest = dataSource.min(by: { abs($0 - currentIndex) < abs($1 - currentIndex) }) {
-                targetIndex = nearest
-            } else if let first = dataSource.first {
-                targetIndex = first
-            }
-        }
+        let targetIndex = pagingVM.toggleBookmarkedOnly(currentIndex: currentIndex)
         var txn = Transaction()
         txn.disablesAnimations = true
         withTransaction(txn) {
             selectedGlobalIndex = targetIndex
             scrollPosition = targetIndex
         }
-        viewModel.setCurrentByGlobalIndex(targetIndex)
         setFooterQuoteAfterQuoteChange()
         DispatchQueue.main.async {
             self.isSwitchingDataSource = false
@@ -303,26 +285,22 @@ struct VerseView: View {
     }
     
     private func rebuildDataSource() {
-        if viewModel.viewingBookmarked {
-            dataSource = viewModel.bookmarkedGlobalIndices
-        } else {
-            dataSource = Array(0..<viewModel.totalVerseCount)
-        }
+        pagingVM.rebuildDataSource()
     }
     
     // Display indices equals the data source (no transient items)
-    private func displayIndices() -> [Int] { dataSource }
+    private func displayIndices() -> [Int] { pagingVM.dataSource }
     
     private func goToPrevious() {
-        guard let currentIdx = dataSource.firstIndex(of: selectedGlobalIndex), currentIdx > 0 else { return }
-        let target = dataSource[currentIdx - 1]
-        scrollPosition = target
+        if let target = pagingVM.previousIndex(currentIndex: selectedGlobalIndex) {
+            scrollPosition = target
+        }
     }
     
     private func goToNext() {
-        guard let currentIdx = dataSource.firstIndex(of: selectedGlobalIndex), currentIdx + 1 < dataSource.count else { return }
-        let target = dataSource[currentIdx + 1]
-        scrollPosition = target
+        if let target = pagingVM.nextIndex(currentIndex: selectedGlobalIndex) {
+            scrollPosition = target
+        }
     }
     
     private func quoteFooterView(quote: Verse) -> some View {
@@ -511,49 +489,14 @@ struct VerseView: View {
 
 // MARK: - Intro animation
 extension VerseView {
-    // MARK: Bookmark List Sheet
-    struct BookmarkListSheet: View {
-        let indices: [Int]
-        let getVerse: (Int) -> Verse
-        let onSelect: (Int) -> Void
-        let onClose: () -> Void
-        var body: some View {
-            NavigationStack {
-                List(indices, id: \.self) { idx in
-                    let verse = getVerse(idx)
-                    Button {
-                        onSelect(idx)
-                    } label: {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text(verse.text)
-                                .font(.custom(Fonts.verseFontName, size: 20))
-                                .foregroundStyle(AppColors.lightPeacock)
-                                .lineLimit(3)
-                            Text("\(verse.chapterNumber).\(verse.verseNumber)")
-                                .font(.footnote)
-                                .foregroundStyle(.secondary)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                }
-                .listStyle(.insetGrouped)
-                .navigationTitle("Bookmarked Verses")
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button("Done") { onClose() }
-                    }
-                }
-            }
-        }
-    }
     // Animate away from the current verse by paging backwards
     func animateAwayFromCurrentBackwards(pages: Int = 7) {
-        guard !dataSource.isEmpty, !isIntroAnimating else { return }
+        guard !pagingVM.dataSource.isEmpty, !isIntroAnimating else { return }
         // Use the currently displayed index to avoid mismatch with view model on first call
         let currentDisplayed = selectedGlobalIndex
-        guard let currentPos = dataSource.firstIndex(of: currentDisplayed) else { return }
+        guard let currentPos = pagingVM.dataSource.firstIndex(of: currentDisplayed) else { return }
         let targetPos = max(currentPos - max(1, pages), 0)
-        let backwardIndex = dataSource[targetPos]
+        let backwardIndex = pagingVM.dataSource[targetPos]
         guard backwardIndex != currentDisplayed else { return }
         isIntroAnimating = true
         let duration: Double = 0.8
@@ -581,13 +524,13 @@ extension VerseView {
 
     // Animate towards a target verse (same feel as app startup animation)
     func animateTowardsVerse(globalIndex target: Int, pagesAhead: Int = 5) {
-        guard !dataSource.isEmpty, !isIntroAnimating else { return }
+        guard !pagingVM.dataSource.isEmpty, !isIntroAnimating else { return }
         // Find target's position within dataSource; fall back to nearest by distance
-        let targetPos: Int = dataSource.firstIndex(of: target)
-            ?? dataSource.enumerated().min(by: { abs($0.element - target) < abs($1.element - target) })?.offset
+        let targetPos: Int = pagingVM.dataSource.firstIndex(of: target)
+            ?? pagingVM.dataSource.enumerated().min(by: { abs($0.element - target) < abs($1.element - target) })?.offset
             ?? 0
-        let aheadPos = min(targetPos + max(1, pagesAhead), dataSource.count - 1)
-        let aheadIndex = dataSource[aheadPos]
+        let aheadPos = min(targetPos + max(1, pagesAhead), pagingVM.dataSource.count - 1)
+        let aheadIndex = pagingVM.dataSource[aheadPos]
         guard aheadIndex != target else {
             // Already at the end, just set to target without animation
             selectedGlobalIndex = target
@@ -625,13 +568,13 @@ extension VerseView {
 
     // Animate towards a target verse from the start side (jump behind, then page forward)
     func animateTowardsVerseFromStart(globalIndex target: Int, pagesBehind: Int = 5) {
-        guard !dataSource.isEmpty, !isIntroAnimating else { return }
+        guard !pagingVM.dataSource.isEmpty, !isIntroAnimating else { return }
         // Find target's position within dataSource; fall back to nearest by distance
-        let targetPos: Int = dataSource.firstIndex(of: target)
-            ?? dataSource.enumerated().min(by: { abs($0.element - target) < abs($1.element - target) })?.offset
+        let targetPos: Int = pagingVM.dataSource.firstIndex(of: target)
+            ?? pagingVM.dataSource.enumerated().min(by: { abs($0.element - target) < abs($1.element - target) })?.offset
             ?? 0
         let behindPos = max(targetPos - max(1, pagesBehind), 0)
-        let behindIndex = dataSource[behindPos]
+        let behindIndex = pagingVM.dataSource[behindPos]
         guard behindIndex != target else {
             // Already at the start, just set to target without animation
             selectedGlobalIndex = target
@@ -667,91 +610,16 @@ extension VerseView {
         }
     }
 
-    private func runGuidanceSearch() {
-        guidanceError = nil
-        guidanceResults = []
-        // Close the sheet immediately on search tap
-        showGuidanceSheet = false
-        let text = guidanceQuery
-        runGuidanceSearch(text: text)
-    }
-
-    // Overload that executes the guidance flow for an arbitrary text (used by Emotion Wheel)
-    private func runGuidanceSearch(text: String) {
-        guidanceError = nil
-        guidanceResults = []
-        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        let normalized = trimmed.hasPrefix("query ") ? trimmed : ("query " + trimmed)
-        guard !trimmed.isEmpty else {
-            guidanceError = "Please enter some text."
-            return
-        }
-        if searchHelper == nil { searchHelper = LessonSearchHelper() }
-        guard let helper = searchHelper else {
-            guidanceError = "Failed to initialize search."
-            return
-        }
-        isSearchingGuidance = true
+    private func runGuidanceViaVM(text: String? = nil) {
         // Immediately animate away from current verse (backwards)
         animateAwayFromCurrentBackwards()
-        let k = guidanceTopK
-        let rk = max(k, guidanceRetrieveTopK)
-        DispatchQueue.global(qos: .userInitiated).async {
-            let results = helper.search(text: normalized, topK: k, retrieveTopK: rk, doRerank: true)
-            DispatchQueue.main.async {
-                self.guidanceResults = results
-                self.isSearchingGuidance = false
-                // Weighted pick from top K (default 0.5/0.3/0.2)
-                if !results.isEmpty {
-                    let chosenOffset = LessonNavigationHelper.pickWeightedTopIndex(count: results.count)
-                    let chosen = results[chosenOffset]
-                    let rowIndex = Int(chosen.id)
-                    if self.unitsIndex == nil { self.unitsIndex = LessonUnitsIndex() }
-                    if let uidx = self.unitsIndex {
-                        let units = uidx.units(forEmbeddingIndex: rowIndex)
-                        let cid = uidx.oldClusterId(forEmbeddingIndex: rowIndex) ?? -1
-                        let compact = units.map { "\($0.chapter).\($0.start)–\($0.end)" }.joined(separator: ", ")
-                        print("Chosen mapping (offset=\(chosenOffset)) → row=\(rowIndex) old_cluster_id=\(cid) units=[\(compact)]")
-                        // Navigate: pick a random UnitRange and animate towards it after away animation completes
-                        if let target = LessonNavigationHelper.pickRandomTarget(from: units) {
-                            let globalIdx = LessonNavigationHelper.globalIndex(forChapter: target.chapter, verse: target.verse)
-                            DispatchQueue.main.asyncAfter(deadline: .now() + LessonNavigationHelper.awayDuration) {
-                                self.animateTowardsVerse(globalIndex: globalIdx)
-                            }
-                        }
-                    } else {
-                        print("LessonUnitsIndex unavailable; cannot map units for top result")
-                    }
-                }
+        guidanceVM.searchAndPickTarget(query: text) { globalIdx in
+            guard let idx = globalIdx else { return }
+            DispatchQueue.main.asyncAfter(deadline: .now() + LessonNavigationHelper.awayDuration) {
+                self.animateTowardsVerse(globalIndex: idx)
             }
         }
     }
 }
 
 // MARK: - Emotion Wheel Container
-extension VerseView {
-    struct EmotionWheelContainerView: View {
-        @Environment(\.colorScheme) private var colorScheme
-        let isBookmarked: Bool
-        let onQuery: ((String) -> Void)?
-        @State private var nodes: [EmotionNode] = []
-        var body: some View {
-            ZStack {
-                (colorScheme == .light ? AppColors.parchment.linearGradient : AppColors.peacockBackground)
-                    .ignoresSafeArea()
-                Group {
-                    if nodes.isEmpty {
-                        ProgressView()
-                            .task {
-                                if let loaded = try? EmotionWheelLoader.load() { nodes = loaded }
-                            }
-                    } else {
-                        EmotionWheelView(roots: nodes) { query in
-                            onQuery?(query)
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
