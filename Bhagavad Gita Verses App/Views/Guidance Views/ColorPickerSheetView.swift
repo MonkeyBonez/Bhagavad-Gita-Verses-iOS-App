@@ -41,139 +41,143 @@ struct ColorPickerSheetView: View {
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 40) {
-                // Visible preview circle (non-interactive)
-                Circle()
-                    .fill(selectedColor)
-                    .overlay(Circle().stroke(foregroundColor.opacity(0.5), lineWidth: 2))
-                    .frame(width: 160, height: 160)
-                    .padding(.top, 8)
-                    .shadow(color: Color.black.opacity(colorScheme == .dark ? 0.35 : 0.12), radius: colorScheme == .dark ? 10 : 12, x: 0, y: colorScheme == .dark ? 6 : 8)
-                    .onTapGesture { showUIKitPicker = true }
-
-                // Compute emotions for current color
-                let result = engine.evaluate(color: selectedColor)
-                let top3 = Array(result.top5.prefix(3))
-
-                // Top 3 selectable options (single selection)
-                if !top3.isEmpty {
-                    if #available(iOS 26.0, *) {
-                        LiquidGlassSegmentedPicker(
-                            items: top3.map { $0.0.capitalized },
-                            selection: Binding<String>(
-                                get: { (selectedEmotionKey ?? top3.first?.0)?.capitalized ?? top3[0].0.capitalized },
-                                set: { selectedEmotionKey = $0.lowercased() }
-                            ),
-                            tint: foregroundColor,
-                            selectedTextColor: (colorScheme == .light ? AppColors.lavender : AppColors.greenPeacock),
-                            selectedPillTint: (colorScheme == .light ? AppColors.greenPeacock : .indigo)
-                        )
-                        .padding(.horizontal)
-                    } else {
-                        // iOS < 26: center-pin the middle emotion using width measurement and manual offsets
-                        let spacing: CGFloat = 20
-                        let labels = top3.map { $0.0.capitalized }
-                        ZStack {
-                            if labels.count == 3 {
-                                ForEach(labels, id: \.self) { label in
-                                    let isSelected = (selectedEmotionKey ?? top3.first?.0)?.capitalized == label
-                                    let centerLabel = labels[1]
-                                    let isLeft = label == labels[0]
-                                    let isCenter = label == centerLabel
-                                    let isRight = label == labels[2]
-
-                                    Button(action: { selectedEmotionKey = label.lowercased() }) {
-                                        Text(label)
-                                            .font(.subheadline)
-                                            .padding(.vertical, 8)
-                                            .padding(.horizontal, 12)
-                                            .frame(minHeight: 36)
-                                            .background(
-                                                Capsule().fill(
-                                                    isSelected
-                                                    ? (colorScheme == .dark ? AppColors.lavender : foregroundColor.opacity(0.95))
-                                                    : Color.clear
+            ZStack {
+                background
+                    .ignoresSafeArea()
+                VStack(spacing: 40) {
+                    // Visible preview circle (non-interactive)
+                    Circle()
+                        .fill(selectedColor)
+                        .overlay(Circle().stroke(foregroundColor.opacity(0.5), lineWidth: 2))
+                        .frame(width: 160, height: 160)
+                        .padding(.top, 8)
+                        .shadow(color: Color.black.opacity(colorScheme == .dark ? 0.35 : 0.12), radius: colorScheme == .dark ? 10 : 12, x: 0, y: colorScheme == .dark ? 6 : 8)
+                        .onTapGesture { showUIKitPicker = true }
+                    
+                    // Compute emotions for current color
+                    let result = engine.evaluate(color: selectedColor)
+                    let top3 = Array(result.top5.prefix(3))
+                    
+                    // Top 3 selectable options (single selection)
+                    if !top3.isEmpty {
+                        if #available(iOS 26.0, *) {
+                            LiquidGlassSegmentedPicker(
+                                items: top3.map { $0.0.capitalized },
+                                selection: Binding<String>(
+                                    get: { (selectedEmotionKey ?? top3.first?.0)?.capitalized ?? top3[0].0.capitalized },
+                                    set: { selectedEmotionKey = $0.lowercased() }
+                                ),
+                                tint: foregroundColor,
+                                selectedTextColor: (colorScheme == .light ? AppColors.lavender : AppColors.greenPeacock),
+                                selectedPillTint: (colorScheme == .light ? AppColors.greenPeacock : .indigo)
+                            )
+                            .padding(.horizontal)
+                        } else {
+                            // iOS < 26: center-pin the middle emotion using width measurement and manual offsets
+                            let spacing: CGFloat = 20
+                            let labels = top3.map { $0.0.capitalized }
+                            ZStack {
+                                if labels.count == 3 {
+                                    ForEach(labels, id: \.self) { label in
+                                        let isSelected = (selectedEmotionKey ?? top3.first?.0)?.capitalized == label
+                                        let centerLabel = labels[1]
+                                        let isLeft = label == labels[0]
+                                        let isCenter = label == centerLabel
+                                        let isRight = label == labels[2]
+                                        
+                                        Button(action: { selectedEmotionKey = label.lowercased() }) {
+                                            Text(label)
+                                                .font(.subheadline)
+                                                .padding(.vertical, 8)
+                                                .padding(.horizontal, 12)
+                                                .frame(minHeight: 36)
+                                                .background(
+                                                    Capsule().fill(
+                                                        isSelected
+                                                        ? (colorScheme == .dark ? AppColors.lavender : foregroundColor.opacity(0.95))
+                                                        : Color.clear
+                                                    )
                                                 )
-                                            )
-                                            .overlay(
-                                                Capsule().stroke(foregroundColor.opacity(0.6), lineWidth: 1)
-                                            )
-                                            .foregroundStyle(isSelected ? (colorScheme == .light ? AppColors.lavender : AppColors.greenPeacock) : foregroundColor)
-                                            .background(
-                                                GeometryReader { g in
-                                                    Color.clear.preference(key: FallbackWidthPrefKey.self, value: [label: g.size.width])
-                                                }
-                                            )
+                                                .overlay(
+                                                    Capsule().stroke(foregroundColor.opacity(0.6), lineWidth: 1)
+                                                )
+                                                .foregroundStyle(isSelected ? (colorScheme == .light ? AppColors.lavender : AppColors.greenPeacock) : foregroundColor)
+                                                .background(
+                                                    GeometryReader { g in
+                                                        Color.clear.preference(key: FallbackWidthPrefKey.self, value: [label: g.size.width])
+                                                    }
+                                                )
+                                        }
+                                        .buttonStyle(.plain)
+                                        .offset(x: {
+                                            let centerW = fallbackItemWidths[labels[1]] ?? 0
+                                            let meW = fallbackItemWidths[label] ?? 0
+                                            if isCenter { return 0 }
+                                            if isLeft { return -((centerW / 2) + spacing + (meW / 2)) }
+                                            if isRight { return (centerW / 2) + spacing + (meW / 2) }
+                                            return 0
+                                        }())
                                     }
-                                    .buttonStyle(.plain)
-                                    .offset(x: {
-                                        let centerW = fallbackItemWidths[labels[1]] ?? 0
-                                        let meW = fallbackItemWidths[label] ?? 0
-                                        if isCenter { return 0 }
-                                        if isLeft { return -((centerW / 2) + spacing + (meW / 2)) }
-                                        if isRight { return (centerW / 2) + spacing + (meW / 2) }
-                                        return 0
-                                    }())
                                 }
                             }
+                            .frame(maxWidth: .infinity)
+                            .onPreferenceChange(FallbackWidthPrefKey.self) { fallbackItemWidths = $0 }
+                            .padding(.horizontal)
                         }
-                        .frame(maxWidth: .infinity)
-                        .onPreferenceChange(FallbackWidthPrefKey.self) { fallbackItemWidths = $0 }
-                        .padding(.horizontal)
                     }
+                    
+                    Spacer()
                 }
-
-                Spacer()
-            }
-            .padding()
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(action: { onClose() }) {
-                        Image(systemName: "xmark")
-                    }
-                    .tint(foregroundColor)
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    if #available(iOS 26.0, *) {
-                        Button(action: {
-                            if let key = selectedEmotionKey {
-                                onSubmitQuery?("I feel \(key.capitalized)")
-                            }
-                            onPick(selectedColor)
-                            onClose()
-                        }) {
-                            Image(systemName: "checkmark")
-                        }
-                        .buttonStyle(.glassProminent)
-                        .tint(AppColors.vividPurple)
-                    } else {
-                        Button(action: {
-                            if let key = selectedEmotionKey {
-                                onSubmitQuery?("I feel \(key.capitalized)")
-                            }
-                            onPick(selectedColor)
-                            onClose()
-                        }) {
-                            Image(systemName: "checkmark")
+                .padding()
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(action: { onClose() }) {
+                            Image(systemName: "xmark")
                         }
                         .tint(foregroundColor)
                     }
+                    ToolbarItem(placement: .confirmationAction) {
+                        if #available(iOS 26.0, *) {
+                            Button(action: {
+                                if let key = selectedEmotionKey {
+                                    onSubmitQuery?("I feel \(key.capitalized)")
+                                }
+                                onPick(selectedColor)
+                                onClose()
+                            }) {
+                                Image(systemName: "checkmark")
+                            }
+                            .buttonStyle(.glassProminent)
+                            .tint(AppColors.vividPurple)
+                        } else {
+                            Button(action: {
+                                if let key = selectedEmotionKey {
+                                    onSubmitQuery?("I feel \(key.capitalized)")
+                                }
+                                onPick(selectedColor)
+                                onClose()
+                            }) {
+                                Image(systemName: "checkmark")
+                            }
+                            .tint(foregroundColor)
+                        }
+                    }
+                }
+                .sheet(isPresented: $showUIKitPicker) {
+                    UIKitColorPickerView(color: $selectedColor, isPresented: $showUIKitPicker, supportsAlpha: false)
+                }
+                .onAppear {
+                    // Default selected emotion = top1 for initial color
+                    let initialTop = engine.evaluate(color: selectedColor).top5.first?.0
+                    if selectedEmotionKey == nil { selectedEmotionKey = initialTop }
+                }
+                .onChange(of: selectedColor) { newColor in
+                    // When color changes, default selection back to new top emotion
+                    selectedEmotionKey = engine.evaluate(color: newColor).top5.first?.0
                 }
             }
-            .sheet(isPresented: $showUIKitPicker) {
-                UIKitColorPickerView(color: $selectedColor, isPresented: $showUIKitPicker, supportsAlpha: false)
-            }
-            .onAppear {
-                // Default selected emotion = top1 for initial color
-                let initialTop = engine.evaluate(color: selectedColor).top5.first?.0
-                if selectedEmotionKey == nil { selectedEmotionKey = initialTop }
-            }
-            .onChange(of: selectedColor) { newColor in
-                // When color changes, default selection back to new top emotion
-                selectedEmotionKey = engine.evaluate(color: newColor).top5.first?.0
-            }
         }
-        .background(background.ignoresSafeArea())
+//        .background(background.ignoresSafeArea())
     }
 }
 

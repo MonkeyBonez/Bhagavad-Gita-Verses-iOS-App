@@ -5,7 +5,18 @@ struct EmotionNode: Codable, Identifiable, Hashable {
     let id: String
     let label: String
     let color: String?
+    let colorDark: String?
+    let colorLight: String?
     let children: [EmotionNode]?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case label
+        case color
+        case colorDark = "color_dark"
+        case colorLight = "color_light"
+        case children
+    }
 }
 
 struct EmotionWheelDocument: Codable {

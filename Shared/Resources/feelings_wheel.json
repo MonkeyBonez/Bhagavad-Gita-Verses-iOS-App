@@ -12,7 +12,6 @@
     {
       "id": "sad",
       "label": "Sad",
-      "color": "#5B6B7A",
       "children": [
         {
           "id": "sad_lonely",
@@ -21,15 +20,18 @@
             {
               "id": "sad_lonely_isolated",
               "label": "Isolated",
-              "color": "#5F6D79"
+              "color_dark": "#6F8592",
+              "color_light": "#4C5A64"
             },
             {
               "id": "sad_lonely_abandoned",
               "label": "Abandoned",
-              "color": "#54626C"
+              "color_dark": "#6F8592",
+              "color_light": "#4C5A64"
             }
           ],
-          "color": "#5A6773"
+          "color_dark": "#6F8592",
+          "color_light": "#4C5A64"
         },
         {
           "id": "sad_vulnerable",
@@ -38,15 +40,18 @@
             {
               "id": "sad_vulnerable_fragile",
               "label": "Fragile",
-              "color": "#626D7E"
+              "color_dark": "#6F8592",
+              "color_light": "#4C5A64"
             },
             {
               "id": "sad_vulnerable_victimized",
               "label": "Victimized",
-              "color": "#55626F"
+              "color_dark": "#6F8592",
+              "color_light": "#4C5A64"
             }
           ],
-          "color": "#5C6777"
+          "color_dark": "#6F8592",
+          "color_light": "#4C5A64"
         },
         {
           "id": "sad_despaired",
@@ -55,15 +60,18 @@
             {
               "id": "sad_despaired_powerless",
               "label": "Powerless",
-              "color": "#566571"
+              "color_dark": "#6F8592",
+              "color_light": "#4C5A64"
             },
             {
               "id": "sad_despaired_grief",
               "label": "Grief",
-              "color": "#4B5B64"
+              "color_dark": "#6F8592",
+              "color_light": "#4C5A64"
             }
           ],
-          "color": "#51606B"
+          "color_dark": "#6F8592",
+          "color_light": "#4C5A64"
         },
         {
           "id": "sad_guilty",
@@ -72,15 +80,18 @@
             {
               "id": "sad_guilty_remorse",
               "label": "Remorse",
-              "color": "#5C6576"
+              "color_dark": "#6F8592",
+              "color_light": "#4C5A64"
             },
             {
               "id": "sad_guilty_ashamed",
               "label": "Ashamed",
-              "color": "#515A69"
+              "color_dark": "#6F8592",
+              "color_light": "#4C5A64"
             }
           ],
-          "color": "#575F70"
+          "color_dark": "#6F8592",
+          "color_light": "#4C5A64"
         },
         {
           "id": "sad_depressed",
@@ -89,15 +100,18 @@
             {
               "id": "sad_depressed_empty",
               "label": "Empty",
-              "color": "#57666D"
+              "color_dark": "#6F8592",
+              "color_light": "#4C5A64"
             },
             {
               "id": "sad_depressed_inferior",
               "label": "Inferior",
-              "color": "#4C5C60"
+              "color_dark": "#6F8592",
+              "color_light": "#4C5A64"
             }
           ],
-          "color": "#526167"
+          "color_dark": "#6F8592",
+          "color_light": "#4C5A64"
         },
         {
           "id": "sad_hurt",
@@ -106,22 +120,26 @@
             {
               "id": "sad_hurt_disappointed",
               "label": "Let down",
-              "color": "#646B7E"
+              "color_dark": "#6F8592",
+              "color_light": "#4C5A64"
             },
             {
               "id": "sad_hurt_agonized",
               "label": "Agonized",
-              "color": "#57606F"
+              "color_dark": "#6F8592",
+              "color_light": "#4C5A64"
             }
           ],
-          "color": "#5E6577"
+          "color_dark": "#6F8592",
+          "color_light": "#4C5A64"
         }
-      ]
+      ],
+      "color_dark": "#6F8592",
+      "color_light": "#4C5A64"
     },
     {
       "id": "mad",
       "label": "Mad",
-      "color": "#B34747",
       "children": [
         {
           "id": "mad_critical",
@@ -130,15 +148,18 @@
             {
               "id": "mad_critical_skeptical",
               "label": "Skeptical",
-              "color": "#B45F51"
+              "color_dark": "#CF5C5C",
+              "color_light": "#A03C3C"
             },
             {
               "id": "mad_critical_judgmental",
               "label": "Judging",
-              "color": "#9F4B44"
+              "color_dark": "#CF5C5C",
+              "color_light": "#A03C3C"
             }
           ],
-          "color": "#AA584B"
+          "color_dark": "#CF5C5C",
+          "color_light": "#A03C3C"
         },
         {
           "id": "mad_distant",
@@ -147,15 +168,18 @@
             {
               "id": "mad_distant_withdrawn",
               "label": "Withdrawn",
-              "color": "#B96C79"
+              "color_dark": "#CF5C5C",
+              "color_light": "#A03C3C"
             },
             {
               "id": "mad_distant_numb",
               "label": "Numb",
-              "color": "#A45D6D"
+              "color_dark": "#CF5C5C",
+              "color_light": "#A03C3C"
             }
           ],
-          "color": "#AF6571"
+          "color_dark": "#CF5C5C",
+          "color_light": "#A03C3C"
         },
         {
           "id": "mad_frustrated",
@@ -164,15 +188,18 @@
             {
               "id": "mad_frustrated_annoyed",
               "label": "Annoyed",
-              "color": "#B9674B"
+              "color_dark": "#CF5C5C",
+              "color_light": "#A03C3C"
             },
             {
               "id": "mad_frustrated_bitter",
               "label": "Bitter",
-              "color": "#A4513E"
+              "color_dark": "#CF5C5C",
+              "color_light": "#A03C3C"
             }
           ],
-          "color": "#AF6045"
+          "color_dark": "#CF5C5C",
+          "color_light": "#A03C3C"
         },
         {
           "id": "mad_aggressive",
@@ -181,15 +208,18 @@
             {
               "id": "mad_aggressive_hostile",
               "label": "Hostile",
-              "color": "#AA4040"
+              "color_dark": "#CF5C5C",
+              "color_light": "#A03C3C"
             },
             {
               "id": "mad_aggressive_furious",
               "label": "Furious",
-              "color": "#97353C"
+              "color_dark": "#CF5C5C",
+              "color_light": "#A03C3C"
             }
           ],
-          "color": "#A13B3B"
+          "color_dark": "#CF5C5C",
+          "color_light": "#A03C3C"
         },
         {
           "id": "mad_hateful",
@@ -198,15 +228,18 @@
             {
               "id": "mad_hateful_rage",
               "label": "Rage",
-              "color": "#A1383E"
+              "color_dark": "#CF5C5C",
+              "color_light": "#A03C3C"
             },
             {
               "id": "mad_hateful_violated",
               "label": "Violated",
-              "color": "#8E2E3A"
+              "color_dark": "#CF5C5C",
+              "color_light": "#A03C3C"
             }
           ],
-          "color": "#983339"
+          "color_dark": "#CF5C5C",
+          "color_light": "#A03C3C"
         },
         {
           "id": "mad_hurt",
@@ -215,22 +248,26 @@
             {
               "id": "mad_hurt_jealous",
               "label": "Jealous",
-              "color": "#BD705E"
+              "color_dark": "#CF5C5C",
+              "color_light": "#A03C3C"
             },
             {
               "id": "mad_hurt_bashful",
               "label": "Bashful",
-              "color": "#A85B50"
+              "color_dark": "#CF5C5C",
+              "color_light": "#A03C3C"
             }
           ],
-          "color": "#B36957"
+          "color_dark": "#CF5C5C",
+          "color_light": "#A03C3C"
         }
-      ]
+      ],
+      "color_dark": "#CF5C5C",
+      "color_light": "#A03C3C"
     },
     {
       "id": "scared",
       "label": "Scared",
-      "color": "#6C7CB0",
       "children": [
         {
           "id": "scared_anxious",
@@ -239,15 +276,18 @@
             {
               "id": "scared_anxious_worried",
               "label": "Worried",
-              "color": "#7079B1"
+              "color_dark": "#8390C8",
+              "color_light": "#5A6799"
             },
             {
               "id": "scared_anxious_frightened",
               "label": "Afraid",
-              "color": "#616E9C"
+              "color_dark": "#8390C8",
+              "color_light": "#5A6799"
             }
           ],
-          "color": "#6972A7"
+          "color_dark": "#8390C8",
+          "color_light": "#5A6799"
         },
         {
           "id": "scared_insecure",
@@ -256,15 +296,18 @@
             {
               "id": "scared_insecure_inadequate",
               "label": "Inadequate",
-              "color": "#778CB1"
+              "color_dark": "#8390C8",
+              "color_light": "#5A6799"
             },
             {
               "id": "scared_insecure_inferior",
               "label": "Inferior",
-              "color": "#687E9C"
+              "color_dark": "#8390C8",
+              "color_light": "#5A6799"
             }
           ],
-          "color": "#7084A7"
+          "color_dark": "#8390C8",
+          "color_light": "#5A6799"
         },
         {
           "id": "scared_overwhelmed",
@@ -273,15 +316,18 @@
             {
               "id": "scared_overwhelmed_helpless",
               "label": "Helpless",
-              "color": "#7384BA"
+              "color_dark": "#8390C8",
+              "color_light": "#5A6799"
             },
             {
               "id": "scared_overwhelmed_insignificant",
               "label": "Small",
-              "color": "#6477A5"
+              "color_dark": "#8390C8",
+              "color_light": "#5A6799"
             }
           ],
-          "color": "#6C7CB0"
+          "color_dark": "#8390C8",
+          "color_light": "#5A6799"
         },
         {
           "id": "scared_rejected",
@@ -290,15 +336,18 @@
             {
               "id": "scared_rejected_weak",
               "label": "Weak",
-              "color": "#7688AA"
+              "color_dark": "#8390C8",
+              "color_light": "#5A6799"
             },
             {
               "id": "scared_rejected_submissive",
               "label": "Submissive",
-              "color": "#677A97"
+              "color_dark": "#8390C8",
+              "color_light": "#5A6799"
             }
           ],
-          "color": "#6F80A1"
+          "color_dark": "#8390C8",
+          "color_light": "#5A6799"
         },
         {
           "id": "scared_confused",
@@ -307,15 +356,18 @@
             {
               "id": "scared_confused_bewildered",
               "label": "Baffled",
-              "color": "#7676B2"
+              "color_dark": "#8390C8",
+              "color_light": "#5A6799"
             },
             {
               "id": "scared_confused_discouraged",
               "label": "Discouraged",
-              "color": "#676A9D"
+              "color_dark": "#8390C8",
+              "color_light": "#5A6799"
             }
           ],
-          "color": "#6F6FA8"
+          "color_dark": "#8390C8",
+          "color_light": "#5A6799"
         },
         {
           "id": "scared_embarrassed",
@@ -324,22 +376,26 @@
             {
               "id": "scared_embarrassed_foolish",
               "label": "Foolish",
-              "color": "#817BB6"
+              "color_dark": "#8390C8",
+              "color_light": "#5A6799"
             },
             {
               "id": "scared_embarrassed_selfconscious",
               "label": "Shy",
-              "color": "#6D6BA1"
+              "color_dark": "#8390C8",
+              "color_light": "#5A6799"
             }
           ],
-          "color": "#7973AC"
+          "color_dark": "#8390C8",
+          "color_light": "#5A6799"
         }
-      ]
+      ],
+      "color_dark": "#8390C8",
+      "color_light": "#5A6799"
     },
     {
       "id": "joyful",
       "label": "Joyful",
-      "color": "#EFBF5B",
       "children": [
         {
           "id": "joyful_playful",
@@ -348,15 +404,18 @@
             {
               "id": "joyful_playful_amused",
               "label": "Amused",
-              "color": "#FDDF63"
+              "color_dark": "#FFD46E",
+              "color_light": "#B77C19"
             },
             {
               "id": "joyful_playful_spirited",
               "label": "Spirited",
-              "color": "#E0BB52"
+              "color_dark": "#FFD46E",
+              "color_light": "#B77C19"
             }
           ],
-          "color": "#E3B84D"
+          "color_dark": "#FFD46E",
+          "color_light": "#B77C19"
         },
         {
           "id": "joyful_content",
@@ -365,15 +424,18 @@
             {
               "id": "joyful_content_peaceful",
               "label": "Peaceful",
-              "color": "#FFC370"
+              "color_dark": "#FFD46E",
+              "color_light": "#B77C19"
             },
             {
               "id": "joyful_content_pleasant",
               "label": "Pleasant",
-              "color": "#EBA861"
+              "color_dark": "#FFD46E",
+              "color_light": "#B77C19"
             }
           ],
-          "color": "#FABE6B"
+          "color_dark": "#FFD46E",
+          "color_light": "#B77C19"
         },
         {
           "id": "joyful_interested",
@@ -382,15 +444,18 @@
             {
               "id": "joyful_interested_curious",
               "label": "Curious",
-              "color": "#FDB46A"
+              "color_dark": "#FFD46E",
+              "color_light": "#B77C19"
             },
             {
               "id": "joyful_interested_inquisitive",
               "label": "Inquisitive",
-              "color": "#E09459"
+              "color_dark": "#FFD46E",
+              "color_light": "#B77C19"
             }
           ],
-          "color": "#EFA962"
+          "color_dark": "#FFD46E",
+          "color_light": "#B77C19"
         },
         {
           "id": "joyful_proud",
@@ -399,15 +464,18 @@
             {
               "id": "joyful_proud_successful",
               "label": "Achieved",
-              "color": "#F09E5E"
+              "color_dark": "#FFD46E",
+              "color_light": "#B77C19"
             },
             {
               "id": "joyful_proud_confident",
               "label": "Confident",
-              "color": "#D5804E"
+              "color_dark": "#FFD46E",
+              "color_light": "#B77C19"
             }
           ],
-          "color": "#E39456"
+          "color_dark": "#FFD46E",
+          "color_light": "#B77C19"
         },
         {
           "id": "joyful_excited",
@@ -416,15 +484,18 @@
             {
               "id": "joyful_excited_eager",
               "label": "Eager",
-              "color": "#FBFD5B"
+              "color_dark": "#FFD46E",
+              "color_light": "#B77C19"
             },
             {
               "id": "joyful_excited_energetic",
               "label": "Energetic",
-              "color": "#E0D84B"
+              "color_dark": "#FFD46E",
+              "color_light": "#B77C19"
             }
           ],
-          "color": "#D4C23F"
+          "color_dark": "#FFD46E",
+          "color_light": "#B77C19"
         },
         {
           "id": "joyful_cheerful",
@@ -433,22 +504,26 @@
             {
               "id": "joyful_cheerful_delightful",
               "label": "Delightful",
-              "color": "#FFCE67"
+              "color_dark": "#FFD46E",
+              "color_light": "#B77C19"
             },
             {
               "id": "joyful_cheerful_optimistic",
               "label": "Optimistic",
-              "color": "#EBB259"
+              "color_dark": "#FFD46E",
+              "color_light": "#B77C19"
             }
           ],
-          "color": "#FAC962"
+          "color_dark": "#FFD46E",
+          "color_light": "#B77C19"
         }
-      ]
+      ],
+      "color_dark": "#FFD46E",
+      "color_light": "#B77C19"
     },
     {
       "id": "powerful",
       "label": "Powerful",
-      "color": "#65A665",
       "children": [
         {
           "id": "powerful_respected",
@@ -457,15 +532,18 @@
             {
               "id": "powerful_respected_valued",
               "label": "Valuable",
-              "color": "#75AF6F"
+              "color_dark": "#7FD27F",
+              "color_light": "#4E8A4E"
             },
             {
               "id": "powerful_respected_appreciated",
               "label": "Valued",
-              "color": "#6A9C60"
+              "color_dark": "#7FD27F",
+              "color_light": "#4E8A4E"
             }
           ],
-          "color": "#6EA668"
+          "color_dark": "#7FD27F",
+          "color_light": "#4E8A4E"
         },
         {
           "id": "powerful_courageous",
@@ -474,15 +552,18 @@
             {
               "id": "powerful_courageous_daring",
               "label": "Daring",
-              "color": "#68AB71"
+              "color_dark": "#7FD27F",
+              "color_light": "#4E8A4E"
             },
             {
               "id": "powerful_courageous_bold",
               "label": "Bold",
-              "color": "#59985E"
+              "color_dark": "#7FD27F",
+              "color_light": "#4E8A4E"
             }
           ],
-          "color": "#61A26A"
+          "color_dark": "#7FD27F",
+          "color_light": "#4E8A4E"
         },
         {
           "id": "powerful_proud",
@@ -491,15 +572,18 @@
             {
               "id": "powerful_proud_successful",
               "label": "Achieved",
-              "color": "#74A867"
+              "color_dark": "#7FD27F",
+              "color_light": "#4E8A4E"
             },
             {
               "id": "powerful_proud_important",
               "label": "Important",
-              "color": "#699559"
+              "color_dark": "#7FD27F",
+              "color_light": "#4E8A4E"
             }
           ],
-          "color": "#6D9F60"
+          "color_dark": "#7FD27F",
+          "color_light": "#4E8A4E"
         },
         {
           "id": "powerful_creative",
@@ -508,15 +592,18 @@
             {
               "id": "powerful_creative_ingenious",
               "label": "Ingenious",
-              "color": "#6CAF7C"
+              "color_dark": "#7FD27F",
+              "color_light": "#4E8A4E"
             },
             {
               "id": "powerful_creative_resourceful",
               "label": "Versatile",
-              "color": "#5D9C67"
+              "color_dark": "#7FD27F",
+              "color_light": "#4E8A4E"
             }
           ],
-          "color": "#65A674"
+          "color_dark": "#7FD27F",
+          "color_light": "#4E8A4E"
         },
         {
           "id": "powerful_aware",
@@ -525,15 +612,18 @@
             {
               "id": "powerful_aware_present",
               "label": "Present",
-              "color": "#73B373"
+              "color_dark": "#7FD27F",
+              "color_light": "#4E8A4E"
             },
             {
               "id": "powerful_aware_focused",
               "label": "Focused",
-              "color": "#689E64"
+              "color_dark": "#7FD27F",
+              "color_light": "#4E8A4E"
             }
           ],
-          "color": "#6CA96C"
+          "color_dark": "#7FD27F",
+          "color_light": "#4E8A4E"
         },
         {
           "id": "powerful_confident",
@@ -542,22 +632,26 @@
             {
               "id": "powerful_confident_valued",
               "label": "Capable",
-              "color": "#70AF6C"
+              "color_dark": "#7FD27F",
+              "color_light": "#4E8A4E"
             },
             {
               "id": "powerful_confident_secure",
               "label": "Secure",
-              "color": "#659C5D"
+              "color_dark": "#7FD27F",
+              "color_light": "#4E8A4E"
             }
           ],
-          "color": "#69A665"
+          "color_dark": "#7FD27F",
+          "color_light": "#4E8A4E"
         }
-      ]
+      ],
+      "color_dark": "#7FD27F",
+      "color_light": "#4E8A4E"
     },
     {
       "id": "peaceful",
       "label": "Peaceful",
-      "color": "#6CB3B9",
       "children": [
         {
           "id": "peaceful_thankful",
@@ -566,15 +660,18 @@
             {
               "id": "peaceful_thankful_grateful",
               "label": "Grateful",
-              "color": "#7AC7C3"
+              "color_dark": "#7FD3D3",
+              "color_light": "#3D7E7E"
             },
             {
               "id": "peaceful_thankful_blessed",
               "label": "Blessed",
-              "color": "#69B0A8"
+              "color_dark": "#7FD3D3",
+              "color_light": "#3D7E7E"
             }
           ],
-          "color": "#72BCB8"
+          "color_dark": "#7FD3D3",
+          "color_light": "#3D7E7E"
         },
         {
           "id": "peaceful_loving",
@@ -583,15 +680,18 @@
             {
               "id": "peaceful_loving_affectionate",
               "label": "Tender",
-              "color": "#7BB2C4"
+              "color_dark": "#7FD3D3",
+              "color_light": "#3D7E7E"
             },
             {
               "id": "peaceful_loving_compassionate",
               "label": "Empathic",
-              "color": "#6AA2AD"
+              "color_dark": "#7FD3D3",
+              "color_light": "#3D7E7E"
             }
           ],
-          "color": "#73A8B9"
+          "color_dark": "#7FD3D3",
+          "color_light": "#3D7E7E"
         },
         {
           "id": "peaceful_trusting",
@@ -600,15 +700,18 @@
             {
               "id": "peaceful_trusting_receptive",
               "label": "Receptive",
-              "color": "#7FC2C7"
+              "color_dark": "#7FD3D3",
+              "color_light": "#3D7E7E"
             },
             {
               "id": "peaceful_trusting_patient",
               "label": "Patient",
-              "color": "#6EB0B0"
+              "color_dark": "#7FD3D3",
+              "color_light": "#3D7E7E"
             }
           ],
-          "color": "#77B7BC"
+          "color_dark": "#7FD3D3",
+          "color_light": "#3D7E7E"
         },
         {
           "id": "peaceful_nurturing",
@@ -617,15 +720,18 @@
             {
               "id": "peaceful_nurturing_supportive",
               "label": "Supportive",
-              "color": "#7BB6C4"
+              "color_dark": "#7FD3D3",
+              "color_light": "#3D7E7E"
             },
             {
               "id": "peaceful_nurturing_caring",
               "label": "Caring",
-              "color": "#6AA5AD"
+              "color_dark": "#7FD3D3",
+              "color_light": "#3D7E7E"
             }
           ],
-          "color": "#73ACB9"
+          "color_dark": "#7FD3D3",
+          "color_light": "#3D7E7E"
         },
         {
           "id": "peaceful_serene",
@@ -634,15 +740,18 @@
             {
               "id": "peaceful_serene_calm",
               "label": "Calm",
-              "color": "#85CDC4"
+              "color_dark": "#7FD3D3",
+              "color_light": "#3D7E7E"
             },
             {
               "id": "peaceful_serene_content",
               "label": "Content",
-              "color": "#74B6A9"
+              "color_dark": "#7FD3D3",
+              "color_light": "#3D7E7E"
             }
           ],
-          "color": "#7DC2B9"
+          "color_dark": "#7FD3D3",
+          "color_light": "#3D7E7E"
         },
         {
           "id": "peaceful_hopeful",
@@ -651,17 +760,22 @@
             {
               "id": "peaceful_hopeful_optimistic",
               "label": "Optimistic",
-              "color": "#7ECACB"
+              "color_dark": "#7FD3D3",
+              "color_light": "#3D7E7E"
             },
             {
               "id": "peaceful_hopeful_inspired",
               "label": "Inspired",
-              "color": "#6DB4B0"
+              "color_dark": "#7FD3D3",
+              "color_light": "#3D7E7E"
             }
           ],
-          "color": "#76BFC0"
+          "color_dark": "#7FD3D3",
+          "color_light": "#3D7E7E"
         }
-      ]
+      ],
+      "color_dark": "#7FD3D3",
+      "color_light": "#3D7E7E"
     }
   ]
 }

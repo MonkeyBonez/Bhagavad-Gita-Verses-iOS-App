@@ -51,7 +51,7 @@
 		33FF16D02D28FD5C006E9888 /* QuoteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FF16CB2D28FA67006E9888 /* QuoteModel.swift */; };
 		3619F1202E65344000128BB8 /* ColorPickerSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3619F11F2E65344000128BB8 /* ColorPickerSheetView.swift */; };
 		3619F1222E6534FF00128BB8 /* ColorEmotionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3619F1212E6534FF00128BB8 /* ColorEmotionEngine.swift */; };
-		362F6F7F2E63C756004E22BF /* GuidanceSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F6F7E2E63C756004E22BF /* GuidanceSheetView.swift */; };
+		362F6F7F2E63C756004E22BF /* JournalSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F6F7E2E63C756004E22BF /* JournalSheetView.swift */; };
 		362F6F932E63CB42004E22BF /* ActionIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F6F902E63CB42004E22BF /* ActionIconButton.swift */; };
 		362F6F9D2E63DF5C004E22BF /* feelings_wheel.json in Resources */ = {isa = PBXBuildFile; fileRef = 362F6F9C2E63DF5C004E22BF /* feelings_wheel.json */; };
 		362F6FA72E63E93A004E22BF /* EmotionWheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362F6FA62E63E93A004E22BF /* EmotionWheelView.swift */; };
@@ -197,7 +197,7 @@
 		33FF16CB2D28FA67006E9888 /* QuoteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteModel.swift; sourceTree = "<group>"; };
 		3619F11F2E65344000128BB8 /* ColorPickerSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerSheetView.swift; sourceTree = "<group>"; };
 		3619F1212E6534FF00128BB8 /* ColorEmotionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorEmotionEngine.swift; sourceTree = "<group>"; };
-		362F6F7E2E63C756004E22BF /* GuidanceSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidanceSheetView.swift; sourceTree = "<group>"; };
+		362F6F7E2E63C756004E22BF /* JournalSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalSheetView.swift; sourceTree = "<group>"; };
 		362F6F902E63CB42004E22BF /* ActionIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionIconButton.swift; sourceTree = "<group>"; };
 		362F6F9C2E63DF5C004E22BF /* feelings_wheel.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = feelings_wheel.json; sourceTree = "<group>"; };
 		362F6FA62E63E93A004E22BF /* EmotionWheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionWheelView.swift; sourceTree = "<group>"; };
@@ -470,10 +470,8 @@
 		362F6FAA2E63E970004E22BF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				36A1E1E02E9CD3E7000863ED /* Guidance Views */,
 				334762CB2D4F5A3C0078FCB4 /* VerseView.swift */,
-				362F6FA62E63E93A004E22BF /* EmotionWheelView.swift */,
-				362F6F7E2E63C756004E22BF /* GuidanceSheetView.swift */,
-				3619F11F2E65344000128BB8 /* ColorPickerSheetView.swift */,
 				363230D32E67D1B1003264E7 /* BookmarkListView.swift */,
 				36306EDC2E6908C900CFBD1D /* Onboarding */,
 			);
@@ -612,6 +610,16 @@
 				368559A82E68F4E600177D96 /* MinimalLockScreenView.swift */,
 			);
 			path = ViewComponents;
+			sourceTree = "<group>";
+		};
+		36A1E1E02E9CD3E7000863ED /* Guidance Views */ = {
+			isa = PBXGroup;
+			children = (
+				362F6FA62E63E93A004E22BF /* EmotionWheelView.swift */,
+				362F6F7E2E63C756004E22BF /* JournalSheetView.swift */,
+				3619F11F2E65344000128BB8 /* ColorPickerSheetView.swift */,
+			);
+			path = "Guidance Views";
 			sourceTree = "<group>";
 		};
 		36E7D9E82E68310500EE6990 /* Notifications */ = {
@@ -809,7 +817,7 @@
 				337BB69B2DCD9B5E00F5EF82 /* DeeplinkConstants.swift in Sources */,
 				337BB69A2DCD9B3200F5EF82 /* DeeplinkCoordinator.swift in Sources */,
 				36350FF52E6A5ED900CA994F /* HomeScreenWidgetOnboarding.swift in Sources */,
-				362F6F7F2E63C756004E22BF /* GuidanceSheetView.swift in Sources */,
+				362F6F7F2E63C756004E22BF /* JournalSheetView.swift in Sources */,
 				36E7D9E92E68310500EE6990 /* WeeklyNotificationScheduler.swift in Sources */,
 				3619F1222E6534FF00128BB8 /* ColorEmotionEngine.swift in Sources */,
 				33B4A9F52D2DF2A700AE1044 /* VersesReader.swift in Sources */,
@@ -1037,7 +1045,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = Sne.LockScreenWidgetSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1072,7 +1080,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1;
+				MARKETING_VERSION = 3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = Sne.LockScreenWidgetSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -165,12 +165,12 @@ struct VerseView: View {
                     guidanceQuery = ""
                     showGuidanceSheet = true
                 } label: {
-                    Label("Describe circumstance", systemImage: "pencil")
+                    Label("Describe Feelings", systemImage: "pencil")
                 }
                 Button {
                     showingEmotionWheel = true
                 } label: {
-                    Label("Pick Emotion", systemImage: "smallcircle.circle")
+                    Label("Identify Emotion", systemImage: "smallcircle.circle")
                 }
                 Button {
                     showingColorPicker = true
@@ -182,7 +182,7 @@ struct VerseView: View {
             actionIcon(systemName: "sparkles")
         }
         .fullScreenCover(isPresented: $showGuidanceSheet) {
-            GuidanceSheetView(
+            JournalSheetView(
                 query: $guidanceQuery,
                 topK: $guidanceTopK,
                 retrieveTopK: $guidanceRetrieveTopK,

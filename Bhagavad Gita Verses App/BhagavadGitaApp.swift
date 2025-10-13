@@ -21,7 +21,7 @@ struct BhagavadGitaApp: App {
             RootContent(quoteModel: quoteModel)
                 .onOpenURL(perform: {handleUrl($0)})
                 .onAppear {
-                    WeeklyNotificationScheduler.onAppOpenIfAuthorized()
+                    WeeklyNotificationScheduler.ensureBacklogAndStreak()
                     refreshWidgetsIfNewWeek()
                 }
         }

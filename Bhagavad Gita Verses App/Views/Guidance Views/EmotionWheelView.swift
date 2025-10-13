@@ -45,6 +45,10 @@ struct EmotionWheelView: View {
 
     private enum Stage { case idle, bringToCenter, expandToOuter, completed }
 
+    private var background: some View {
+        colorScheme == .light ? AppColors.parchment.linearGradient : AppColors.peacockBackground
+    }
+
     private var displayNodes: [EmotionNode] {
         if let last = path.last, let kids = last.children, !kids.isEmpty { return kids }
         // Reorder top-level to match reference layout
@@ -71,7 +75,7 @@ struct EmotionWheelView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color.clear.ignoresSafeArea()
+                background.ignoresSafeArea()
                 GeometryReader { geo in
                     let side = min(geo.size.width, geo.size.height)
                     let size = side
@@ -304,11 +308,21 @@ struct EmotionWheelView: View {
                 }
             }
         }
+//        .background(background.ignoresSafeArea())
     }
 
     // MARK: - Helpers
     private func defaultTheme() -> Color {
         colorScheme == .light ? AppColors.lightPeacock : AppColors.lavender
+    }
+
+    private func preferredHexColor(for node: EmotionNode) -> String? {
+        // Prefer explicit dark/light tokens; fall back to legacy "color"
+        if colorScheme == .dark {
+            return node.colorDark ?? node.color ?? node.colorLight
+        } else {
+            return node.colorLight ?? node.color ?? node.colorDark
+        }
     }
 
     // MARK: - Angles and helpers
@@ -393,7 +407,8 @@ struct EmotionWheelView: View {
             let currentTheme = lerpColor(themeFrom, themeTo, t: morphProgress)
             themeFrom = currentTheme
             // Always morph to the selected node's color, regardless of depth
-            let targetTheme = (Color(hex: nodes[index].color ?? "#808080") ?? defaultTheme())
+            let hex = preferredHexColor(for: nodes[index]) ?? "#808080"
+            let targetTheme = (Color(hex: hex) ?? defaultTheme())
             themeTo = targetTheme
             morphProgress = 0
             // Subtle medium haptic that increases 5% per depth
@@ -583,7 +598,7 @@ private struct EmotionBubbleView: View {
                     EmotionWheelView(roots: nodes) { _ in }
                 }
             }
-            .padding()
+
         }
     }
     return Wrapper()
