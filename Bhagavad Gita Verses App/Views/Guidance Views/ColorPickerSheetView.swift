@@ -170,6 +170,8 @@ struct ColorPickerSheetView: View {
                     // Default selected emotion = top1 for initial color
                     let initialTop = engine.evaluate(color: selectedColor).top5.first?.0
                     if selectedEmotionKey == nil { selectedEmotionKey = initialTop }
+                    // Open the color picker immediately
+                    showUIKitPicker = true
                 }
                 .onChange(of: selectedColor) { newColor in
                     // When color changes, default selection back to new top emotion

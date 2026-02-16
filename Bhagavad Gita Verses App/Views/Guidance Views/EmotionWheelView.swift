@@ -387,16 +387,16 @@ struct EmotionWheelView: View {
                 // Leaf: immediately after centering -> trigger haptic, build and send query, then continue visuals
                 if nodes.indices.contains(index) {
                     let tapped = nodes[index]
-                    let top = path.first?.label ?? tapped.label
-                    let second = path.dropFirst().first?.label ?? tapped.label
-                    let third = tapped.label
-                    // DEMO: override leaf query with demo sentinel
-                    pendingQuery = "demo://force/2/47"
+                    let root = path.first?.label ?? tapped.label
+                    let mid = path.dropFirst().first?.label ?? tapped.label
+                    let leaf = tapped.label
+                    pendingQuery = EmotionQueryBuilder.build(root: root, mid: mid, leaf: leaf)
                 }
                 triggerExpandHaptic(depth: targetDepth)
                 didTriggerHapticForCurrentTap = true
                 if !didSendQueryForCurrentTap, let q = pendingQuery {
                     didSendQueryForCurrentTap = true
+                    print("[EmotionWheel] Sending to model: \"\(q)\"")
                     onSelect(q)
                 }
                 innerCurrentOpacity = 1

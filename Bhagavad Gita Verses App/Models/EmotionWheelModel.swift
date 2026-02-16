@@ -58,6 +58,20 @@ final class EmotionWheelLoader {
     }
 }
 
+/// Builds the retrieval query string from emotion wheel selection.
+/// Negative roots (Sad, Mad, Scared) use Option B; positive roots use the current "I feel..." format.
+enum EmotionQueryBuilder {
+    private static let optionBRoots: Set<String> = ["Sad", "Mad", "Scared"]
+
+    /// Returns the query string to send to the lesson retriever.
+    static func build(root: String, mid: String, leaf: String) -> String {
+        if optionBRoots.contains(root) {
+            return "overcome \(mid.lowercased()) and \(leaf.lowercased())"
+        }
+        return "I feel \(root) because I feel \(mid), because I feel \(leaf)"
+    }
+}
+
 extension Color {
     init?(hex: String) {
         var hexSanitized = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)

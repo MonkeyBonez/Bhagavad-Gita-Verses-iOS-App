@@ -162,15 +162,15 @@ struct VerseView: View {
         Menu {
             Section("Gita Guidance") {
                 Button {
+                    showingEmotionWheel = true
+                } label: {
+                    Label("Identify Emotion", systemImage: "smallcircle.circle")
+                }
+                Button {
                     guidanceQuery = ""
                     showGuidanceSheet = true
                 } label: {
                     Label("Describe Feelings", systemImage: "pencil")
-                }
-                Button {
-                    showingEmotionWheel = true
-                } label: {
-                    Label("Identify Emotion", systemImage: "smallcircle.circle")
                 }
                 Button {
                     showingColorPicker = true
