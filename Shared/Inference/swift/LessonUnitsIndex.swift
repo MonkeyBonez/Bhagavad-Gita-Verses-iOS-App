@@ -30,7 +30,9 @@ public final class LessonUnitsIndex {
             let decoded = try JSONDecoder().decode([LessonUnitsEntry].self, from: data)
             self.entries = decoded
         } catch {
+            #if DEBUG
             print("LessonUnitsIndex: failed to load/parse lesson_units.json: \(error)")
+            #endif
             return nil
         }
     }

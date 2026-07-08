@@ -673,9 +673,6 @@ extension VerseView {
                     if self.unitsIndex == nil { self.unitsIndex = LessonUnitsIndex() }
                     if let uidx = self.unitsIndex {
                         let units = uidx.units(forEmbeddingIndex: rowIndex)
-                        let cid = uidx.oldClusterId(forEmbeddingIndex: rowIndex) ?? -1
-                        let compact = units.map { "\($0.chapter).\($0.start)–\($0.end)" }.joined(separator: ", ")
-                        print("Chosen mapping (offset=\(chosenOffset)) → row=\(rowIndex) old_cluster_id=\(cid) units=[\(compact)]")
                         // Navigate: pick a random UnitRange and animate towards it after away animation completes
                         if let target = LessonNavigationHelper.pickRandomTarget(from: units) {
                             let globalIdx = LessonNavigationHelper.globalIndex(forChapter: target.chapter, verse: target.verse)
@@ -683,8 +680,6 @@ extension VerseView {
                                 self.animateTowardsVerse(globalIndex: globalIdx)
                             }
                         }
-                    } else {
-                        print("LessonUnitsIndex unavailable; cannot map units for top result")
                     }
                 }
             }

@@ -37,7 +37,6 @@ final class MiniLMReranker {
         guard let mdl = loaded else { return nil }
         model = mdl
         let keys = Array(model.modelDescription.outputDescriptionsByName.keys)
-        print("MiniLMReranker: outputs=\(keys)")
         outputName = keys.first ?? "var_0"
     }
 
@@ -54,36 +53,32 @@ final class MiniLMReranker {
             typeIdsName: MLFeatureValue(multiArray: typesArr)
         ]) else { return nil }
         guard let out = try? model.prediction(from: inputs) else {
+            #if DEBUG
             print("MiniLMReranker: prediction failed")
+            #endif
             return nil
         }
         guard let arr = out.featureValue(for: outputName)?.multiArrayValue else {
+            #if DEBUG
             print("MiniLMReranker: output missing for key \(outputName)")
+            #endif
             return nil
         }
         if arr.count == 0 {
+            #if DEBUG
             print("MiniLMReranker: output array empty")
+            #endif
             return nil
         }
         let v = arr[0].floatValue
-        let shape = arr.shape.map { $0.intValue }
-        let first = min(arr.count, 3)
-        var head: [Float] = []
-        head.reserveCapacity(first)
-        for i in 0..<first { head.append(arr[i].floatValue) }
-        print("MiniLMReranker: out shape=\(shape) head=\(head)")
         if !v.isFinite { return nil }
         return v
     }
 
     func scoreBatch(query: String, passages: [String], tokenizer: PairWordPieceTokenizer, maxLen: Int = 160, maxQuery: Int = 48) -> [Float] {
         var out: [Float] = []; out.reserveCapacity(passages.count)
-        for (idx, p) in passages.enumerated() {
+        for p in passages {
             let enc = tokenizer.encodePair(query: query, passage: p, maxLen: maxLen, maxQuery: maxQuery)
-            if idx == 0 {
-                let idsPreview = enc.ids.prefix(12).map { String($0) }.joined(separator: ",")
-                print("MiniLMReranker: ids=\(enc.ids.count) mask=\(enc.mask.count) types=\(enc.types.count) idsHead=[\(idsPreview)]")
-            }
             out.append(score(ids: enc.ids, mask: enc.mask, types: enc.types) ?? -Float.greatestFiniteMagnitude)
         }
         return out

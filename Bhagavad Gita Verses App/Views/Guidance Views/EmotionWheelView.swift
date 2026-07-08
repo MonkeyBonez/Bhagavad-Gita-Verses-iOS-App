@@ -391,7 +391,6 @@ struct EmotionWheelView: View {
                 didTriggerHapticForCurrentTap = true
                 if !didSendQueryForCurrentTap, let q = pendingQuery {
                     didSendQueryForCurrentTap = true
-                    print("[EmotionWheel] Sending to model: \"\(q)\"")
                     onSelect(q)
                 }
                 innerCurrentOpacity = 1

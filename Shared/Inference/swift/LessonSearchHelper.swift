@@ -31,10 +31,8 @@ public final class LessonSearchHelper {
                 let s = ceScores[i]
                 if s.isFinite && abs(s) < 1e6 {
                     hits[i].2 = s
-                    print("CE[\(i)] = \(s)")
                 } else {
                     hits[i].2 = nil
-                    print("CE[\(i)] = nil")
                 }
             }
             hits.sort { ($0.2 ?? -Float.greatestFiniteMagnitude) > ($1.2 ?? -Float.greatestFiniteMagnitude) }

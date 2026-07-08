@@ -106,7 +106,9 @@ final class WordPieceTokenizer {
         // Discover tokenizer files in bundle
         guard let vocabURL = WordPieceTokenizer.findResource(name: "vocab", ext: "txt", preferSubdir: "tokenizer"),
               let specialURL = WordPieceTokenizer.findResource(name: "special_tokens_map", ext: "json", preferSubdir: "tokenizer") else {
+            #if DEBUG
             print("WordPieceTokenizer: missing vocab.txt or special_tokens_map.json in bundle")
+            #endif
             return nil
         }
 
@@ -121,7 +123,9 @@ final class WordPieceTokenizer {
                 index += 1
             }
         } catch {
+            #if DEBUG
             print("WordPieceTokenizer: failed reading vocab: \(error)")
+            #endif
             return nil
         }
         self.tokenToId = map
