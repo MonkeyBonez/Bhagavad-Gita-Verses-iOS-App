@@ -340,32 +340,6 @@ enum WeeklyNotificationScheduler {
         #endif
     }
 
-    static func debugPrintSchedule(now: Date = Date()) {
-        #if DEBUG
-        let currentAnchor = WeeklyPickSync.sundayStart(for: now)
-        let nextAnchor = WeeklyPickSync.nextSundayStart(after: now)
-        let fmt = DateFormatter(); fmt.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        print("[Notif][DEBUG] currentWeek=\(fmt.string(from: currentAnchor)) nextWeek=\(fmt.string(from: nextAnchor)) now=\(fmt.string(from: now))")
-        let opened = loadOpenedWeeks().sorted()
-        print("[Notif][DEBUG] openedWeeks anchorsTs=\(opened)")
-        UNUserNotificationCenter.current().getPendingNotificationRequests { reqs in
-            let ours = reqs.filter { $0.identifier.hasPrefix("regular_") || $0.identifier.hasPrefix("streak_") }
-            print("[Notif][DEBUG] pending ours count=\(ours.count)")
-            for r in ours {
-                var fireStr = "(unknown)"; var kind = "other"
-                if let t = r.trigger as? UNCalendarNotificationTrigger {
-                    let cal = Calendar.current
-                    if let d = cal.date(from: t.dateComponents) { fireStr = fmt.string(from: d) }
-                    kind = "calendar"
-                } else if let t = r.trigger as? UNTimeIntervalNotificationTrigger {
-                    let d = Date(timeIntervalSinceNow: t.timeInterval); fireStr = fmt.string(from: d)
-                    kind = "interval" + (t.repeats ? "(repeats)" : "")
-                }
-                print("[Notif][DEBUG] id=\(r.identifier) kind=\(kind) fireAt=\(fireStr) title=\(r.content.title) body=\(r.content.body)")
-            }
-        }
-        #endif
-    }
 }
 
 

@@ -87,7 +87,6 @@ struct VerseView: View {
         }
         .foregroundStyle(foregroundColor)
         .frame(maxHeight: .infinity, alignment: .bottom)
-//        .safeAreaPadding(.bottom, 48-buttonClickPadding)
     }
 
     private var headerActionView: some View {
@@ -511,41 +510,6 @@ struct VerseView: View {
 
 // MARK: - Intro animation
 extension VerseView {
-    // MARK: Bookmark List Sheet
-    struct BookmarkListSheet: View {
-        let indices: [Int]
-        let getVerse: (Int) -> Verse
-        let onSelect: (Int) -> Void
-        let onClose: () -> Void
-        var body: some View {
-            NavigationStack {
-                List(indices, id: \.self) { idx in
-                    let verse = getVerse(idx)
-                    Button {
-                        onSelect(idx)
-                    } label: {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text(verse.text)
-                                .font(.custom(Fonts.verseFontName, size: 20))
-                                .foregroundStyle(AppColors.lightPeacock)
-                                .lineLimit(3)
-                            Text("\(verse.chapterNumber).\(verse.verseNumber)")
-                                .font(.footnote)
-                                .foregroundStyle(.secondary)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                }
-                .listStyle(.insetGrouped)
-                .navigationTitle("Bookmarked Verses")
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button("Done") { onClose() }
-                    }
-                }
-            }
-        }
-    }
     // Animate away from the current verse by paging backwards
     func animateAwayFromCurrentBackwards(pages: Int = 7) {
         guard !dataSource.isEmpty, !isIntroAnimating else { return }

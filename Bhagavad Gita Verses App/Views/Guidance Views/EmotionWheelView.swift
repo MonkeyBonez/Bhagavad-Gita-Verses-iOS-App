@@ -23,12 +23,9 @@ struct EmotionWheelView: View {
     @State private var selectedIndex: Int? = nil
     @State private var stage: Stage = .idle
     @State private var path: [EmotionNode] = []
-    @State private var activeTopHex: String? = nil // kept for back-compat
     @State private var themeFrom: Color = .gray
     @State private var themeTo: Color = .gray
     @State private var morphProgress: CGFloat = 1.0
-    @State private var hasPersistentRing: Bool = false
-    @State private var ringColor: Color = .gray
     @State private var centerScale: CGFloat = 1.15
     @State private var pendingQuery: String? = nil
     @State private var didTriggerHapticForCurrentTap: Bool = false
@@ -308,7 +305,6 @@ struct EmotionWheelView: View {
                 }
             }
         }
-//        .background(background.ignoresSafeArea())
     }
 
     // MARK: - Helpers
@@ -349,11 +345,10 @@ struct EmotionWheelView: View {
         ua.getRed(&r1, green: &g1, blue: &b1, alpha: &a1)
         ub.getRed(&r2, green: &g2, blue: &b2, alpha: &a2)
         let r = r1 + (r2 - r1) * ta
-        let g = g1 + (r2 - r1) * 0 // placeholder to preserve alignment
-        let gFixed = g1 + (g2 - g1) * ta
+        let g = g1 + (g2 - g1) * ta
         let b = b1 + (b2 - b1) * ta
         let a = a1 + (a2 - a1) * ta
-        return Color(red: r, green: gFixed, blue: b, opacity: a)
+        return Color(red: r, green: g, blue: b, opacity: a)
     }
 
     private func point(from center: CGPoint, radius: CGFloat, angle: Angle) -> CGPoint {

@@ -100,7 +100,6 @@
 		366F74EA2E62A80F0013079A /* LessonEmbeddingIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74BF2E62A80F0013079A /* LessonEmbeddingIndex.swift */; };
 		366F74EB2E62A80F0013079A /* MiniLML6CE.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = 366F74A92E62A80F0013079A /* MiniLML6CE.mlpackage */; };
 		366F74EC2E62A80F0013079A /* E5RetrieverEmbedder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74BE2E62A80F0013079A /* E5RetrieverEmbedder.swift */; };
-		366F74ED2E62A80F0013079A /* RetrieverEmbeddingIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74BC2E62A80F0013079A /* RetrieverEmbeddingIndex.swift */; };
 		366F75282E62C69E0013079A /* LessonUnitsIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F75262E62C69E0013079A /* LessonUnitsIndex.swift */; };
 		366F75322E6364D70013079A /* LessonNavigationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F75312E6364D70013079A /* LessonNavigationHelper.swift */; };
 		3680C2522E792F770036D216 /* AppGroupMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3680C2512E792F770036D216 /* AppGroupMigration.swift */; };
@@ -232,7 +231,6 @@
 		366F74B82E62A80F0013079A /* tokenizer_config_retriever.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tokenizer_config_retriever.json; sourceTree = "<group>"; };
 		366F74B92E62A80F0013079A /* tokenizer_retriever.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = tokenizer_retriever.json; sourceTree = "<group>"; };
 		366F74BA2E62A80F0013079A /* vocab_retriever.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = vocab_retriever.txt; sourceTree = "<group>"; };
-		366F74BC2E62A80F0013079A /* RetrieverEmbeddingIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieverEmbeddingIndex.swift; sourceTree = "<group>"; };
 		366F74BE2E62A80F0013079A /* E5RetrieverEmbedder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E5RetrieverEmbedder.swift; sourceTree = "<group>"; };
 		366F74BF2E62A80F0013079A /* LessonEmbeddingIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonEmbeddingIndex.swift; sourceTree = "<group>"; };
 		366F74C02E62A80F0013079A /* LessonSearchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSearchHelper.swift; sourceTree = "<group>"; };
@@ -568,7 +566,6 @@
 				366F74B32E62A80F0013079A /* Index */,
 				366F74B62E62A80F0013079A /* Model */,
 				366F74BB2E62A80F0013079A /* Tokenizer */,
-				366F74BC2E62A80F0013079A /* RetrieverEmbeddingIndex.swift */,
 			);
 			path = Retriever;
 			sourceTree = "<group>";
@@ -839,7 +836,6 @@
 				366F74EB2E62A80F0013079A /* MiniLML6CE.mlpackage in Sources */,
 				363230D42E67D1B1003264E7 /* BookmarkListView.swift in Sources */,
 				366F74EC2E62A80F0013079A /* E5RetrieverEmbedder.swift in Sources */,
-				366F74ED2E62A80F0013079A /* RetrieverEmbeddingIndex.swift in Sources */,
 				334762D12D4F5A3C0078FCB4 /* VerseView.swift in Sources */,
 				362F6FA72E63E93A004E22BF /* EmotionWheelView.swift in Sources */,
 				33FF16CC2D28FA83006E9888 /* QuoteModel.swift in Sources */,
