@@ -54,7 +54,7 @@ struct BhagavadGitaApp: App {
     // MARK: - Safety: reload widgets on first app open after midnight
     private func refreshWidgetsIfNewWeek(now: Date = Date()) {
         let anchor = WeeklyPickSync.sundayStart(for: now)
-        let key = "last_widget_refresh_anchor_ts"
+        let key = DefaultsKeys.lastWidgetRefreshAnchorTs
         let lastTs = SharedDefaults.defaults.double(forKey: key)
         let anchorTs = anchor.timeIntervalSince1970
         if lastTs < anchorTs {
@@ -67,7 +67,7 @@ struct BhagavadGitaApp: App {
 // MARK: - RootContent with onboarding gate
 private struct RootContent: View {
     @State var quoteModel: QuoteModel
-    @State private var showOnboarding: Bool = !SharedDefaults.defaults.bool(forKey: "onboarding_completed_v1")
+    @State private var showOnboarding: Bool = !SharedDefaults.defaults.bool(forKey: DefaultsKeys.onboardingCompleted)
     var body: some View {
         VerseView(dailyQuoteModel: quoteModel, isExternalCoverPresented: $showOnboarding)
             .fullScreenCover(isPresented: $showOnboarding, onDismiss: {

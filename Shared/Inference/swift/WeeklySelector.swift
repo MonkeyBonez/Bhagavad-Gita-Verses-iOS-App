@@ -9,6 +9,36 @@ public enum SharedDefaults {
     }
 }
 
+/// Shared "already shown" history for the weekly lesson pick.
+/// Stored as JSON `[{index, ts}]` in the App Group under `DefaultsKeys.weeklyShownHistory`.
+/// Used by both SattvaWeeklyHeuristic and ColdStartWeeklyHeuristic.
+enum WeeklyShownHistory {
+    static func load(excludingNewerThanDays days: Int) -> Set<Int> {
+        guard let data = SharedDefaults.defaults.data(forKey: DefaultsKeys.weeklyShownHistory),
+              let arr = try? JSONSerialization.jsonObject(with: data) as? [[String:Any]] else { return [] }
+        let cutoff = Date().addingTimeInterval(TimeInterval(-days * 24 * 3600))
+        var set = Set<Int>()
+        for obj in arr {
+            if let idx = obj["index"] as? Int, let ts = obj["ts"] as? TimeInterval {
+                if Date(timeIntervalSince1970: ts) > cutoff { set.insert(idx) }
+            }
+        }
+        return set
+    }
+
+    static func save(index: Int, date: Date) {
+        var arr: [[String:Any]] = []
+        if let data = SharedDefaults.defaults.data(forKey: DefaultsKeys.weeklyShownHistory),
+           let existing = try? JSONSerialization.jsonObject(with: data) as? [[String:Any]] {
+            arr = existing
+        }
+        arr.append(["index": index, "ts": date.timeIntervalSince1970])
+        if let data = try? JSONSerialization.data(withJSONObject: arr) {
+            SharedDefaults.defaults.set(data, forKey: DefaultsKeys.weeklyShownHistory)
+        }
+    }
+}
+
 public struct WeeklyPick {
     public let lessonIndex: Int
     public let lessonText: String
@@ -36,7 +66,6 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
     private let textsIndex: LessonTextsIndex?
     private let verseMap: [String:Int]
     private let params: WeeklyParams
-    private let shownKey = "weekly_shown_history"
     private let shouldPersistShown: Bool
 
     public init(params: WeeklyParams = WeeklyParams(), verseToLessonJSON: URL? = nil, shouldPersistShown: Bool = true) {
@@ -93,7 +122,7 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
             }
         }
         // 5) Shown filter
-        let shownSet = loadShown(excludingNewerThanDays: params.noRepeatDays)
+        let shownSet = WeeklyShownHistory.load(excludingNewerThanDays: params.noRepeatDays)
         // 6) Per cluster: score all lessons vs centroid; filter; band; pick
         var clusterPicks: [(idx:Int, score:Float)] = []
         for c in 0..<k {
@@ -144,7 +173,7 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
         let verse = first?.start ?? 1
         let text = lt.text(forIndex: chosen.0)
         // Persist shown
-        if shouldPersistShown { saveShown(index: chosen.0, date: date) }
+        if shouldPersistShown { WeeklyShownHistory.save(index: chosen.0, date: date) }
         return WeeklyPick(lessonIndex: chosen.0, lessonText: text, chapter: chapter, verse: verse)
     }
 
@@ -187,7 +216,7 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
 
     private func loadBookmarkTimestamps() -> [Int: TimeInterval] {
         // Prefer V2 structure: array of {index, ts}
-        if let data = SharedDefaults.defaults.data(forKey: "SavedVersesV2"),
+        if let data = SharedDefaults.defaults.data(forKey: DefaultsKeys.savedVersesV2),
            let arr = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
             var map: [Int: TimeInterval] = [:]
             for obj in arr {
@@ -196,7 +225,7 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
             return map
         }
         // Fallback: legacy list → give them a uniform recent timestamp
-        if let legacy = SharedDefaults.defaults.array(forKey: "SavedVerses") as? [Int] {
+        if let legacy = SharedDefaults.defaults.array(forKey: DefaultsKeys.savedVerses) as? [Int] {
             let now = Date().timeIntervalSince1970
             var map: [Int: TimeInterval] = [:]
             for idx in legacy { map[idx] = now }
@@ -206,9 +235,9 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
     }
 
     private func loadSeedLessonIndices() -> [Int] {
-        // Pull bookmarks from UserDefaults (SavedVerses) and map via verseMap if present
+        // Pull bookmarks from UserDefaults (savedVerses) and map via verseMap if present
         var seeds: [Int] = []
-        if let array = SharedDefaults.defaults.array(forKey: "SavedVerses") as? [Int] {
+        if let array = SharedDefaults.defaults.array(forKey: DefaultsKeys.savedVerses) as? [Int] {
             for gi in array {
                 let (ch,v) = VersesInfo.getVerseFromIndex(idx: gi)
                 let key = "\(ch):\(v)"
@@ -220,35 +249,11 @@ public final class SattvaWeeklyHeuristic: WeeklyHeuristic {
         for s in seeds { if !seen.contains(s) { seen.insert(s); out.append(s) } }
         return out
     }
-
-    private func loadShown(excludingNewerThanDays days: Int) -> Set<Int> {
-        guard let data = SharedDefaults.defaults.data(forKey: shownKey), let arr = try? JSONSerialization.jsonObject(with: data) as? [[String:Any]] else { return [] }
-        let cutoff = Date().addingTimeInterval(TimeInterval(-days * 24 * 3600))
-        var set = Set<Int>()
-        for obj in arr {
-            if let idx = obj["index"] as? Int, let ts = obj["ts"] as? TimeInterval {
-                let d = Date(timeIntervalSince1970: ts)
-                if d > cutoff { set.insert(idx) }
-            }
-        }
-        return set
-    }
-
-    private func saveShown(index: Int, date: Date) {
-        var arr: [[String:Any]] = []
-        if let data = SharedDefaults.defaults.data(forKey: shownKey), let existing = try? JSONSerialization.jsonObject(with: data) as? [[String:Any]] {
-            arr = existing
-        }
-        arr.append(["index": index, "ts": date.timeIntervalSince1970])
-        if let data = try? JSONSerialization.data(withJSONObject: arr) {
-            SharedDefaults.defaults.set(data, forKey: shownKey)
-        }
-    }
 }
 
 // MARK: - Weekly pick synchronization helpers
 public struct WeeklyPickSync {
-    private static let pickKeyPrefix = "weekly_pick_"
+    private static let pickKeyPrefix = DefaultsKeys.weeklyPickPrefix
 
     public static func sundayStart(for date: Date) -> Date {
         // Return the start of the current week's Sunday (most recent Sunday, including today if Sunday)
@@ -365,7 +370,6 @@ fileprivate final class ColdStartWeeklyHeuristic: WeeklyHeuristic {
     private struct ColdStartMap: Decodable { let lessons: [ColdStartEntry] }
 
     private let lessonTexts: LessonTextsIndex?
-    private let shownKey = "weekly_shown_history"
     private let entries: [ColdStartEntry]
     private let shouldPersistShown: Bool
 
@@ -392,11 +396,11 @@ fileprivate final class ColdStartWeeklyHeuristic: WeeklyHeuristic {
             return WeeklyPick(lessonIndex: 0, lessonText: "Lesson of the Week", chapter: 1, verse: 1)
         }
 
-        let shownSet = loadShown(excludingNewerThanDays: 180)
+        let shownSet = WeeklyShownHistory.load(excludingNewerThanDays: 180)
         // First available not shown recently
         if let e = entries.first(where: { !shownSet.contains($0.index) }) {
             let text = lt.text(forIndex: e.index)
-            if shouldPersistShown { saveShown(index: e.index, date: date) }
+            if shouldPersistShown { WeeklyShownHistory.save(index: e.index, date: date) }
             return WeeklyPick(lessonIndex: e.index, lessonText: text, chapter: e.chapter, verse: e.verse)
         }
 
@@ -405,33 +409,8 @@ fileprivate final class ColdStartWeeklyHeuristic: WeeklyHeuristic {
         let week = cal.component(.weekOfYear, from: date)
         let e = entries[max(0, (week - 1) % entries.count)]
         let text = lt.text(forIndex: e.index)
-        if shouldPersistShown { saveShown(index: e.index, date: date) }
+        if shouldPersistShown { WeeklyShownHistory.save(index: e.index, date: date) }
         return WeeklyPick(lessonIndex: e.index, lessonText: text, chapter: e.chapter, verse: e.verse)
-    }
-
-    // MARK: - Shown history (shared format/key with SattvaWeeklyHeuristic; use SharedDefaults)
-    private func loadShown(excludingNewerThanDays days: Int) -> Set<Int> {
-        guard let data = SharedDefaults.defaults.data(forKey: shownKey), let arr = try? JSONSerialization.jsonObject(with: data) as? [[String:Any]] else { return [] }
-        let cutoff = Date().addingTimeInterval(TimeInterval(-days * 24 * 3600))
-        var set = Set<Int>()
-        for obj in arr {
-            if let idx = obj["index"] as? Int, let ts = obj["ts"] as? TimeInterval {
-                let d = Date(timeIntervalSince1970: ts)
-                if d > cutoff { set.insert(idx) }
-            }
-        }
-        return set
-    }
-
-    private func saveShown(index: Int, date: Date) {
-        var arr: [[String:Any]] = []
-        if let data = SharedDefaults.defaults.data(forKey: shownKey), let existing = try? JSONSerialization.jsonObject(with: data) as? [[String:Any]] {
-            arr = existing
-        }
-        arr.append(["index": index, "ts": date.timeIntervalSince1970])
-        if let data = try? JSONSerialization.data(withJSONObject: arr) {
-            SharedDefaults.defaults.set(data, forKey: shownKey)
-        }
     }
 }
 

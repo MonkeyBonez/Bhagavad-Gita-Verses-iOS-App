@@ -68,6 +68,8 @@
 		363230C52E66213B003264E7 /* LessonEmbeddingIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74BF2E62A80F0013079A /* LessonEmbeddingIndex.swift */; };
 		363230C72E662254003264E7 /* WeeklySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230C62E662254003264E7 /* WeeklySelector.swift */; };
 		363230C82E662254003264E7 /* WeeklySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230C62E662254003264E7 /* WeeklySelector.swift */; };
+		DEFA170000000000000000F2 /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFA170000000000000000F1 /* DefaultsKeys.swift */; };
+		DEFA170000000000000000F3 /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFA170000000000000000F1 /* DefaultsKeys.swift */; };
 		363230CA2E66230C003264E7 /* LessonTextsIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230C92E66230C003264E7 /* LessonTextsIndex.swift */; };
 		363230CB2E66230C003264E7 /* LessonTextsIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230C92E66230C003264E7 /* LessonTextsIndex.swift */; };
 		363230D42E67D1B1003264E7 /* BookmarkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230D32E67D1B1003264E7 /* BookmarkListView.swift */; };
@@ -210,6 +212,7 @@
 		36306EE52E690AAE00CFBD1D /* WelcomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePage.swift; sourceTree = "<group>"; };
 		36306EE62E690AAE00CFBD1D /* WidgetsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsPage.swift; sourceTree = "<group>"; };
 		363230C62E662254003264E7 /* WeeklySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklySelector.swift; sourceTree = "<group>"; };
+		DEFA170000000000000000F1 /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
 		363230C92E66230C003264E7 /* LessonTextsIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonTextsIndex.swift; sourceTree = "<group>"; };
 		363230D32E67D1B1003264E7 /* BookmarkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkListView.swift; sourceTree = "<group>"; };
 		36350FF22E6913CF00CA994F /* OnboardingMandalaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMandalaView.swift; sourceTree = "<group>"; };
@@ -443,6 +446,7 @@
 				3680C2512E792F770036D216 /* AppGroupMigration.swift */,
 				3310A48D2DEF606700EBBA15 /* FileReader.swift */,
 				339B0B032DE0267F00BFC39D /* BookmarkedVersesModel.swift */,
+				DEFA170000000000000000F1 /* DefaultsKeys.swift */,
 				33FF16CB2D28FA67006E9888 /* QuoteModel.swift */,
 				33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */,
 			);
@@ -803,6 +807,7 @@
 				339B0B152DE0307600BFC39D /* Verses.swift in Sources */,
 				362F6FAD2E63E99B004E22BF /* EmotionWheelModel.swift in Sources */,
 				363230C72E662254003264E7 /* WeeklySelector.swift in Sources */,
+				DEFA170000000000000000F2 /* DefaultsKeys.swift in Sources */,
 				36306EE72E690AAE00CFBD1D /* ThemedBlankSheet.swift in Sources */,
 				36306EE82E690AAE00CFBD1D /* WelcomePage.swift in Sources */,
 				36306EE92E690AAE00CFBD1D /* WidgetsPage.swift in Sources */,
@@ -855,6 +860,7 @@
 				363230CA2E66230C003264E7 /* LessonTextsIndex.swift in Sources */,
 				334762DA2D4F5B1B0078FCB4 /* WidgetBundle.swift in Sources */,
 				363230C82E662254003264E7 /* WeeklySelector.swift in Sources */,
+				DEFA170000000000000000F3 /* DefaultsKeys.swift in Sources */,
 				339B0B112DE0307600BFC39D /* Verses.swift in Sources */,
 				339B0B122DE0307600BFC39D /* Colors.swift in Sources */,
 				335445C52DE42EF0000D38E2 /* BookmarkedVersesModel.swift in Sources */,

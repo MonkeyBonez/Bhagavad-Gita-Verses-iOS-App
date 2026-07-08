@@ -3,7 +3,7 @@ import UserNotifications
 
 enum WeeklyNotificationScheduler {
 
-    private static let scheduledMapKey = "weekly_notif_scheduled_map" // [anchorTs: {id, fireTs}]
+    private static let scheduledMapKey = DefaultsKeys.weeklyNotifScheduledMap // [anchorTs: {id, fireTs}]
     private static let openedWeeksKey = "opened_week_anchors" // [Int]
     private static let backlogWeeksCount = 26
 

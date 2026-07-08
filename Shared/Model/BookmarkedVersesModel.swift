@@ -4,8 +4,8 @@ import Algorithms
 struct BookmarkedVersesModel {
     private var bookmarkedVerseIndices: [Int] = []
     private var indexToTimestamp: [Int: TimeInterval] = [:]
-    private let userDefaultsKey = "SavedVerses"
-    private let userDefaultsKeyV2 = "SavedVersesV2"
+    private let userDefaultsKey = DefaultsKeys.savedVerses
+    private let userDefaultsKeyV2 = DefaultsKeys.savedVersesV2
     private var bookmarkedVerseIndex = 0
 
     init() {

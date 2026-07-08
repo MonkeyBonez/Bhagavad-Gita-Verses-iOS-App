@@ -93,7 +93,7 @@ struct OnboardingView: View {
                     .buttonStyle(PrimaryButtonStyle(accent: foreground, foreground: backgroundColor, fullWidth: true))
             } else {
                 Button("Done") {
-                    SharedDefaults.defaults.set(true, forKey: "onboarding_completed_v1")
+                    SharedDefaults.defaults.set(true, forKey: DefaultsKeys.onboardingCompleted)
                     dismiss()
                 }
                 .buttonStyle(PrimaryButtonStyle(accent: accent, foreground: backgroundColor, fullWidth: true))

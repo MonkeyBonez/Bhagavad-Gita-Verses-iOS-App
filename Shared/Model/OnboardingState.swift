@@ -1,7 +1,7 @@
 import Foundation
 
 enum OnboardingState {
-    private static let completedKey = "onboarding_completed_v1"
+    private static let completedKey = DefaultsKeys.onboardingCompleted
 
     static var hasCompleted: Bool {
         SharedDefaults.defaults.bool(forKey: completedKey)
