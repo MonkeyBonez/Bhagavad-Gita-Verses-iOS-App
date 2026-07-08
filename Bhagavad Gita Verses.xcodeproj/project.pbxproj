@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		252BFBD9EA495089EE53D519 /* BookmarkBinaryFindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC5D403DEE54966E802A8A8 /* BookmarkBinaryFindTests.swift */; };
+		2971572A09AB107B5B70FA6C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 320B657129921FC2535CED49 /* Foundation.framework */; };
 		3310A48E2DEF606A00EBBA15 /* FileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3310A48D2DEF606700EBBA15 /* FileReader.swift */; };
 		3310A48F2DEF606A00EBBA15 /* FileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3310A48D2DEF606700EBBA15 /* FileReader.swift */; };
 		33182E082DD58B6000A82202 /* HomescreenVerseWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182E052DD5893A00A82202 /* HomescreenVerseWidget.swift */; };
@@ -68,8 +70,6 @@
 		363230C52E66213B003264E7 /* LessonEmbeddingIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366F74BF2E62A80F0013079A /* LessonEmbeddingIndex.swift */; };
 		363230C72E662254003264E7 /* WeeklySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230C62E662254003264E7 /* WeeklySelector.swift */; };
 		363230C82E662254003264E7 /* WeeklySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230C62E662254003264E7 /* WeeklySelector.swift */; };
-		DEFA170000000000000000F2 /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFA170000000000000000F1 /* DefaultsKeys.swift */; };
-		DEFA170000000000000000F3 /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFA170000000000000000F1 /* DefaultsKeys.swift */; };
 		363230CA2E66230C003264E7 /* LessonTextsIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230C92E66230C003264E7 /* LessonTextsIndex.swift */; };
 		363230CB2E66230C003264E7 /* LessonTextsIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230C92E66230C003264E7 /* LessonTextsIndex.swift */; };
 		363230D42E67D1B1003264E7 /* BookmarkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363230D32E67D1B1003264E7 /* BookmarkListView.swift */; };
@@ -110,6 +110,12 @@
 		36E7D9E12E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */; };
 		36E7D9E22E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */; };
 		36E7D9E92E68310500EE6990 /* WeeklyNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E7D9E72E68310500EE6990 /* WeeklyNotificationScheduler.swift */; };
+		6A9B49B2FD1BA7A1B868252C /* EmotionQueryBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA061B6B48CB9EE977B03E53 /* EmotionQueryBuilderTests.swift */; };
+		7E1DE8C1B53DAAD38BC2622F /* ColorEmotionEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD504A3F788CD75E2DCB65CD /* ColorEmotionEngineTests.swift */; };
+		A088CBB7E75F142900F6A677 /* AppGroupMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB58CAB6B0F96D7475D133BA /* AppGroupMigrationTests.swift */; };
+		B3117FC2E9CAFF6B2A1EA2E4 /* WeeklyPickSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B6674DDF8805048C02DDD0 /* WeeklyPickSyncTests.swift */; };
+		DEFA170000000000000000F2 /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFA170000000000000000F1 /* DefaultsKeys.swift */; };
+		DEFA170000000000000000F3 /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFA170000000000000000F1 /* DefaultsKeys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +132,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 334762E12D5071400078FCB4;
 			remoteInfo = "App Intent Extension";
+		};
+		F7E9CFA039D68406A5E7FCE4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 33440B1C2D263D6E007321E2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 33440B232D263D6E007321E2;
+			remoteInfo = "Bhagavad Gita Verses";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -165,6 +178,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		320B657129921FC2535CED49 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		3310A48D2DEF606700EBBA15 /* FileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReader.swift; sourceTree = "<group>"; };
 		33182E052DD5893A00A82202 /* HomescreenVerseWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomescreenVerseWidget.swift; sourceTree = "<group>"; };
 		33182E092DD58B7400A82202 /* VerseWidgetProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerseWidgetProvider.swift; sourceTree = "<group>"; };
@@ -212,7 +226,6 @@
 		36306EE52E690AAE00CFBD1D /* WelcomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePage.swift; sourceTree = "<group>"; };
 		36306EE62E690AAE00CFBD1D /* WidgetsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsPage.swift; sourceTree = "<group>"; };
 		363230C62E662254003264E7 /* WeeklySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklySelector.swift; sourceTree = "<group>"; };
-		DEFA170000000000000000F1 /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
 		363230C92E66230C003264E7 /* LessonTextsIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonTextsIndex.swift; sourceTree = "<group>"; };
 		363230D32E67D1B1003264E7 /* BookmarkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkListView.swift; sourceTree = "<group>"; };
 		36350FF22E6913CF00CA994F /* OnboardingMandalaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMandalaView.swift; sourceTree = "<group>"; };
@@ -248,6 +261,13 @@
 		36E7D9E52E682BB100EE6990 /* Bhagavad Gita Verses.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Bhagavad Gita Verses.entitlements"; sourceTree = "<group>"; };
 		36E7D9E62E682BE200EE6990 /* Widgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Widgets.entitlements; sourceTree = "<group>"; };
 		36E7D9E72E68310500EE6990 /* WeeklyNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyNotificationScheduler.swift; sourceTree = "<group>"; };
+		5D56C174A5A34E1E1C1DEAFE /* BhagavadGitaVersesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BhagavadGitaVersesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8B6674DDF8805048C02DDD0 /* WeeklyPickSyncTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WeeklyPickSyncTests.swift; sourceTree = "<group>"; };
+		ADC5D403DEE54966E802A8A8 /* BookmarkBinaryFindTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookmarkBinaryFindTests.swift; sourceTree = "<group>"; };
+		CA061B6B48CB9EE977B03E53 /* EmotionQueryBuilderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EmotionQueryBuilderTests.swift; sourceTree = "<group>"; };
+		DB58CAB6B0F96D7475D133BA /* AppGroupMigrationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppGroupMigrationTests.swift; sourceTree = "<group>"; };
+		DEFA170000000000000000F1 /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
+		FD504A3F788CD75E2DCB65CD /* ColorEmotionEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ColorEmotionEngineTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -314,9 +334,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		76A45F3120E33DF7454CE94E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2971572A09AB107B5B70FA6C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		16BEA3781A51C784CC4DC38A /* BhagavadGitaVersesTests */ = {
+			isa = PBXGroup;
+			children = (
+				DB58CAB6B0F96D7475D133BA /* AppGroupMigrationTests.swift */,
+				ADC5D403DEE54966E802A8A8 /* BookmarkBinaryFindTests.swift */,
+				FD504A3F788CD75E2DCB65CD /* ColorEmotionEngineTests.swift */,
+				CA061B6B48CB9EE977B03E53 /* EmotionQueryBuilderTests.swift */,
+				A8B6674DDF8805048C02DDD0 /* WeeklyPickSyncTests.swift */,
+			);
+			name = BhagavadGitaVersesTests;
+			path = BhagavadGitaVersesTests;
+			sourceTree = "<group>";
+		};
+		2AE5E620B00922AF392FCA0B /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				320B657129921FC2535CED49 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
 		33440B1B2D263D6E007321E2 = {
 			isa = PBXGroup;
 			children = (
@@ -328,6 +377,7 @@
 				33440B3A2D263E89007321E2 /* Frameworks */,
 				33440B252D263D6E007321E2 /* Products */,
 				334762DD2D506F6C0078FCB4 /* Shared */,
+				16BEA3781A51C784CC4DC38A /* BhagavadGitaVersesTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -337,6 +387,7 @@
 				33440B242D263D6E007321E2 /* Bhagavad Gita Verses.app */,
 				33440B392D263E89007321E2 /* Widgets.appex */,
 				334762E22D5071400078FCB4 /* App Intent Extension.appex */,
+				5D56C174A5A34E1E1C1DEAFE /* BhagavadGitaVersesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -346,6 +397,7 @@
 			children = (
 				33440B3B2D263E89007321E2 /* WidgetKit.framework */,
 				33440B3D2D263E8A007321E2 /* SwiftUI.framework */,
+				2AE5E620B00922AF392FCA0B /* iOS */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -695,11 +747,27 @@
 				334762E32D5071400078FCB4 /* App Intent Extension */,
 			);
 			name = "App Intent Extension";
-			packageProductDependencies = (
-			);
 			productName = "App Intent Extension";
 			productReference = 334762E22D5071400078FCB4 /* App Intent Extension.appex */;
 			productType = "com.apple.product-type.extensionkit-extension";
+		};
+		FBFD8A88BE54D017B67F9221 /* BhagavadGitaVersesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F8D029ADBD7F0EF2F0577C2A /* Build configuration list for PBXNativeTarget "BhagavadGitaVersesTests" */;
+			buildPhases = (
+				009DF322FE6C3557E55CDD6E /* Sources */,
+				76A45F3120E33DF7454CE94E /* Frameworks */,
+				5AE216E567B43EA03C744C50 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A080301E3158BC0434157DD8 /* PBXTargetDependency */,
+			);
+			name = BhagavadGitaVersesTests;
+			productName = BhagavadGitaVersesTests;
+			productReference = 5D56C174A5A34E1E1C1DEAFE /* BhagavadGitaVersesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -742,6 +810,7 @@
 				33440B232D263D6E007321E2 /* Bhagavad Gita Verses */,
 				33440B382D263E89007321E2 /* Widgets */,
 				334762E12D5071400078FCB4 /* App Intent Extension */,
+				FBFD8A88BE54D017B67F9221 /* BhagavadGitaVersesTests */,
 			);
 		};
 /* End PBXProject section */
@@ -796,9 +865,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5AE216E567B43EA03C744C50 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		009DF322FE6C3557E55CDD6E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A088CBB7E75F142900F6A677 /* AppGroupMigrationTests.swift in Sources */,
+				252BFBD9EA495089EE53D519 /* BookmarkBinaryFindTests.swift in Sources */,
+				7E1DE8C1B53DAAD38BC2622F /* ColorEmotionEngineTests.swift in Sources */,
+				6A9B49B2FD1BA7A1B868252C /* EmotionQueryBuilderTests.swift in Sources */,
+				B3117FC2E9CAFF6B2A1EA2E4 /* WeeklyPickSyncTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		33440B202D263D6E007321E2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -901,6 +989,12 @@
 			isa = PBXTargetDependency;
 			target = 334762E12D5071400078FCB4 /* App Intent Extension */;
 			targetProxy = 334762E92D5071400078FCB4 /* PBXContainerItemProxy */;
+		};
+		A080301E3158BC0434157DD8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Bhagavad Gita Verses";
+			target = 33440B232D263D6E007321E2 /* Bhagavad Gita Verses */;
+			targetProxy = F7E9CFA039D68406A5E7FCE4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1202,6 +1296,43 @@
 			};
 			name = Release;
 		};
+		4D981B3327A01802AF77A0E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Sne.LockScreenWidgetSample.BhagavadGitaVersesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bhagavad Gita Verses.app/Bhagavad Gita Verses";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E838A33716CE86E074F049F0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				PRODUCT_BUNDLE_IDENTIFIER = Sne.LockScreenWidgetSample.BhagavadGitaVersesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bhagavad Gita Verses.app/Bhagavad Gita Verses";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1237,6 +1368,15 @@
 			buildConfigurations = (
 				334762EE2D5071400078FCB4 /* Debug */,
 				334762EF2D5071400078FCB4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F8D029ADBD7F0EF2F0577C2A /* Build configuration list for PBXNativeTarget "BhagavadGitaVersesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D981B3327A01802AF77A0E9 /* Release */,
+				E838A33716CE86E074F049F0 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
