@@ -1,3 +1,4 @@
 /Bhagavad Gita Verses.xcodeproj/xcuserdata
 *.xcuserstate
-Shared/.DS_Store
+.DS_Store
+**/.DS_Store
