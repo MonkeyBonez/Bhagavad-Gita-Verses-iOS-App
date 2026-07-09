@@ -129,7 +129,7 @@ struct LockScreenWidgetOnboarding: View {
         case 2:
             return "Tap the widget area below the clock"
         case 3:
-            return "Scroll to or search Sattva and add the widget"
+            return "Scroll to or search Sattvic and add the widget"
         case 4:
             return "To open color options, tap on the time"
         default:

@@ -15,10 +15,10 @@ struct WelcomePage: View {
                 .padding(.horizontal, 30)
                 .padding(.bottom, 2)
             VStack(spacing: 8) {
-                Text("Sattva (n.)")
+                Text("Sattvic (adj.)")
                     .font(.custom(Fonts.verseFontName, size: 26))
                     .fontWeight(.bold)
-                Text("The quality of truth, purity, and goodness; \nthe principle of harmony and clarity in \nIndian philosophy.")
+                Text("Of the nature of sattva — truth, purity, and \ngoodness; living in harmony and clarity, \nas taught in the Gita.")
                     .font(.custom(Fonts.supportingFontName, size: 17))
                     .italic()
                     .multilineTextAlignment(.center)

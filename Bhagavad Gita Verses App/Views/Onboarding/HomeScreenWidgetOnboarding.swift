@@ -103,7 +103,7 @@ struct HomeScreenWidgetOnboarding: View {
             } else {
                 return "Tap the “+” button in the\ntop left corner"
             }
-        default: return "Search Sattva and pick the\nverse or lesson widget"
+        default: return "Search Sattvic and pick the\nverse or lesson widget"
         }
     }
 }
