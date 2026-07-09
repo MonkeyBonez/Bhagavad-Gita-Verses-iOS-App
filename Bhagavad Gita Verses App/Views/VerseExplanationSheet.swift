@@ -26,7 +26,7 @@ final class VerseExplanationViewModel {
         self.explainer = explainer
         self.context = GitaSceneProvider.context(chapter: chapter, verse: verse,
                                                  verseText: verseText, lesson: lesson)
-        if case .unavailable(let reason) = explainer.availability {
+        if case .fallback(let reason) = explainer.availability {
             phase = .unavailable(reason)
         }
     }

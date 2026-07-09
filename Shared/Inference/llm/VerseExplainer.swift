@@ -63,9 +63,12 @@ enum GitaSceneProvider {
 // MARK: - Explainer abstraction
 
 enum ExplainerAvailability: Equatable {
+    /// On-device generation works — `explain` streams a model response.
     case available
-    /// Not usable here; the associated string is a short human-readable reason.
-    case unavailable(String)
+    /// On-device generation isn't available here (older OS, ineligible device, Apple Intelligence
+    /// off, model still downloading). The associated string is a short human-readable note; the
+    /// feature still degrades gracefully — `explain` streams the mapped lesson instead of failing.
+    case fallback(String)
 }
 
 /// Generates a short, grounded "why does this apply to me?" explanation for a verse.
@@ -75,12 +78,15 @@ protocol VerseExplainer {
     func explain(_ context: VerseSceneContext, userSituation: String?) -> AsyncThrowingStream<String, Error>
 }
 
-/// Picks the best available explainer for this device.
+/// Picks the best available explainer for this device. Returns the Foundation Models backend only
+/// when it reports `.available` at runtime — otherwise the stub, so callers never hold an explainer
+/// whose `explain` would throw. This is what makes the graceful lesson fallback actually reachable.
 enum VerseExplainerFactory {
     static func make() -> VerseExplainer {
         #if canImport(FoundationModels)
         if #available(iOS 26.0, *) {
-            return FoundationModelsVerseExplainer()
+            let fm = FoundationModelsVerseExplainer()
+            if case .available = fm.availability { return fm }
         }
         #endif
         return StubVerseExplainer()
@@ -124,7 +130,9 @@ enum ExplanationPrompt {
 /// Used when no on-device model is available. Returns the lesson (or verse) with a short frame,
 /// so the feature degrades gracefully instead of disappearing.
 struct StubVerseExplainer: VerseExplainer {
-    var availability: ExplainerAvailability { .unavailable("On-device model unavailable on this device.") }
+    var availability: ExplainerAvailability {
+        .fallback("On-device explanations need Apple Intelligence — here's the heart of this verse.")
+    }
 
     func explain(_ context: VerseSceneContext, userSituation: String?) -> AsyncThrowingStream<String, Error> {
         AsyncThrowingStream { continuation in
@@ -145,7 +153,7 @@ struct FoundationModelsVerseExplainer: VerseExplainer {
         case .available:
             return .available
         case .unavailable(let reason):
-            return .unavailable(Self.describe(reason))
+            return .fallback(Self.describe(reason))
         }
     }
 

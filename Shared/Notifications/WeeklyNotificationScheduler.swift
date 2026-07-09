@@ -119,8 +119,9 @@ enum WeeklyNotificationScheduler {
     // MARK: - Core reconcile
 
     private static func reconcile(now: Date, completion: @escaping () -> Void) {
-        let currentAnchor = WeeklyPickSync.sundayStart(for: now)
-        markWeekOpened(anchorTs: Int(currentAnchor.timeIntervalSince1970))
+        // WeeklyEngagement is the single writer of the opened-week history; recording here is
+        // belt-and-suspenders for the notification-authorized path (idempotent set insert).
+        WeeklyEngagement.recordCurrentWeekOpen(now: now)
         retireObsoleteDefaults()
 
         let center = UNUserNotificationCenter.current()
@@ -168,25 +169,6 @@ enum WeeklyNotificationScheduler {
         let comps = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: entry.fireDate)
         let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
         return UNNotificationRequest(identifier: entry.id, content: content, trigger: trigger)
-    }
-
-    // MARK: - Opened-week history (kept for future progress/streak features)
-
-    private static func markWeekOpened(anchorTs: Int) {
-        var set = loadOpenedWeeks()
-        set.insert(anchorTs)
-        saveOpenedWeeks(set)
-    }
-
-    private static func loadOpenedWeeks() -> Set<Int> {
-        if let arr = SharedDefaults.defaults.array(forKey: DefaultsKeys.openedWeekAnchors) as? [Int] {
-            return Set(arr)
-        }
-        return []
-    }
-
-    private static func saveOpenedWeeks(_ set: Set<Int>) {
-        SharedDefaults.defaults.set(Array(set), forKey: DefaultsKeys.openedWeekAnchors)
     }
 
     // MARK: - Cleanup of superseded state

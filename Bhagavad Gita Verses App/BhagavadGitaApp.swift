@@ -5,6 +5,7 @@ import UserNotifications
 @main
 struct BhagavadGitaApp: App {
     @Environment(\.openURL) var openURL
+    @Environment(\.scenePhase) private var scenePhase
     let quoteModel: QuoteModel
     let deeplinkCoordinator = DeeplinkCoordinator()
 
@@ -20,12 +21,21 @@ struct BhagavadGitaApp: App {
         WindowGroup {
             RootContent(quoteModel: quoteModel)
                 .onOpenURL(perform: {handleUrl($0)})
-                .onAppear {
-                    WeeklyEngagement.recordCurrentWeekOpen()   // progress accrues regardless of notif permission
-                    WeeklyNotificationScheduler.reconcileOnAppOpen()
-                    refreshWidgetsIfNewWeek()
+                .onAppear { handleForegroundTick() }
+                .onChange(of: scenePhase) { _, newPhase in
+                    // Cover warm foregrounds: .onAppear fires once per view lifetime, so a
+                    // resident app crossing into a new week would otherwise never record it.
+                    if newPhase == .active { handleForegroundTick() }
                 }
         }
+    }
+
+    /// Idempotent per-foreground work: record this week's engagement (independent of notification
+    /// permission), reconcile the notification queue, and refresh widgets on a new week.
+    private func handleForegroundTick() {
+        WeeklyEngagement.recordCurrentWeekOpen()
+        WeeklyNotificationScheduler.reconcileOnAppOpen()
+        refreshWidgetsIfNewWeek()
     }
 
     private func handleUrl(_ url: URL) {
