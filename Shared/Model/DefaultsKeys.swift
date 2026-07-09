@@ -13,8 +13,15 @@ public enum DefaultsKeys {
     public static let weeklyShownHistory = "weekly_shown_history"
     /// Prefix for per-week pick keys (`weekly_pick_<anchorTs>`).
     public static let weeklyPickPrefix = "weekly_pick_"
-    /// Weekly notification scheduling map: JSON `{anchorTs: {id, fireTs}}`.
+    /// Obsolete legacy notification map. No longer written; the notification reconcile
+    /// actively deletes it. Kept so the cleanup call can target the exact key string.
     public static let weeklyNotifScheduledMap = "weekly_notif_scheduled_map"
+    /// Sunday anchors (epoch seconds) of weeks the app was opened at least once.
+    /// Engagement history, kept for future progress/streak features. Stored as `[Int]`.
+    public static let openedWeekAnchors = "opened_week_anchors"
+    /// Obsolete one-shot flag from the superseded v2 notification migration.
+    /// Actively deleted during notification reconcile; kept so cleanup targets the exact key.
+    public static let legacyNotifMigratedV2 = "notif_migrated_v2"
     /// Whether onboarding has been completed.
     public static let onboardingCompleted = "onboarding_completed_v1"
     /// Timestamp of the last widget-timeline refresh anchor.

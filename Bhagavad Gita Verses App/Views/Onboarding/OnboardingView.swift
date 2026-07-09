@@ -106,9 +106,7 @@ struct OnboardingView: View {
     private func requestNotifications() {
         guard !isRequestingNotifications else { return }
         isRequestingNotifications = true
-        WeeklyNotificationScheduler.userTappedEnableNotifications { _ in
-            // Run idempotent reconciliation immediately after permission flow
-            WeeklyNotificationScheduler.ensureBacklogAndStreak()
+        WeeklyNotificationScheduler.requestAuthorizationAndReconcile { _ in
             isRequestingNotifications = false
             spinToken += 1 // trigger mandala spin exactly when transitioning to page 2
             withAnimation { selection = 2 }

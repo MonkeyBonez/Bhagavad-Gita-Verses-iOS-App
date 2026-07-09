@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12F54EAD61B2BAA1F242B056 /* WeeklyNotificationPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9B2B3ED2E6E2676EB63B99 /* WeeklyNotificationPlanTests.swift */; };
 		252BFBD9EA495089EE53D519 /* BookmarkBinaryFindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC5D403DEE54966E802A8A8 /* BookmarkBinaryFindTests.swift */; };
 		2971572A09AB107B5B70FA6C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 320B657129921FC2535CED49 /* Foundation.framework */; };
 		3310A48E2DEF606A00EBBA15 /* FileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3310A48D2DEF606700EBBA15 /* FileReader.swift */; };
@@ -263,6 +264,7 @@
 		36E7D9E72E68310500EE6990 /* WeeklyNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyNotificationScheduler.swift; sourceTree = "<group>"; };
 		5D56C174A5A34E1E1C1DEAFE /* BhagavadGitaVersesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BhagavadGitaVersesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8B6674DDF8805048C02DDD0 /* WeeklyPickSyncTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WeeklyPickSyncTests.swift; sourceTree = "<group>"; };
+		AD9B2B3ED2E6E2676EB63B99 /* WeeklyNotificationPlanTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WeeklyNotificationPlanTests.swift; sourceTree = "<group>"; };
 		ADC5D403DEE54966E802A8A8 /* BookmarkBinaryFindTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookmarkBinaryFindTests.swift; sourceTree = "<group>"; };
 		CA061B6B48CB9EE977B03E53 /* EmotionQueryBuilderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EmotionQueryBuilderTests.swift; sourceTree = "<group>"; };
 		DB58CAB6B0F96D7475D133BA /* AppGroupMigrationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppGroupMigrationTests.swift; sourceTree = "<group>"; };
@@ -353,6 +355,7 @@
 				FD504A3F788CD75E2DCB65CD /* ColorEmotionEngineTests.swift */,
 				CA061B6B48CB9EE977B03E53 /* EmotionQueryBuilderTests.swift */,
 				A8B6674DDF8805048C02DDD0 /* WeeklyPickSyncTests.swift */,
+				AD9B2B3ED2E6E2676EB63B99 /* WeeklyNotificationPlanTests.swift */,
 			);
 			name = BhagavadGitaVersesTests;
 			path = BhagavadGitaVersesTests;
@@ -884,6 +887,7 @@
 				7E1DE8C1B53DAAD38BC2622F /* ColorEmotionEngineTests.swift in Sources */,
 				6A9B49B2FD1BA7A1B868252C /* EmotionQueryBuilderTests.swift in Sources */,
 				B3117FC2E9CAFF6B2A1EA2E4 /* WeeklyPickSyncTests.swift in Sources */,
+				12F54EAD61B2BAA1F242B056 /* WeeklyNotificationPlanTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -42,7 +42,6 @@ enum AppGroupMigration {
         // Everything else: copy only if the App Group has no value yet, so stale standard-defaults
         // data can never overwrite the current shared state.
         copyIfAbsent(key: DefaultsKeys.weeklyShownHistory, from: source, to: destination)
-        copyIfAbsent(key: DefaultsKeys.weeklyNotifScheduledMap, from: source, to: destination)
         for (key, value) in source.dictionaryRepresentation()
             where key.hasPrefix(DefaultsKeys.weeklyPickPrefix) && destination.object(forKey: key) == nil {
             destination.set(value, forKey: key)

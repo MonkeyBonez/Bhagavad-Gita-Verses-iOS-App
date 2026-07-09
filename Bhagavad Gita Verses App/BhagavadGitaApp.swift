@@ -21,7 +21,7 @@ struct BhagavadGitaApp: App {
             RootContent(quoteModel: quoteModel)
                 .onOpenURL(perform: {handleUrl($0)})
                 .onAppear {
-                    WeeklyNotificationScheduler.ensureBacklogAndStreak()
+                    WeeklyNotificationScheduler.reconcileOnAppOpen()
                     refreshWidgetsIfNewWeek()
                 }
         }
@@ -34,10 +34,10 @@ struct BhagavadGitaApp: App {
             break
         case .quoteOfTheDay:
             setToQuoteOfDay()
-            WeeklyNotificationScheduler.onAppOpen()
+            WeeklyNotificationScheduler.reconcileOnAppOpen()
         case .openVerse(let chapter, let verse):
             openSpecificVerse(chapter: chapter, verse: verse)
-            WeeklyNotificationScheduler.onAppOpen()
+            WeeklyNotificationScheduler.reconcileOnAppOpen()
         }
     }
 
@@ -71,8 +71,8 @@ private struct RootContent: View {
     var body: some View {
         VerseView(dailyQuoteModel: quoteModel, isExternalCoverPresented: $showOnboarding)
             .fullScreenCover(isPresented: $showOnboarding, onDismiss: {
-                // After onboarding, run weekly lifecycle once (authorized only)
-                WeeklyNotificationScheduler.onAppOpenIfAuthorized()
+                // Reconcile after onboarding (no-op if notifications weren't enabled)
+                WeeklyNotificationScheduler.reconcileOnAppOpen()
             }) {
                 OnboardingView()
             }
