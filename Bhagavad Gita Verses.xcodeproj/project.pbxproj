@@ -113,6 +113,7 @@
 		36E7D9E22E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36E7D9E02E68183600EE6990 /* SourceSans3-VariableFont_wght.ttf */; };
 		36E7D9E92E68310500EE6990 /* WeeklyNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E7D9E72E68310500EE6990 /* WeeklyNotificationScheduler.swift */; };
 		3DAFA02E25A3D0D233DB48A7 /* MLXLMCommon in Frameworks */ = {isa = PBXBuildFile; productRef = B71EC68FBF1DB35A782F7FD7 /* MLXLMCommon */; };
+		4A585987A9B4E7E579806A59 /* VerseLessonMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050AAAF3ED378E2B6E78466 /* VerseLessonMap.swift */; };
 		4BF19C83874164AC11C9035E /* MLXLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 7D0E8DDFAED002A6AF88ABCC /* MLXLLM */; };
 		5F44576A1754073830D24F2E /* VerseExplainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023AF1648B17E84EC0E7E86D /* VerseExplainerTests.swift */; };
 		60BDECEC4137E075320E666F /* ExplainerTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2706F3AABF3E4E389684A826 /* ExplainerTier.swift */; };
@@ -194,6 +195,7 @@
 		0C7E0845B26A5B9787029CD0 /* VerseExplanationSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VerseExplanationSheet.swift; path = "Bhagavad Gita Verses App/Views/VerseExplanationSheet.swift"; sourceTree = SOURCE_ROOT; };
 		2706F3AABF3E4E389684A826 /* ExplainerTier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Shared/Inference/llm/ExplainerTier.swift; sourceTree = SOURCE_ROOT; };
 		2E66A9469AFB235E2C593843 /* WeeklyProgress.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WeeklyProgress.swift; path = Shared/Model/WeeklyProgress.swift; sourceTree = SOURCE_ROOT; };
+		3050AAAF3ED378E2B6E78466 /* VerseLessonMap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VerseLessonMap.swift; path = Shared/Inference/llm/VerseLessonMap.swift; sourceTree = SOURCE_ROOT; };
 		320B657129921FC2535CED49 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		3310A48D2DEF606700EBBA15 /* FileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReader.swift; sourceTree = "<group>"; };
 		33182E052DD5893A00A82202 /* HomescreenVerseWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomescreenVerseWidget.swift; sourceTree = "<group>"; };
@@ -721,6 +723,7 @@
 				B6ADEB58A0644C4A7371D3A4 /* VerseExplainer.swift */,
 				2706F3AABF3E4E389684A826 /* ExplainerTier.swift */,
 				DB3617D2C4C1FC5DFCDB3325 /* MLXVerseExplainer.swift */,
+				3050AAAF3ED378E2B6E78466 /* VerseLessonMap.swift */,
 			);
 			name = llm;
 			sourceTree = SOURCE_ROOT;
@@ -992,6 +995,7 @@
 				FBF2F4D72FAD888FB57DC593 /* WeeklyProgressView.swift in Sources */,
 				60BDECEC4137E075320E666F /* ExplainerTier.swift in Sources */,
 				A56E883DFA8D50D139B164AE /* MLXVerseExplainer.swift in Sources */,
+				4A585987A9B4E7E579806A59 /* VerseLessonMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

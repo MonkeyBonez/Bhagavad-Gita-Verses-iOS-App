@@ -61,6 +61,35 @@ struct VerseExplainerTests {
         #expect(!(chunks.last ?? "").isEmpty)
     }
 
+    // MARK: - View model over the fallback backend
+
+    /// Regression: on a device with no on-device model, `.fallback` must NOT block generation —
+    /// the sheet auto-streams the mapped lesson. (The original view model treated fallback as a
+    /// dead end and rendered an empty sheet on every non-Apple-Intelligence device.)
+    @Test @MainActor func viewModelStreamsStubLessonDespiteFallback() async throws {
+        let vm = VerseExplanationViewModel(
+            chapter: 2, verse: 47,
+            verseText: "You have a right to your actions, but never to the fruits of your actions.",
+            lesson: "Your right is to your work, not its rewards.",
+            explainer: StubVerseExplainer())
+        #expect(vm.fallbackNote != nil)   // note shown…
+        #expect(vm.canGenerate)           // …but generation still allowed
+        vm.generate(situation: nil)
+        for _ in 0..<200 {                // stub is instant; poll briefly for the task hop
+            if vm.phase == .done { break }
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        #expect(vm.phase == .done)
+        #expect(vm.text == "Your right is to your work, not its rewards.")
+    }
+
+    /// The bundled verse→lesson map must resolve for a verse the corpus covers (2:47),
+    /// so the sheet call site never regresses to `lesson: nil`.
+    @Test func verseLessonMapResolvesKnownVerse() {
+        let lesson = VerseLessonMap.lesson(chapter: 2, verse: 47)
+        #expect(lesson?.isEmpty == false)
+    }
+
     // MARK: - Factory
 
     @Test func factoryReturnsAnExplainer() {

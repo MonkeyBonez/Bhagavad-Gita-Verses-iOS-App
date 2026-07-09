@@ -93,7 +93,9 @@ struct VerseView: View {
         .sheet(isPresented: $showingExplanation) {
             let v = viewModel.quote
             VerseExplanationSheet(chapter: v.chapterNumber, verse: v.verseNumber,
-                                  verseText: v.text, lesson: nil)
+                                  verseText: v.text,
+                                  lesson: VerseLessonMap.lesson(chapter: v.chapterNumber,
+                                                                verse: v.verseNumber))
         }
     }
 

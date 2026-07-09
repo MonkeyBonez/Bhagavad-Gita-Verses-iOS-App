@@ -8,7 +8,6 @@ import SwiftUI
 final class VerseExplanationViewModel {
     enum Phase: Equatable {
         case idle
-        case unavailable(String)
         case streaming
         case done
         case failed(String)
@@ -16,6 +15,11 @@ final class VerseExplanationViewModel {
 
     private(set) var text: String = ""
     private(set) var phase: Phase = .idle
+    /// Set when the backend is the graceful fallback (no on-device model here). Generation
+    /// still works — the fallback *streams the mapped lesson* — this note only explains the
+    /// shorter output. It must never block `generate()` (that was the bug that rendered an
+    /// empty sheet on non-AI devices).
+    private(set) var fallbackNote: String?
 
     private let explainer: VerseExplainer
     private let context: VerseSceneContext
@@ -27,12 +31,11 @@ final class VerseExplanationViewModel {
         self.context = GitaSceneProvider.context(chapter: chapter, verse: verse,
                                                  verseText: verseText, lesson: lesson)
         if case .fallback(let reason) = explainer.availability {
-            phase = .unavailable(reason)
+            fallbackNote = reason
         }
     }
 
     var canGenerate: Bool {
-        if case .unavailable = phase { return false }
         if case .streaming = phase { return false }
         return true
     }
@@ -89,17 +92,17 @@ struct VerseExplanationSheet: View {
                     .foregroundStyle(.secondary)
             }
 
-            switch model.phase {
-            case .unavailable(let reason):
-                unavailableView(reason)
-            default:
-                content
-            }
+            content
         }
         .padding(22)
         .foregroundStyle(ink)
         .presentationDetents([.medium, .large])
         .presentationDragIndicator(.visible)
+        .onAppear {
+            // Fallback backend (no on-device model): the stream is the mapped lesson and is
+            // instant — show it immediately rather than making the user tap a button.
+            if model.fallbackNote != nil { model.generate(situation: nil) }
+        }
         .onDisappear { model.cancel() }
     }
 
@@ -136,6 +139,12 @@ struct VerseExplanationSheet: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
+            if let note = model.fallbackNote {
+                Text(note)
+                    .font(.footnote)
+                    .foregroundStyle(.tertiary)
+            }
+
             Spacer(minLength: 0)
 
             Button {
@@ -159,19 +168,5 @@ struct VerseExplanationSheet: View {
         case .done, .failed: return "Try again"
         default: return "Explain this for me"
         }
-    }
-
-    @ViewBuilder private func unavailableView(_ reason: String) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Image(systemName: "sparkles.slash")
-                .font(.title2)
-                .foregroundStyle(.secondary)
-            Text(reason)
-                .foregroundStyle(.secondary)
-            Text("You can still explore verses and weekly lessons as usual.")
-                .font(.footnote)
-                .foregroundStyle(.tertiary)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

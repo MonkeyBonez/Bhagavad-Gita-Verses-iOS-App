@@ -38,7 +38,13 @@ final class MLXVerseExplainer: VerseExplainer, Sendable {
                 do {
                     // Keep the Metal buffer cache small — matters on 6 GB devices under pressure.
                     MLX.GPU.set(cacheLimit: 20 * 1024 * 1024)
-                    let container = try await loader.container(for: configuration)
+                    // Surface first-run download progress in the stream (the UI renders the
+                    // latest snapshot, so these are replaced once real tokens arrive). Without
+                    // this, a ~1–2 GB fetch hides behind a bare spinner and reads as a hang.
+                    let container = try await loader.container(for: configuration) { pct in
+                        continuation.yield("Downloading the on-device model — \(pct)%\nThis happens once; after that, explanations are instant and offline.")
+                    }
+                    continuation.yield("Reading the verse…")
                     try await container.perform { (ctx: ModelContext) in
                         let input = try await ctx.processor.prepare(
                             input: UserInput(chat: [.system(system), .user(user)]))
@@ -72,9 +78,14 @@ actor ModelLoader {
     static let shared = ModelLoader()
     private var containers: [String: ModelContainer] = [:]
 
-    func container(for config: ModelConfiguration) async throws -> ModelContainer {
+    /// `progress` reports whole percentages (0–100) during a first-run Hub download; it isn't
+    /// called when the model is already cached on disk or in memory.
+    func container(for config: ModelConfiguration,
+                   progress: (@Sendable (Int) -> Void)? = nil) async throws -> ModelContainer {
         if let cached = containers[config.name] { return cached }
-        let container = try await LLMModelFactory.shared.loadContainer(configuration: config) { _ in }
+        let container = try await LLMModelFactory.shared.loadContainer(configuration: config) { p in
+            progress?(Int(p.fractionCompleted * 100))
+        }
         containers[config.name] = container
         return container
     }
