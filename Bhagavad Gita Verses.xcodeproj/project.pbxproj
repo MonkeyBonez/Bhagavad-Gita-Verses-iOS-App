@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		12F54EAD61B2BAA1F242B056 /* WeeklyNotificationPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9B2B3ED2E6E2676EB63B99 /* WeeklyNotificationPlanTests.swift */; };
 		252BFBD9EA495089EE53D519 /* BookmarkBinaryFindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC5D403DEE54966E802A8A8 /* BookmarkBinaryFindTests.swift */; };
+		2627FDA759E53ECAA01B3A82 /* VerseExplanationSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7E0845B26A5B9787029CD0 /* VerseExplanationSheet.swift */; };
 		2971572A09AB107B5B70FA6C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 320B657129921FC2535CED49 /* Foundation.framework */; };
 		3310A48E2DEF606A00EBBA15 /* FileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3310A48D2DEF606700EBBA15 /* FileReader.swift */; };
 		3310A48F2DEF606A00EBBA15 /* FileReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3310A48D2DEF606700EBBA15 /* FileReader.swift */; };
@@ -182,6 +183,7 @@
 
 /* Begin PBXFileReference section */
 		023AF1648B17E84EC0E7E86D /* VerseExplainerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VerseExplainerTests.swift; path = BhagavadGitaVersesTests/VerseExplainerTests.swift; sourceTree = SOURCE_ROOT; };
+		0C7E0845B26A5B9787029CD0 /* VerseExplanationSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VerseExplanationSheet.swift; path = "Bhagavad Gita Verses App/Views/VerseExplanationSheet.swift"; sourceTree = SOURCE_ROOT; };
 		320B657129921FC2535CED49 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		3310A48D2DEF606700EBBA15 /* FileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReader.swift; sourceTree = "<group>"; };
 		33182E052DD5893A00A82202 /* HomescreenVerseWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomescreenVerseWidget.swift; sourceTree = "<group>"; };
@@ -536,6 +538,7 @@
 				334762CB2D4F5A3C0078FCB4 /* VerseView.swift */,
 				363230D32E67D1B1003264E7 /* BookmarkListView.swift */,
 				36306EDC2E6908C900CFBD1D /* Onboarding */,
+				0C7E0845B26A5B9787029CD0 /* VerseExplanationSheet.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -957,6 +960,7 @@
 				36306EE22E690AA700CFBD1D /* AppIconHeader.swift in Sources */,
 				36306EE32E690AA700CFBD1D /* Buttons.swift in Sources */,
 				AD7BF0E286AD7AB4B974CA51 /* VerseExplainer.swift in Sources */,
+				2627FDA759E53ECAA01B3A82 /* VerseExplanationSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

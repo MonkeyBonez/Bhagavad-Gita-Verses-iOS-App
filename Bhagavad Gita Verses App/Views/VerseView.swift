@@ -25,6 +25,7 @@ struct VerseView: View {
     @State private var showingEmotionWheel: Bool = false
     @State private var showingColorPicker: Bool = false
     @State private var showingBookmarkList: Bool = false
+    @State private var showingExplanation: Bool = false
     @State private var guidanceQuery: String = ""
     @State private var guidanceTopK: Int = 3
     @State private var guidanceRetrieveTopK: Int = 10
@@ -83,10 +84,25 @@ struct VerseView: View {
         return HStack() {
             bookmarkButtonView
             Spacer()
+            explainButtonView
+            Spacer()
             shareButtonView
         }
         .foregroundStyle(foregroundColor)
         .frame(maxHeight: .infinity, alignment: .bottom)
+        .sheet(isPresented: $showingExplanation) {
+            let v = viewModel.quote
+            VerseExplanationSheet(chapter: v.chapterNumber, verse: v.verseNumber,
+                                  verseText: v.text, lesson: nil)
+        }
+    }
+
+    private var explainButtonView: some View {
+        AnimatedTap(content: {
+            actionIcon(systemName: "quote.bubble")
+        }, onTap: {
+            showingExplanation = true
+        })
     }
 
     private var headerActionView: some View {
