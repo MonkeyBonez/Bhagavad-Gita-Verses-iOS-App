@@ -51,45 +51,28 @@ struct VerseExplainerTests {
 
     // MARK: - Stub fallback
 
-    @Test func stubStreamsLessonThenFinishes() async throws {
+    @Test func stubReportsFallbackButStillStreamsLesson() async throws {
         let stub = StubVerseExplainer()
-        if case .unavailable = stub.availability {} else { Issue.record("stub should report unavailable") }
+        // The whole point of C2: the stub is a *fallback*, not a dead end — it still yields content.
+        if case .fallback = stub.availability {} else { Issue.record("stub should report .fallback") }
         var chunks: [String] = []
         for try await s in stub.explain(sampleContext(), userSituation: nil) { chunks.append(s) }
         #expect(chunks.last == "Your right is to your work, not its rewards.")
+        #expect(!(chunks.last ?? "").isEmpty)
     }
 
     // MARK: - Factory
 
     @Test func factoryReturnsAnExplainer() {
-        _ = VerseExplainerFactory.make()   // must not crash; returns FM backend on iOS 26+, else stub
+        // Construction is lazy (no model download) and `availability` is a total function —
+        // this must never crash regardless of device tier or which backend is selected.
+        let e = VerseExplainerFactory.make()
+        _ = e.availability
     }
 
-    // MARK: - Live on-device generation (iOS 26+; tolerant of an unprovisioned model)
-
-    @Test func liveGenerationOrKnownUnavailable() async throws {
-        let explainer = VerseExplainerFactory.make()
-        switch explainer.availability {
-        case .unavailable(let reason):
-            // Acceptable on a sim/device without Apple Intelligence provisioned — just record it.
-            print("[VerseExplainer] unavailable: \(reason)")
-        case .available:
-            // The model reports available, but a Simulator without provisioned Apple Intelligence
-            // assets will still throw at generation time. Treat that as an environment skip — the
-            // integration (session build + request) is exercised either way; real generation needs
-            // a device with Apple Intelligence downloaded.
-            do {
-                var last = ""
-                for try await s in explainer.explain(sampleContext(situation: "I keep obsessing over results at work"),
-                                                     userSituation: "I keep obsessing over results at work") {
-                    last = s
-                }
-                print("[VerseExplainer] generated: \(last)")
-                #expect(!last.isEmpty)
-                #expect(last.count < 1200)   // concise, per instructions
-            } catch {
-                print("[VerseExplainer] model available but generation unavailable in this environment: \(error)")
-            }
-        }
-    }
+    // NOTE: on-device generation is deliberately NOT exercised here. Through the factory it could
+    // select the MLX backend, whose first `explain` downloads a multi-GB model — inappropriate for
+    // a unit test. MLX integration is validated by (a) the app compiling+linking against the real
+    // MLXLLM/MLXLMCommon API and (b) the on-device sideload test. Stub streaming is covered above;
+    // tier selection is covered by ExplainerTierTests.
 }

@@ -78,18 +78,39 @@ protocol VerseExplainer {
     func explain(_ context: VerseSceneContext, userSituation: String?) -> AsyncThrowingStream<String, Error>
 }
 
-/// Picks the best available explainer for this device. Returns the Foundation Models backend only
-/// when it reports `.available` at runtime — otherwise the stub, so callers never hold an explainer
-/// whose `explain` would throw. This is what makes the graceful lesson fallback actually reachable.
+/// Picks the on-device explainer for this device via `ExplainerTier` (hardware-tiered):
+/// Foundation Models on Apple-Intelligence devices, an MLX small-LLM on 6/4 GB devices, and the
+/// stub everywhere else. Returns the Foundation Models backend only when it reports `.available`
+/// at runtime, and the MLX backend only when its package is linked — so callers never hold an
+/// explainer whose `explain` would throw, and the graceful lesson fallback stays reachable.
 enum VerseExplainerFactory {
     static func make() -> VerseExplainer {
-        #if canImport(FoundationModels)
-        if #available(iOS 26.0, *) {
-            let fm = FoundationModelsVerseExplainer()
-            if case .available = fm.availability { return fm }
+        switch ExplainerTier.recommended() {
+        case .foundationModels:
+            #if canImport(FoundationModels)
+            if #available(iOS 26.0, *) {
+                let fm = FoundationModelsVerseExplainer()
+                if case .available = fm.availability { return fm }
+            }
+            #endif
+            // Claimed available but not actually usable → an 8 GB device can still run the large MLX model.
+            return mlx(large: true)
+        case .mlxLarge:
+            return mlx(large: true)
+        case .mlxSmall:
+            return mlx(large: false)
+        case .stub:
+            return StubVerseExplainer()
         }
-        #endif
+    }
+
+    /// The MLX backend when its package is linked into this target; otherwise the stub.
+    private static func mlx(large: Bool) -> VerseExplainer {
+        #if canImport(MLXLLM)
+        return large ? MLXVerseExplainer.large() : MLXVerseExplainer.small()
+        #else
         return StubVerseExplainer()
+        #endif
     }
 }
 

@@ -30,4 +30,8 @@ public enum DefaultsKeys {
     public static let appGroupMigratedV1 = "app_group_migrated_v1_debug"
     /// One-shot flag for the corrected v2 App Group migration.
     public static let appGroupMigratedV2 = "app_group_migrated_v2"
+    /// Developer override forcing the on-device explanation backend, for on-device A/B
+    /// testing. Values: "fm" | "3b" | "1.5b" | "stub". Absent = automatic device tiering
+    /// (`ExplainerTier.recommended`). Not surfaced in UI; set via a debug affordance.
+    public static let explainerBackendOverride = "explainer_backend_override"
 }
