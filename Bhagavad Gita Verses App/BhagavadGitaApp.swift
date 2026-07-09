@@ -21,6 +21,7 @@ struct BhagavadGitaApp: App {
             RootContent(quoteModel: quoteModel)
                 .onOpenURL(perform: {handleUrl($0)})
                 .onAppear {
+                    WeeklyEngagement.recordCurrentWeekOpen()   // progress accrues regardless of notif permission
                     WeeklyNotificationScheduler.reconcileOnAppOpen()
                     refreshWidgetsIfNewWeek()
                 }

@@ -109,6 +109,8 @@ struct VerseView: View {
         HStack(spacing: 0) {
             viewBookmarkedView
             Spacer()
+            WeeklyProgressView()
+            Spacer()
             guidanceButtonView
         }
         .foregroundStyle(foregroundColor)

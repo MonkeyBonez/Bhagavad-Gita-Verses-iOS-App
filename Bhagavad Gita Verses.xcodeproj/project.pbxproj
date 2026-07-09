@@ -118,8 +118,11 @@
 		A088CBB7E75F142900F6A677 /* AppGroupMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB58CAB6B0F96D7475D133BA /* AppGroupMigrationTests.swift */; };
 		AD7BF0E286AD7AB4B974CA51 /* VerseExplainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6ADEB58A0644C4A7371D3A4 /* VerseExplainer.swift */; };
 		B3117FC2E9CAFF6B2A1EA2E4 /* WeeklyPickSyncTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B6674DDF8805048C02DDD0 /* WeeklyPickSyncTests.swift */; };
+		B77E60B2ABE8211CCDED0678 /* WeeklyProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC09D949D70EC7AE55E97A1 /* WeeklyProgressTests.swift */; };
+		BD1B2E6FBEA5E19E6B73E2EF /* WeeklyProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E66A9469AFB235E2C593843 /* WeeklyProgress.swift */; };
 		DEFA170000000000000000F2 /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFA170000000000000000F1 /* DefaultsKeys.swift */; };
 		DEFA170000000000000000F3 /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFA170000000000000000F1 /* DefaultsKeys.swift */; };
+		FBF2F4D72FAD888FB57DC593 /* WeeklyProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEEC5CF4933D95A8F5D30CE /* WeeklyProgressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,6 +187,7 @@
 /* Begin PBXFileReference section */
 		023AF1648B17E84EC0E7E86D /* VerseExplainerTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VerseExplainerTests.swift; path = BhagavadGitaVersesTests/VerseExplainerTests.swift; sourceTree = SOURCE_ROOT; };
 		0C7E0845B26A5B9787029CD0 /* VerseExplanationSheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VerseExplanationSheet.swift; path = "Bhagavad Gita Verses App/Views/VerseExplanationSheet.swift"; sourceTree = SOURCE_ROOT; };
+		2E66A9469AFB235E2C593843 /* WeeklyProgress.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WeeklyProgress.swift; path = Shared/Model/WeeklyProgress.swift; sourceTree = SOURCE_ROOT; };
 		320B657129921FC2535CED49 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		3310A48D2DEF606700EBBA15 /* FileReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReader.swift; sourceTree = "<group>"; };
 		33182E052DD5893A00A82202 /* HomescreenVerseWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomescreenVerseWidget.swift; sourceTree = "<group>"; };
@@ -268,11 +272,13 @@
 		36E7D9E62E682BE200EE6990 /* Widgets.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Widgets.entitlements; sourceTree = "<group>"; };
 		36E7D9E72E68310500EE6990 /* WeeklyNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyNotificationScheduler.swift; sourceTree = "<group>"; };
 		5D56C174A5A34E1E1C1DEAFE /* BhagavadGitaVersesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BhagavadGitaVersesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BEEC5CF4933D95A8F5D30CE /* WeeklyProgressView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WeeklyProgressView.swift; path = "Bhagavad Gita Verses App/Views/WeeklyProgressView.swift"; sourceTree = SOURCE_ROOT; };
 		A8B6674DDF8805048C02DDD0 /* WeeklyPickSyncTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WeeklyPickSyncTests.swift; sourceTree = "<group>"; };
 		AD9B2B3ED2E6E2676EB63B99 /* WeeklyNotificationPlanTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = WeeklyNotificationPlanTests.swift; sourceTree = "<group>"; };
 		ADC5D403DEE54966E802A8A8 /* BookmarkBinaryFindTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BookmarkBinaryFindTests.swift; sourceTree = "<group>"; };
 		B6ADEB58A0644C4A7371D3A4 /* VerseExplainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VerseExplainer.swift; path = Shared/Inference/llm/VerseExplainer.swift; sourceTree = SOURCE_ROOT; };
 		CA061B6B48CB9EE977B03E53 /* EmotionQueryBuilderTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = EmotionQueryBuilderTests.swift; sourceTree = "<group>"; };
+		CAC09D949D70EC7AE55E97A1 /* WeeklyProgressTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WeeklyProgressTests.swift; path = BhagavadGitaVersesTests/WeeklyProgressTests.swift; sourceTree = SOURCE_ROOT; };
 		DB58CAB6B0F96D7475D133BA /* AppGroupMigrationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppGroupMigrationTests.swift; sourceTree = "<group>"; };
 		DEFA170000000000000000F1 /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
 		FD504A3F788CD75E2DCB65CD /* ColorEmotionEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ColorEmotionEngineTests.swift; sourceTree = "<group>"; };
@@ -363,6 +369,7 @@
 				A8B6674DDF8805048C02DDD0 /* WeeklyPickSyncTests.swift */,
 				AD9B2B3ED2E6E2676EB63B99 /* WeeklyNotificationPlanTests.swift */,
 				023AF1648B17E84EC0E7E86D /* VerseExplainerTests.swift */,
+				CAC09D949D70EC7AE55E97A1 /* WeeklyProgressTests.swift */,
 			);
 			name = BhagavadGitaVersesTests;
 			path = BhagavadGitaVersesTests;
@@ -511,6 +518,7 @@
 				DEFA170000000000000000F1 /* DefaultsKeys.swift */,
 				33FF16CB2D28FA67006E9888 /* QuoteModel.swift */,
 				33B4A9F32D2DF2A300AE1044 /* VersesReader.swift */,
+				2E66A9469AFB235E2C593843 /* WeeklyProgress.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -539,6 +547,7 @@
 				363230D32E67D1B1003264E7 /* BookmarkListView.swift */,
 				36306EDC2E6908C900CFBD1D /* Onboarding */,
 				0C7E0845B26A5B9787029CD0 /* VerseExplanationSheet.swift */,
+				8BEEC5CF4933D95A8F5D30CE /* WeeklyProgressView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -906,6 +915,7 @@
 				B3117FC2E9CAFF6B2A1EA2E4 /* WeeklyPickSyncTests.swift in Sources */,
 				12F54EAD61B2BAA1F242B056 /* WeeklyNotificationPlanTests.swift in Sources */,
 				5F44576A1754073830D24F2E /* VerseExplainerTests.swift in Sources */,
+				B77E60B2ABE8211CCDED0678 /* WeeklyProgressTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -961,6 +971,8 @@
 				36306EE32E690AA700CFBD1D /* Buttons.swift in Sources */,
 				AD7BF0E286AD7AB4B974CA51 /* VerseExplainer.swift in Sources */,
 				2627FDA759E53ECAA01B3A82 /* VerseExplanationSheet.swift in Sources */,
+				BD1B2E6FBEA5E19E6B73E2EF /* WeeklyProgress.swift in Sources */,
+				FBF2F4D72FAD888FB57DC593 /* WeeklyProgressView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
