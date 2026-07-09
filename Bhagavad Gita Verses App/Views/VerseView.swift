@@ -173,6 +173,23 @@ struct VerseView: View {
         isCentered && !isIntroAnimating && !isSwitchingDataSource
     }
 
+    #if DEBUG
+    /// One row of the debug backend picker: sets (or clears, for `nil`) the explainer override
+    /// and shows a checkmark for the current selection. Read at menu-open time.
+    @ViewBuilder private func debugBackendButton(_ label: String, _ value: String?) -> some View {
+        let current = SharedDefaults.defaults.string(forKey: DefaultsKeys.explainerBackendOverride)
+        Button {
+            if let value {
+                SharedDefaults.defaults.set(value, forKey: DefaultsKeys.explainerBackendOverride)
+            } else {
+                SharedDefaults.defaults.removeObject(forKey: DefaultsKeys.explainerBackendOverride)
+            }
+        } label: {
+            Label(label, systemImage: current == value ? "checkmark.circle.fill" : "circle")
+        }
+    }
+    #endif
+
     private var guidanceButtonView: some View {
         Menu {
             Section("Gita Guidance") {
@@ -193,6 +210,17 @@ struct VerseView: View {
                     Label("Pick Color", systemImage: "paintpalette")
                 }
             }
+            #if DEBUG
+            // On-device A/B for the explanation backend (see ExplainerTier). Takes effect the
+            // next time an explanation sheet is opened. Not compiled into release builds.
+            Section("Explainer backend (debug)") {
+                debugBackendButton("Auto (device tier)", nil)
+                debugBackendButton("Foundation Models", "fm")
+                debugBackendButton("Llama-3.2-3B", "3b")
+                debugBackendButton("Qwen2.5-1.5B", "1.5b")
+                debugBackendButton("Stub (lesson only)", "stub")
+            }
+            #endif
         } label: {
             actionIcon(systemName: "sparkles")
         }
