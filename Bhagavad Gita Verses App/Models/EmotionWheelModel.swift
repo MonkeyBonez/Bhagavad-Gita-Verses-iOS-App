@@ -59,16 +59,28 @@ final class EmotionWheelLoader {
 }
 
 /// Builds the retrieval query string from emotion wheel selection.
-/// Negative roots (Sad, Mad, Scared) use Option B; positive roots use the current "I feel..." format.
+///
+/// Category-aware templating, chosen from a 72-emotion × 4-template cross-encoder
+/// sweep (see `utils/Scripts/outputs/template_comparison_analysis.md`):
+/// - Negative roots (Sad, Mad, Scared) → Option B, a bare solution phrase
+///   (`overcome X and Y`). Best avg CE for negatives (−4.22).
+/// - Positive roots (Joyful, Powerful, Peaceful) → Option C, a cultivate/deepen
+///   phrase (`cultivate X and Y, deepen Z`). Lifts positive avg CE from −3.55 to
+///   +2.68 vs. the old "I feel…" format.
+///
+/// This B-neg / C-pos hybrid scored the best overall avg CE (−0.77) of any single
+/// template in the sweep.
 enum EmotionQueryBuilder {
-    private static let optionBRoots: Set<String> = ["Sad", "Mad", "Scared"]
+    private static let negativeRoots: Set<String> = ["Sad", "Mad", "Scared"]
 
     /// Returns the query string to send to the lesson retriever.
     static func build(root: String, mid: String, leaf: String) -> String {
-        if optionBRoots.contains(root) {
+        if negativeRoots.contains(root) {
+            // Option B
             return "overcome \(mid.lowercased()) and \(leaf.lowercased())"
         }
-        return "I feel \(root) because I feel \(mid), because I feel \(leaf)"
+        // Option C
+        return "cultivate \(mid.lowercased()) and \(leaf.lowercased()), deepen \(root.lowercased())"
     }
 }
 

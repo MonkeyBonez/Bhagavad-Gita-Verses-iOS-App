@@ -8,10 +8,12 @@ struct EmotionQueryBuilderTests {
         #expect(EmotionQueryBuilder.build(root: "Scared", mid: "Anxious", leaf: "Worried") == "overcome anxious and worried")
     }
 
-    @Test func positiveRootsUseIFeelFormat() {
+    @Test func positiveRootsUseOptionC() {
         #expect(EmotionQueryBuilder.build(root: "Joyful", mid: "Content", leaf: "Free")
-                == "I feel Joyful because I feel Content, because I feel Free")
+                == "cultivate content and free, deepen joyful")
         #expect(EmotionQueryBuilder.build(root: "Powerful", mid: "Confident", leaf: "Brave")
-                == "I feel Powerful because I feel Confident, because I feel Brave")
+                == "cultivate confident and brave, deepen powerful")
+        #expect(EmotionQueryBuilder.build(root: "Peaceful", mid: "Loving", leaf: "Tender")
+                == "cultivate loving and tender, deepen peaceful")
     }
 }
