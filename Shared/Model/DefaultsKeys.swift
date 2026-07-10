@@ -34,4 +34,8 @@ public enum DefaultsKeys {
     /// testing. Values: "fm" | "3b" | "1.5b" | "stub". Absent = automatic device tiering
     /// (`ExplainerTier.recommended`). Not surfaced in UI; set via a debug affordance.
     public static let explainerBackendOverride = "explainer_backend_override"
+    /// Prompt framing for the explanation surface. Values: "lesson" (lesson-first — the
+    /// lesson is the subject, verse only its source) | "verse" (verse-first — explains the
+    /// scene). Absent = lesson-first. Toggled via the debug menu for on-device comparison.
+    public static let explainerPromptStyle = "explainer_prompt_style"
 }

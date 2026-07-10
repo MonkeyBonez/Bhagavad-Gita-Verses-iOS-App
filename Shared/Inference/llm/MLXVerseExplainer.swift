@@ -33,8 +33,9 @@ final class MLXVerseExplainer: VerseExplainer, Sendable {
         let loader = self.loader
         return AsyncThrowingStream { continuation in
             let task = Task {
-                let system = ExplanationPrompt.instructions
-                let user = ExplanationPrompt.prompt(context, userSituation: userSituation)
+                let style = ExplanationPromptStyle.current
+                let system = ExplanationPrompt.instructions(for: style)
+                let user = ExplanationPrompt.prompt(context, userSituation: userSituation, style: style)
                 do {
                     // Keep the Metal buffer cache small — matters on 6 GB devices under pressure.
                     MLX.GPU.set(cacheLimit: 20 * 1024 * 1024)
@@ -48,7 +49,9 @@ final class MLXVerseExplainer: VerseExplainer, Sendable {
                     try await container.perform { (ctx: ModelContext) in
                         let input = try await ctx.processor.prepare(
                             input: UserInput(chat: [.system(system), .user(user)]))
-                        let params = GenerateParameters(maxTokens: 220, temperature: 0.5)
+                        // Lesson-first wants a tight paragraph; small models over-write, so cap harder.
+                        let params = GenerateParameters(maxTokens: style == .lesson ? 160 : 220,
+                                                        temperature: 0.5)
                         let stream = try MLXLMCommon.generate(
                             input: input, parameters: params, context: ctx)
                         var acc = ""

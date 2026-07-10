@@ -116,7 +116,27 @@ enum VerseExplainerFactory {
 
 // MARK: - Prompt construction (pure, unit-testable)
 
+/// How the explanation is framed. In the Mac bake-off (utils/Scripts/llm_experiments/),
+/// lesson-first produced tighter, on-task output across every model — verse-first tempted
+/// small models into retelling the battlefield scene instead of speaking to the reader.
+enum ExplanationPromptStyle: String {
+    /// The lesson is the subject; the verse is only its (unquoted) source. Default.
+    case lesson
+    /// The original #5 framing: explain the verse, scene included.
+    case verse
+
+    static var current: ExplanationPromptStyle {
+        if let raw = SharedDefaults.defaults.string(forKey: DefaultsKeys.explainerPromptStyle),
+           let style = ExplanationPromptStyle(rawValue: raw) {
+            return style
+        }
+        return .lesson
+    }
+}
+
 enum ExplanationPrompt {
+    // MARK: Verse-first (original)
+
     static let instructions = """
     You explain how a single line from the Bhagavad Gita applies to an ordinary person's life today.
     Rules:
@@ -143,6 +163,46 @@ enum ExplanationPrompt {
             p += "\n\nExplain why this verse still matters for someone's everyday life."
         }
         return p
+    }
+
+    // MARK: Lesson-first (bake-off Mode B — the #6 "lesson spotlight" framing)
+
+    static let lessonInstructions = """
+    You help a reader take in a single life lesson and connect it to what they are going through right now.
+    Rules:
+    - The lesson is the point. Speak about the lesson and the reader's moment.
+    - Be concrete and practical. No preaching, no religious jargon, no "thou".
+    - 2–3 short sentences, plain modern English, addressed to "you".
+    - Do not retell the scripture's story or name its characters. Do not quote the verse or mention chapter and verse numbers. No sign-off.
+    """
+
+    /// The lesson is the headline; the verse appears only as a do-not-quote source note so the
+    /// model stays grounded without narrating Arjuna and Krishna at the reader.
+    static func lessonPrompt(_ c: VerseSceneContext, userSituation: String?) -> String {
+        let headline = (c.lesson?.isEmpty == false) ? c.lesson! : c.verseText
+        var p = """
+        The lesson: "\(headline)"
+        (Source, do not quote or retell: Gita \(c.chapter):\(c.verse), \(c.speakers) — \(c.scene))
+        """
+        if let s = userSituation?.trimmingCharacters(in: .whitespacesAndNewlines), !s.isEmpty {
+            p += "\n\nThe reader came here feeling / seeking: \"\(s)\""
+            p += "\n\nWrite the connection: how this lesson meets their moment, and what it asks of them today."
+        } else {
+            p += "\n\nWrite the connection: why this lesson matters in an ordinary life today, and what it asks of someone."
+        }
+        return p
+    }
+
+    // MARK: Style-aware entry points (what the backends call)
+
+    static func instructions(for style: ExplanationPromptStyle) -> String {
+        style == .lesson ? lessonInstructions : instructions
+    }
+
+    static func prompt(_ c: VerseSceneContext, userSituation: String?,
+                       style: ExplanationPromptStyle) -> String {
+        style == .lesson ? lessonPrompt(c, userSituation: userSituation)
+                         : prompt(c, userSituation: userSituation)
     }
 }
 
@@ -182,9 +242,12 @@ struct FoundationModelsVerseExplainer: VerseExplainer {
         AsyncThrowingStream { continuation in
             let task = Task {
                 do {
-                    let session = LanguageModelSession(instructions: ExplanationPrompt.instructions)
-                    let options = GenerationOptions(temperature: 0.5, maximumResponseTokens: 220)
-                    let prompt = ExplanationPrompt.prompt(context, userSituation: userSituation)
+                    let style = ExplanationPromptStyle.current
+                    let session = LanguageModelSession(instructions: ExplanationPrompt.instructions(for: style))
+                    // Lesson-first wants a tight paragraph; the looser cap is for the scene-grounded style.
+                    let options = GenerationOptions(temperature: 0.5,
+                                                    maximumResponseTokens: style == .lesson ? 160 : 220)
+                    let prompt = ExplanationPrompt.prompt(context, userSituation: userSituation, style: style)
                     for try await snapshot in session.streamResponse(to: prompt, options: options) {
                         continuation.yield(snapshot.content)   // cumulative text
                     }

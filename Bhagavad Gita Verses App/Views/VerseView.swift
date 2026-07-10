@@ -179,12 +179,23 @@ struct VerseView: View {
     /// One row of the debug backend picker: sets (or clears, for `nil`) the explainer override
     /// and shows a checkmark for the current selection. Read at menu-open time.
     @ViewBuilder private func debugBackendButton(_ label: String, _ value: String?) -> some View {
-        let current = SharedDefaults.defaults.string(forKey: DefaultsKeys.explainerBackendOverride)
+        debugDefaultsRow(label, key: DefaultsKeys.explainerBackendOverride, value: value)
+    }
+
+    /// One row of the debug prompt-style picker (nil = lesson-first default).
+    @ViewBuilder private func debugPromptStyleButton(_ label: String, _ value: String?) -> some View {
+        debugDefaultsRow(label, key: DefaultsKeys.explainerPromptStyle, value: value)
+    }
+
+    /// Shared row: writes `value` under `key` in the App Group (removes on nil) with a
+    /// checkmark on the current selection.
+    @ViewBuilder private func debugDefaultsRow(_ label: String, key: String, value: String?) -> some View {
+        let current = SharedDefaults.defaults.string(forKey: key)
         Button {
             if let value {
-                SharedDefaults.defaults.set(value, forKey: DefaultsKeys.explainerBackendOverride)
+                SharedDefaults.defaults.set(value, forKey: key)
             } else {
-                SharedDefaults.defaults.removeObject(forKey: DefaultsKeys.explainerBackendOverride)
+                SharedDefaults.defaults.removeObject(forKey: key)
             }
         } label: {
             Label(label, systemImage: current == value ? "checkmark.circle.fill" : "circle")
@@ -221,6 +232,12 @@ struct VerseView: View {
                 debugBackendButton("Llama-3.2-3B", "3b")
                 debugBackendButton("Qwen2.5-1.5B", "1.5b")
                 debugBackendButton("Stub (lesson only)", "stub")
+            }
+            // Prompt framing A/B (see ExplanationPromptStyle). Lesson-first is the default:
+            // "what's the lesson and how does it meet your moment" — no battlefield retelling.
+            Section("Explainer prompt (debug)") {
+                debugPromptStyleButton("Lesson-first (default)", nil)
+                debugPromptStyleButton("Verse-first (story context)", "verse")
             }
             #endif
         } label: {

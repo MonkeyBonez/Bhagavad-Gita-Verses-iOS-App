@@ -49,6 +49,36 @@ struct VerseExplainerTests {
         #expect(!p.contains("The reader says"))
     }
 
+    // MARK: - Lesson-first prompt (bake-off Mode B — the shipping framing)
+
+    @Test func lessonPromptLeadsWithLessonNotScene() {
+        let p = ExplanationPrompt.lessonPrompt(sampleContext(), userSituation: "anxious about a deadline")
+        #expect(p.hasPrefix("The lesson: \"Your right is to your work, not its rewards.\""))
+        #expect(p.contains("do not quote"))            // verse is a source note only
+        #expect(p.contains("anxious about a deadline"))
+        #expect(!p.contains("Cast:"))                  // no battlefield retelling material
+        #expect(!p.contains("Chapter 2 —"))
+    }
+
+    @Test func lessonPromptFallsBackToVerseTextWhenNoLesson() {
+        let c = GitaSceneProvider.context(chapter: 2, verse: 47,
+                                          verseText: "You have a right to your actions.",
+                                          lesson: nil)
+        let p = ExplanationPrompt.lessonPrompt(c, userSituation: nil)
+        #expect(p.hasPrefix("The lesson: \"You have a right to your actions.\""))
+        #expect(p.contains("ordinary life"))           // no-situation branch
+    }
+
+    @Test func lessonInstructionsForbidStorytelling() {
+        let i = ExplanationPrompt.instructions(for: .lesson)
+        #expect(i.contains("Do not retell"))
+        #expect(i.contains("No sign-off"))
+        // and the style dispatcher routes correctly
+        #expect(ExplanationPrompt.instructions(for: .verse) == ExplanationPrompt.instructions)
+        #expect(ExplanationPrompt.prompt(sampleContext(), userSituation: nil, style: .lesson)
+                == ExplanationPrompt.lessonPrompt(sampleContext(), userSituation: nil))
+    }
+
     // MARK: - Stub fallback
 
     @Test func stubReportsFallbackButStillStreamsLesson() async throws {
